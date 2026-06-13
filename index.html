@@ -783,12 +783,18 @@ footer p { font-size: 0.83rem; color: var(--muted); }
   <div class="portfolio-grid">
     <div class="video-card reveal">
       <div class="video-wrapper">
-        <!-- Replace src with your YouTube embed URL -->
+        <!-- ============================================================
+             VIDEO 1 — when you have a real video:
+             1. Upload to YouTube as Unlisted
+             2. Copy the video ID from the URL (the part after ?v=)
+             3. Delete the <div class="video-placeholder">...</div> block below
+             4. Uncomment the <iframe> line and paste your video ID
+             ============================================================ -->
         <div class="video-placeholder">
           <div class="play-icon">▶</div>
           <span>Your video here</span>
         </div>
-        <!-- <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
+        <!-- <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HERE" allowfullscreen></iframe> -->
       </div>
       <div class="video-info">
         <h3>Luxury Jewelry Commercial</h3>
@@ -798,10 +804,12 @@ footer p { font-size: 0.83rem; color: var(--muted); }
     </div>
     <div class="video-card reveal reveal-delay-1">
       <div class="video-wrapper">
+        <!-- VIDEO 2 — same steps as Video 1 above -->
         <div class="video-placeholder">
           <div class="play-icon">▶</div>
           <span>Your video here</span>
         </div>
+        <!-- <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HERE" allowfullscreen></iframe> -->
       </div>
       <div class="video-info">
         <h3>Skincare Brand Reel</h3>
@@ -811,10 +819,12 @@ footer p { font-size: 0.83rem; color: var(--muted); }
     </div>
     <div class="video-card reveal reveal-delay-2">
       <div class="video-wrapper">
+        <!-- VIDEO 3 — same steps as Video 1 above -->
         <div class="video-placeholder">
           <div class="play-icon">▶</div>
           <span>Your video here</span>
         </div>
+        <!-- <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HERE" allowfullscreen></iframe> -->
       </div>
       <div class="video-info">
         <h3>Watch Product Launch</h3>
@@ -1010,16 +1020,44 @@ document.querySelectorAll('#hero .reveal').forEach(el => {
   setTimeout(() => el.classList.add('visible'), 80);
 });
 
-// Form submit (placeholder — wire up to Formspree or EmailJS)
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault();
   const btn = e.target;
-  btn.textContent = '✓ Message sent!';
-  btn.style.background = '#22c55e';
-  setTimeout(() => {
-    btn.textContent = 'Send message →';
-    btn.style.background = '';
-  }, 3000);
+  const form = btn.closest('div.contact-form');
+  const data = {
+    name:    form.querySelector('input[type=text]').value,
+    email:   form.querySelector('input[type=email]').value,
+    package: form.querySelector('select').value,
+    message: form.querySelector('textarea').value,
+  };
+
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('https://formspree.io/f/mkoappja', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      btn.textContent = '✓ Message sent!';
+      btn.style.background = '#22c55e';
+      form.querySelector('input[type=text]').value = '';
+      form.querySelector('input[type=email]').value = '';
+      form.querySelector('textarea').value = '';
+    } else {
+      throw new Error('failed');
+    }
+  } catch {
+    btn.textContent = 'Failed — email me directly';
+    btn.style.background = '#ef4444';
+    btn.disabled = false;
+    setTimeout(() => {
+      btn.textContent = 'Send message →';
+      btn.style.background = '';
+    }, 4000);
+  }
 }
 </script>
 </body>
