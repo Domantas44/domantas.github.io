@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domantas Media — AI Product Commercials</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black:   #080808;
+  --surface: #111111;
+  --card:    #161616;
+  --border:  rgba(255,255,255,0.07);
+  --white:   #F0EEE9;
+  --muted:   rgba(240,238,233,0.45);
+  --accent:  #7B5CF0;
+  --accent2: #A78BFA;
+  --glow:    rgba(123,92,240,0.25);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 6%;
+  transition: background 0.4s, backdrop-filter 0.4s, border-bottom 0.4s;
+}
+nav.scrolled {
+  background: rgba(8,8,8,0.85);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1.15rem;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--accent2); }
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  font-size: 0.88rem; font-weight: 500;
+  color: var(--muted); text-decoration: none;
+  letter-spacing: 0.03em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  padding: 10px 22px;
+  background: var(--accent);
+  color: var(--white) !important;
+  border-radius: 8px;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  transition: background 0.2s, transform 0.15s !important;
+}
+.nav-cta:hover { background: var(--accent2) !important; transform: translateY(-1px); }
+
+/* ===== HERO ===== */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 6% 80px;
+  overflow: hidden;
+}
+
+/* Animated gradient orbs */
+.orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); opacity: 0.35;
+  animation: drift 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, #7B5CF0, transparent 70%);
+  top: -150px; left: -100px;
+  animation-delay: 0s;
+}
+.orb-2 {
+  width: 450px; height: 450px;
+  background: radial-gradient(circle, #a855f7, transparent 70%);
+  bottom: -100px; right: -80px;
+  animation-delay: -5s;
+}
+.orb-3 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, #6366f1, transparent 70%);
+  top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: -8s;
+  opacity: 0.15;
+}
+
+@keyframes drift {
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(40px, 30px) scale(1.08); }
+}
+
+/* Film strip ticker */
+.filmstrip {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 40px; overflow: hidden;
+  display: flex; align-items: center;
+  border-top: 1px solid var(--border);
+}
+.filmstrip-track {
+  display: flex; gap: 0; white-space: nowrap;
+  animation: ticker 18s linear infinite;
+}
+.filmstrip-track span {
+  font-size: 0.7rem; font-weight: 500;
+  color: rgba(167,139,250,0.5);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0 28px;
+}
+.filmstrip-track span::before {
+  content: '◆';
+  margin-right: 28px;
+  color: rgba(123,92,240,0.4);
+}
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.hero-inner { position: relative; z-index: 2; max-width: 900px; }
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent2);
+  border: 1px solid rgba(167,139,250,0.3);
+  background: rgba(123,92,240,0.08);
+  padding: 7px 16px; border-radius: 100px;
+  margin-bottom: 32px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent2);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, #A78BFA 0%, #7B5CF0 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 1.2rem; color: var(--muted);
+  max-width: 580px; margin: 0 auto 44px;
+  font-weight: 300;
+}
+
+.hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+.btn-primary {
+  padding: 15px 32px;
+  background: var(--accent);
+  color: var(--white);
+  border-radius: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 0 0 0 rgba(123,92,240,0);
+}
+.btn-primary:hover {
+  background: var(--accent2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(123,92,240,0.35);
+}
+
+.btn-ghost {
+  padding: 15px 32px;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500; font-size: 0.95rem;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+.btn-ghost:hover {
+  border-color: rgba(167,139,250,0.5);
+  background: rgba(123,92,240,0.08);
+  transform: translateY(-2px);
+}
+
+.hero-stats {
+  display: flex; gap: 48px; justify-content: center;
+  margin-top: 64px; flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.2rem; font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1;
+  color: var(--white);
+}
+.stat-num span { color: var(--accent2); }
+.stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 6px; }
+
+/* ===== SECTIONS ===== */
+section { padding: 100px 6%; }
+
+.section-label {
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent2); margin-bottom: 14px;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 700; letter-spacing: -0.025em;
+  line-height: 1.1; margin-bottom: 18px;
+}
+.section-sub {
+  font-size: 1.05rem; color: var(--muted);
+  max-width: 520px; font-weight: 300;
+}
+
+/* ===== SERVICES ===== */
+#services { border-top: 1px solid var(--border); }
+
+.services-head { margin-bottom: 60px; }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2px;
+}
+
+.service-card {
+  background: var(--card);
+  padding: 40px 36px;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+  cursor: default;
+}
+.service-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.service-card:hover { background: #1c1c1c; }
+.service-card:hover::before { opacity: 1; }
+
+.service-icon {
+  font-size: 2rem; margin-bottom: 20px;
+  display: inline-block;
+  transition: transform 0.3s;
+}
+.service-card:hover .service-icon { transform: scale(1.15); }
+
+.service-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.25rem; font-weight: 600;
+  margin-bottom: 10px; letter-spacing: -0.01em;
+}
+.service-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
+
+.service-tag {
+  display: inline-block; margin-top: 18px;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent2);
+}
+
+/* ===== PORTFOLIO ===== */
+#portfolio { background: var(--surface); border-top: 1px solid var(--border); }
+
+.portfolio-head { margin-bottom: 60px; }
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.video-card {
+  background: var(--card);
+  border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--border);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.video-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(123,92,240,0.2);
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0; overflow: hidden;
+}
+.video-wrapper iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+/* Placeholder state */
+.video-placeholder {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px;
+}
+.video-placeholder .play-icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(123,92,240,0.25);
+  border: 2px solid rgba(123,92,240,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.video-placeholder span {
+  font-size: 0.78rem; color: var(--muted);
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+.video-info { padding: 22px 24px 26px; }
+.video-info h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem; font-weight: 600;
+  margin-bottom: 6px; letter-spacing: -0.01em;
+}
+.video-info p { font-size: 0.88rem; color: var(--muted); }
+.video-badge {
+  display: inline-block; margin-top: 12px;
+  padding: 4px 12px; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  background: rgba(123,92,240,0.15);
+  color: var(--accent2);
+  border: 1px solid rgba(123,92,240,0.25);
+}
+
+/* ===== PROCESS ===== */
+#process { border-top: 1px solid var(--border); }
+.process-head { margin-bottom: 60px; }
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0;
+  position: relative;
+}
+
+.process-step {
+  padding: 40px 32px;
+  border-right: 1px solid var(--border);
+  position: relative;
+  transition: background 0.3s;
+}
+.process-step:last-child { border-right: none; }
+.process-step:hover { background: rgba(123,92,240,0.04); }
+
+.step-number {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 3.5rem; font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  background: linear-gradient(135deg, rgba(123,92,240,0.5), rgba(123,92,240,0.1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+.process-step h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem; font-weight: 600;
+  margin-bottom: 10px;
+}
+.process-step p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+/* ===== PRICING ===== */
+#pricing { background: var(--surface); border-top: 1px solid var(--border); }
+.pricing-head { margin-bottom: 60px; }
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 960px; margin: 0 auto;
+}
+
+.price-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 40px 36px;
+  position: relative; overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.price-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.5);
+}
+.price-card.featured {
+  border-color: rgba(123,92,240,0.5);
+  background: linear-gradient(160deg, #1d1830 0%, #161616 60%);
+}
+.price-card.featured::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+.price-card.featured:hover {
+  box-shadow: 0 16px 50px rgba(123,92,240,0.2);
+}
+
+.price-badge {
+  display: inline-block; margin-bottom: 20px;
+  padding: 4px 14px; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: rgba(123,92,240,0.2);
+  color: var(--accent2);
+  border: 1px solid rgba(123,92,240,0.3);
+}
+
+.price-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem; font-weight: 600; margin-bottom: 6px;
+}
+.price-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 28px; }
+
+.price-amount {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 3.4rem; font-weight: 700;
+  letter-spacing: -0.04em; line-height: 1;
+  margin-bottom: 28px;
+}
+.price-amount sup { font-size: 1.5rem; vertical-align: top; margin-top: 8px; }
+.price-amount .price-note { font-size: 0.85rem; font-weight: 400; color: var(--muted); }
+
+.price-features { list-style: none; margin-bottom: 36px; }
+.price-features li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 0.92rem; color: var(--muted);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.price-features li:last-child { border-bottom: none; }
+.price-features li::before {
+  content: '✓';
+  color: var(--accent2); font-weight: 700; flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.btn-price-cta {
+  display: block; width: 100%;
+  padding: 14px;
+  text-align: center;
+  border-radius: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid var(--border);
+  color: var(--white);
+  background: transparent;
+}
+.btn-price-cta:hover {
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+}
+.price-card.featured .btn-price-cta {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.price-card.featured .btn-price-cta:hover {
+  background: var(--accent2);
+  border-color: var(--accent2);
+  box-shadow: 0 6px 24px rgba(123,92,240,0.4);
+}
+
+/* ===== CONTACT ===== */
+#contact { border-top: 1px solid var(--border); }
+
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+@media(max-width: 700px) {
+  .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+}
+
+.contact-info h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700; letter-spacing: -0.025em;
+  line-height: 1.1; margin-bottom: 18px;
+}
+.contact-info p { font-size: 1rem; color: var(--muted); margin-bottom: 36px; }
+
+.contact-methods { display: flex; flex-direction: column; gap: 16px; }
+.contact-method {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--white);
+  transition: border-color 0.2s, background 0.2s;
+}
+.contact-method:hover {
+  border-color: rgba(123,92,240,0.4);
+  background: rgba(123,92,240,0.06);
+}
+.contact-method-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: rgba(123,92,240,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.contact-method-text strong { display: block; font-weight: 600; font-size: 0.9rem; }
+.contact-method-text span { font-size: 0.83rem; color: var(--muted); }
+
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group label {
+  font-size: 0.82rem; font-weight: 500;
+  letter-spacing: 0.04em; color: var(--muted);
+  text-transform: uppercase;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: rgba(123,92,240,0.6);
+  box-shadow: 0 0 0 3px rgba(123,92,240,0.1);
+}
+.form-group textarea { resize: vertical; min-height: 120px; }
+.form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23A78BFA'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 18px; padding-right: 42px; }
+.form-group select option { background: var(--card); }
+
+.btn-submit {
+  padding: 15px;
+  background: var(--accent);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  margin-top: 4px;
+}
+.btn-submit:hover {
+  background: var(--accent2);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(123,92,240,0.35);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 40px 6%;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1rem;
+  color: var(--white); text-decoration: none;
+}
+.footer-logo span { color: var(--accent2); }
+footer p { font-size: 0.83rem; color: var(--muted); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a {
+  font-size: 0.83rem; color: var(--muted);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--white); }
+
+/* ===== REVEAL ANIMATIONS ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1),
+              transform 0.65s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero-stats { gap: 28px; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+  .process-step { border-right: none; border-bottom: 1px solid var(--border); }
+  .process-step:last-child { border-bottom: none; }
+  .filmstrip { display: none; }
+  footer { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .process-steps { grid-template-columns: 1fr; }
+  section { padding: 70px 5%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">Domantas<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+  </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow reveal">AI-Powered Video Production · Vilnius, Lithuania</div>
+    <h1 class="reveal reveal-delay-1">
+      Commercials that<br><em>sell products.</em>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      Premium AI-generated advertising videos for e-commerce brands, product launches, and social media campaigns. Fast. Cinematic. Effective.
+    </p>
+    <div class="hero-btns reveal reveal-delay-3">
+      <a href="#portfolio" class="btn-primary">View work ↓</a>
+      <a href="#contact" class="btn-ghost">Start a project</a>
+    </div>
+    <div class="hero-stats reveal reveal-delay-4">
+      <div class="stat-item">
+        <div class="stat-num">48<span>h</span></div>
+        <div class="stat-label">Avg. turnaround</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4K</div>
+        <div class="stat-label">Output quality</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">€75</div>
+        <div class="stat-label">Starting from</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filmstrip">
+    <div class="filmstrip-track">
+      <span>Instagram Reels</span><span>TikTok Ads</span><span>Product Showcases</span>
+      <span>E-Commerce Brands</span><span>Social Media</span><span>YouTube Pre-Roll</span>
+      <span>Luxury Branding</span><span>Product Launches</span>
+      <!-- duplicate for seamless loop -->
+      <span>Instagram Reels</span><span>TikTok Ads</span><span>Product Showcases</span>
+      <span>E-Commerce Brands</span><span>Social Media</span><span>YouTube Pre-Roll</span>
+      <span>Luxury Branding</span><span>Product Launches</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="services">
+  <div class="services-head">
+    <div class="section-label reveal">What I do</div>
+    <h2 class="section-title reveal reveal-delay-1">Video that converts</h2>
+    <p class="section-sub reveal reveal-delay-2">Every format, every platform — crafted to stop the scroll and drive sales.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🎬</div>
+      <h3>Product Commercials</h3>
+      <p>Cinematic showcases that make your product irresistible. Perfect for landing pages, paid ads, and brand campaigns.</p>
+      <span class="service-tag">High-end · 15–60s</span>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">📱</div>
+      <h3>Instagram Reels</h3>
+      <p>Vertical-format short videos optimized for engagement and reach. Designed for the algorithm and the audience.</p>
+      <span class="service-tag">Social · 15–30s</span>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">⚡</div>
+      <h3>TikTok Ads</h3>
+      <p>Trend-aware, high-energy content that earns attention in the first two seconds. Built to go viral.</p>
+      <span class="service-tag">TikTok · 15–60s</span>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon">🛍️</div>
+      <h3>E-Commerce Packs</h3>
+      <p>Multi-format bundles for Shopify and WooCommerce stores — hero video, reels, and stories in one order.</p>
+      <span class="service-tag">Bundle · Multi-format</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PORTFOLIO ===== -->
+<section id="portfolio">
+  <div class="portfolio-head">
+    <div class="section-label reveal">Portfolio</div>
+    <h2 class="section-title reveal reveal-delay-1">Recent work</h2>
+    <p class="section-sub reveal reveal-delay-2">Real AI-generated commercials — replace these with your Higgsfield videos.</p>
+  </div>
+  <div class="portfolio-grid">
+    <div class="video-card reveal">
+      <div class="video-wrapper">
+        <!-- Replace src with your YouTube embed URL -->
+        <div class="video-placeholder">
+          <div class="play-icon">▶</div>
+          <span>Your video here</span>
+        </div>
+        <!-- <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
+      </div>
+      <div class="video-info">
+        <h3>Luxury Jewelry Commercial</h3>
+        <p>Premium brand showcase · Instagram & web</p>
+        <span class="video-badge">Product Showcase</span>
+      </div>
+    </div>
+    <div class="video-card reveal reveal-delay-1">
+      <div class="video-wrapper">
+        <div class="video-placeholder">
+          <div class="play-icon">▶</div>
+          <span>Your video here</span>
+        </div>
+      </div>
+      <div class="video-info">
+        <h3>Skincare Brand Reel</h3>
+        <p>30-second Instagram ad · 3.2× ROAS</p>
+        <span class="video-badge">Instagram Reel</span>
+      </div>
+    </div>
+    <div class="video-card reveal reveal-delay-2">
+      <div class="video-wrapper">
+        <div class="video-placeholder">
+          <div class="play-icon">▶</div>
+          <span>Your video here</span>
+        </div>
+      </div>
+      <div class="video-info">
+        <h3>Watch Product Launch</h3>
+        <p>Cinematic 45-second commercial</p>
+        <span class="video-badge">TikTok + YouTube</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section id="process">
+  <div class="process-head">
+    <div class="section-label reveal">How it works</div>
+    <h2 class="section-title reveal reveal-delay-1">From brief to final video</h2>
+    <p class="section-sub reveal reveal-delay-2">Simple. Fast. No back-and-forth that wastes your time.</p>
+  </div>
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="step-number">01</div>
+      <h3>Share your brief</h3>
+      <p>Tell me about your product, brand style, and where the video will run. A quick email is enough to get started.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-1">
+      <div class="step-number">02</div>
+      <h3>I produce the video</h3>
+      <p>Using AI tools and cinematic techniques, I create a draft within 48 hours. No stock footage, fully custom.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <div class="step-number">03</div>
+      <h3>Review & refine</h3>
+      <p>One round of revisions included. You give feedback, I polish. Most clients approve within 24 hours.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-3">
+      <div class="step-number">04</div>
+      <h3>Receive your files</h3>
+      <p>Final delivery in all formats you need — 9:16 for Reels, 1:1 for feeds, 16:9 for YouTube. Ready to upload.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing">
+  <div class="pricing-head" style="text-align:center;">
+    <div class="section-label reveal" style="text-align:center;">Pricing</div>
+    <h2 class="section-title reveal reveal-delay-1" style="text-align:center;">Transparent. No surprises.</h2>
+    <p class="section-sub reveal reveal-delay-2" style="margin:0 auto; text-align:center;">Every package includes unlimited file formats and one revision round.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <div class="price-card reveal">
+      <div class="price-badge">Starter</div>
+      <h3>Single Ad</h3>
+      <p class="price-desc">One polished video, delivered fast.</p>
+      <div class="price-amount"><sup>€</sup>75</div>
+      <ul class="price-features">
+        <li>1 AI-generated commercial</li>
+        <li>Up to 30 seconds</li>
+        <li>1 revision round</li>
+        <li>All aspect ratios</li>
+        <li>48h turnaround</li>
+      </ul>
+      <a href="#contact" class="btn-price-cta">Get started</a>
+    </div>
+
+    <div class="price-card featured reveal reveal-delay-1">
+      <div class="price-badge">Most Popular</div>
+      <h3>Growth Pack</h3>
+      <p class="price-desc">Everything you need to test and scale.</p>
+      <div class="price-amount"><sup>€</sup>300</div>
+      <ul class="price-features">
+        <li>5 AI-generated videos</li>
+        <li>Mix of formats & lengths</li>
+        <li>2 revision rounds each</li>
+        <li>All aspect ratios</li>
+        <li>Priority turnaround</li>
+      </ul>
+      <a href="#contact" class="btn-price-cta">Get started</a>
+    </div>
+
+    <div class="price-card reveal reveal-delay-2">
+      <div class="price-badge">Agency</div>
+      <h3>Monthly Retainer</h3>
+      <p class="price-desc">Ongoing content for growing brands.</p>
+      <div class="price-amount">Custom</div>
+      <ul class="price-features">
+        <li>8–20 videos/month</li>
+        <li>Dedicated content calendar</li>
+        <li>Unlimited revisions</li>
+        <li>Strategy included</li>
+        <li>Same-day turnaround</li>
+      </ul>
+      <a href="#contact" class="btn-price-cta">Let's talk</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <div class="section-label">Contact</div>
+      <h2>Let's make your product impossible to ignore.</h2>
+      <p>Whether you have one product to launch or a full catalog to promote, reach out and I'll respond within a few hours.</p>
+      <div class="contact-methods">
+        <a href="mailto:your.email@gmail.com" class="contact-method">
+          <div class="contact-method-icon">✉️</div>
+          <div class="contact-method-text">
+            <strong>Email</strong>
+            <span>your.email@gmail.com</span>
+          </div>
+        </a>
+        <a href="https://instagram.com" target="_blank" class="contact-method">
+          <div class="contact-method-icon">📸</div>
+          <div class="contact-method-text">
+            <strong>Instagram</strong>
+            <span>@domantasmedia</span>
+          </div>
+        </a>
+        <div class="contact-method">
+          <div class="contact-method-icon">📍</div>
+          <div class="contact-method-text">
+            <strong>Location</strong>
+            <span>Vilnius, Lithuania · Remote worldwide</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal reveal-delay-1">
+      <div class="form-group">
+        <label>Your name</label>
+        <input type="text" placeholder="e.g. Jonas Jonaitis">
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" placeholder="you@company.com">
+      </div>
+      <div class="form-group">
+        <label>Package interest</label>
+        <select>
+          <option value="" disabled selected>Select a package…</option>
+          <option>Starter — €75</option>
+          <option>Growth Pack — €300</option>
+          <option>Monthly Retainer</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tell me about your product</label>
+        <textarea placeholder="What are you selling? Any brand style, colors, or references you like?"></textarea>
+      </div>
+      <button class="btn-submit" onclick="handleSubmit(event)">Send message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <a href="#hero" class="footer-logo">Domantas<span>.</span></a>
+  <p>© 2026 Domantas Media · AI Product Commercials</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+// Nav scroll effect
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// Reveal on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => {
+  observer.observe(el);
+});
+
+// Hero elements visible immediately
+document.querySelectorAll('#hero .reveal').forEach(el => {
+  setTimeout(() => el.classList.add('visible'), 80);
+});
+
+// Form submit (placeholder — wire up to Formspree or EmailJS)
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target;
+  btn.textContent = '✓ Message sent!';
+  btn.style.background = '#22c55e';
+  setTimeout(() => {
+    btn.textContent = 'Send message →';
+    btn.style.background = '';
+  }, 3000);
+}
+</script>
+</body>
+</html>
