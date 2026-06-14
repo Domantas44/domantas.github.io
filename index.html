@@ -706,6 +706,94 @@ body.lang-switching [data-lt] {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
 }
+
+/* ===== AI PHOTOS ===== */
+#photos { border-top: 1px solid var(--border); }
+.photos-head { margin-bottom: 64px; }
+.photo-examples { display: flex; flex-direction: column; gap: 24px; max-width: 1100px; margin: 0 auto; }
+.photo-example {
+  display: grid;
+  grid-template-columns: 1fr 68px 1fr;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: border-color 0.3s var(--ease-fluid), box-shadow 0.3s var(--ease-fluid);
+}
+.photo-example:hover {
+  border-color: rgba(123,92,240,0.28);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.45);
+}
+.photo-side { display: flex; flex-direction: column; }
+.photo-mock {
+  position: relative; height: 260px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.photo-badge {
+  position: absolute; top: 14px; left: 14px;
+  padding: 4px 12px; border-radius: 100px;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  backdrop-filter: blur(6px);
+}
+.badge-before {
+  background: rgba(0,0,0,0.22); color: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+.badge-after {
+  background: rgba(123,92,240,0.25); color: var(--accent2);
+  border: 1px solid rgba(123,92,240,0.4);
+}
+.mock-icon {
+  font-size: 5.5rem; position: relative; z-index: 1;
+  transition: transform 0.4s var(--ease-spring);
+}
+.photo-example:hover .mock-icon { transform: scale(1.1); }
+.mock-env-label {
+  position: absolute; bottom: 12px; right: 14px;
+  font-size: 0.64rem; color: rgba(255,255,255,0.45);
+  letter-spacing: 0.07em; text-transform: uppercase; z-index: 1;
+}
+.mock-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.42) 0%, transparent 55%);
+  pointer-events: none;
+}
+.photo-info { padding: 18px 22px 22px; border-top: 1px solid var(--border); }
+.photo-info strong {
+  display: block; font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;
+}
+.photo-info span { font-size: 0.8rem; color: var(--muted); }
+.photo-divider {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  background: rgba(123,92,240,0.04);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+.photo-divider-text {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent2);
+  writing-mode: vertical-rl; transform: rotate(180deg);
+}
+.photo-divider-arrow { font-size: 1.4rem; color: var(--accent2); line-height: 1; }
+.mock-jewelry-before { background: linear-gradient(160deg, #f7f6f0 0%, #e8e6dd 100%); }
+.mock-jewelry-after  { background: linear-gradient(160deg, #0c0710 0%, #1e0e35 55%, #2a1450 100%); }
+.mock-food-before    { background: linear-gradient(160deg, #fdf9f0 0%, #f0e8d5 100%); }
+.mock-food-after     { background: linear-gradient(160deg, #150c04 0%, #2e1808 55%, #3f2210 100%); }
+.mock-clothing-before { background: linear-gradient(160deg, #f2f2f2 0%, #e2e2e2 100%); }
+.mock-clothing-after  { background: linear-gradient(160deg, #040810 0%, #0c1a28 55%, #142238 100%); }
+@media (max-width: 700px) {
+  .photo-example { grid-template-columns: 1fr; }
+  .photo-divider {
+    flex-direction: row; gap: 14px; padding: 14px 20px;
+    border-left: none; border-right: none;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .photo-divider-text { writing-mode: horizontal-tb; transform: none; }
+  .photo-mock { height: 200px; }
+}
 </style>
 </head>
 <body>
@@ -717,6 +805,7 @@ body.lang-switching [data-lt] {
   <a href="#hero" class="nav-logo">Domantas<span>.</span></a>
   <ul class="nav-center">
     <li><a href="#services" data-en="Services" data-lt="Paslaugos">Services</a></li>
+    <li><a href="#photos" data-en="Photos" data-lt="Nuotraukos">Photos</a></li>
     <li><a href="#portfolio" data-en="Portfolio" data-lt="Portfolio">Portfolio</a></li>
     <li><a href="#process" data-en="Process" data-lt="Procesas">Process</a></li>
     <li><a href="#pricing" data-en="Pricing" data-lt="Kainos">Pricing</a></li>
@@ -819,6 +908,118 @@ body.lang-switching [data-lt] {
       <p data-en="Multi-format bundles for Shopify and WooCommerce stores — hero video, reels, and stories in one order." data-lt="Kelių formatų paketai Shopify ir WooCommerce parduotuvėms — pagrindinis vaizdo įrašas, reels ir stories viename užsakyme.">Multi-format bundles for Shopify and WooCommerce stores — hero video, reels, and stories in one order.</p>
       <span class="service-tag" data-en="Bundle · Multi-format" data-lt="Paketas · Kelių formatų">Bundle · Multi-format</span>
     </div>
+    <div class="service-card reveal reveal-delay-4">
+      <div class="service-icon">📸</div>
+      <h3 data-en="AI Product Photography" data-lt="AI Produktų Fotografija">AI Product Photography</h3>
+      <p data-en="Send a photo of your product and we place it into any environment — on models, in styled locations, against professional backdrops. No photographer, no model, no studio needed." data-lt="Nusiųskite produkto nuotrauką ir mes ją patalpinsime bet kokioje aplinkoje — ant modelių, stilizuotose vietose, profesionaliame fone. Jokio fotografo, modelio ar studijos.">Send a photo of your product and we place it into any environment — on models, in styled locations, against professional backdrops. No photographer, no model, no studio needed.</p>
+      <span class="service-tag" data-en="Photos · Any setting" data-lt="Nuotraukos · Bet kokia aplinka">Photos · Any setting</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AI PHOTOS ===== -->
+<section id="photos">
+  <div class="photos-head">
+    <div class="section-label reveal" data-en="AI Product Photography" data-lt="AI Produktų Fotografija">AI Product Photography</div>
+    <h2 class="section-title reveal reveal-delay-1" data-en="Studio results — without the studio" data-lt="Studijos rezultatai — be studijos">Studio results — without the studio</h2>
+    <p class="section-sub reveal reveal-delay-2" data-en="Send a photo of your product. We place it into any setting, on any model, in any environment you want. No photographer, no model, no expensive shoot — just professional images ready to sell." data-lt="Nusiųskite produkto nuotrauką. Mes ją patalpinsime bet kokioje aplinkoje, ant bet kokio modelio. Jokio fotografo, modelio ar brangios fotosesijos — tik profesionalios nuotraukos, paruoštos parduoti.">Send a photo of your product. We place it into any setting, on any model, in any environment you want. No photographer, no model, no expensive shoot — just professional images ready to sell.</p>
+  </div>
+
+  <div class="photo-examples">
+
+    <!-- Example 1: Jewelry -->
+    <div class="photo-example reveal">
+      <div class="photo-side">
+        <div class="photo-mock mock-jewelry-before">
+          <span class="photo-badge badge-before" data-en="Before" data-lt="Prieš">Before</span>
+          <div class="mock-icon">💎</div>
+          <span class="mock-env-label" data-en="Raw product photo" data-lt="Pradinė produkto nuotrauka">Raw product photo</span>
+        </div>
+        <div class="photo-info">
+          <strong data-en="Plain white background" data-lt="Paprastas baltas fonas">Plain white background</strong>
+          <span data-en="Just the piece — no context, no emotion" data-lt="Tik papuošalas — jokio konteksto ar emocijų">Just the piece — no context, no emotion</span>
+        </div>
+      </div>
+      <div class="photo-divider">
+        <span class="photo-divider-text" data-en="AI" data-lt="AI">AI</span>
+        <span class="photo-divider-arrow">→</span>
+      </div>
+      <div class="photo-side">
+        <div class="photo-mock mock-jewelry-after">
+          <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
+          <div class="mock-icon" style="filter: drop-shadow(0 0 28px rgba(167,139,250,0.65));">💎</div>
+          <div class="mock-overlay"></div>
+          <span class="mock-env-label" data-en="AI model · luxury editorial" data-lt="AI modelis · prabangus editorialas">AI model · luxury editorial</span>
+        </div>
+        <div class="photo-info">
+          <strong data-en="Jewelry worn by an AI-generated model" data-lt="Papuošalas ant AI sugeneruoto modelio">Jewelry worn by an AI-generated model</strong>
+          <span data-en="Elegant lighting, luxury backdrop — looks like a high-end campaign" data-lt="Elegantiška šviesa, prabangus fonas — atrodo kaip aukštos klasės kampanija">Elegant lighting, luxury backdrop — looks like a high-end campaign</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 2: Food / Bakery -->
+    <div class="photo-example reveal reveal-delay-1">
+      <div class="photo-side">
+        <div class="photo-mock mock-food-before">
+          <span class="photo-badge badge-before" data-en="Before" data-lt="Prieš">Before</span>
+          <div class="mock-icon">🎂</div>
+          <span class="mock-env-label" data-en="Raw product photo" data-lt="Pradinė produkto nuotrauka">Raw product photo</span>
+        </div>
+        <div class="photo-info">
+          <strong data-en="Phone photo on a kitchen counter" data-lt="Telefono nuotrauka ant virtuvės stalo">Phone photo on a kitchen counter</strong>
+          <span data-en="Flat lighting, no mood, no styling" data-lt="Plokščia šviesa, jokios nuotaikos, jokio stilizavimo">Flat lighting, no mood, no styling</span>
+        </div>
+      </div>
+      <div class="photo-divider">
+        <span class="photo-divider-text" data-en="AI" data-lt="AI">AI</span>
+        <span class="photo-divider-arrow">→</span>
+      </div>
+      <div class="photo-side">
+        <div class="photo-mock mock-food-after">
+          <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
+          <div class="mock-icon" style="filter: drop-shadow(0 0 24px rgba(255,150,60,0.55));">🎂</div>
+          <div class="mock-overlay"></div>
+          <span class="mock-env-label" data-en="Styled café · warm mood lighting" data-lt="Stilizuota kavinė · šilta nuotaikos šviesa">Styled café · warm mood lighting</span>
+        </div>
+        <div class="photo-info">
+          <strong data-en="Pastry placed in a styled café setting" data-lt="Konditerijos gaminys stilizuotoje kavinės aplinkoje">Pastry placed in a styled café setting</strong>
+          <span data-en="Warm tones, professional food photography feel — without hiring a photographer" data-lt="Šilti tonai, profesionalios maisto fotografijos jausmas — be fotografo samdymo">Warm tones, professional food photography feel — without hiring a photographer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 3: Clothing / Apparel -->
+    <div class="photo-example reveal reveal-delay-2">
+      <div class="photo-side">
+        <div class="photo-mock mock-clothing-before">
+          <span class="photo-badge badge-before" data-en="Before" data-lt="Prieš">Before</span>
+          <div class="mock-icon">👕</div>
+          <span class="mock-env-label" data-en="Raw product photo" data-lt="Pradinė produkto nuotrauka">Raw product photo</span>
+        </div>
+        <div class="photo-info">
+          <strong data-en="Flat lay on the floor" data-lt="Plokščias išdėstymas ant grindų">Flat lay on the floor</strong>
+          <span data-en="No model, no context, nothing to connect with" data-lt="Jokio modelio, konteksto ar ryšio su pirkėju">No model, no context, nothing to connect with</span>
+        </div>
+      </div>
+      <div class="photo-divider">
+        <span class="photo-divider-text" data-en="AI" data-lt="AI">AI</span>
+        <span class="photo-divider-arrow">→</span>
+      </div>
+      <div class="photo-side">
+        <div class="photo-mock mock-clothing-after">
+          <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
+          <div class="mock-icon" style="filter: drop-shadow(0 0 22px rgba(80,160,255,0.45));">👕</div>
+          <div class="mock-overlay"></div>
+          <span class="mock-env-label" data-en="AI model · urban outdoor setting" data-lt="AI modelis · miesto lauko aplinka">AI model · urban outdoor setting</span>
+        </div>
+        <div class="photo-info">
+          <strong data-en="Clothing on an AI model in a city environment" data-lt="Drabužis ant AI modelio miesto aplinkoje">Clothing on an AI model in a city environment</strong>
+          <span data-en="Natural daylight, lifestyle feel — the kind of photo that actually sells" data-lt="Natūrali dienos šviesa, gyvenimo būdo jausmas — tokia nuotrauka, kuri iš tikrųjų parduoda">Natural daylight, lifestyle feel — the kind of photo that actually sells</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
