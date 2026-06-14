@@ -927,17 +927,18 @@ body.lang-switching [data-lt] {
 
   <div class="photo-examples">
 
-    <!-- Example 1: Jewelry -->
+    <!-- Example 1 -->
     <div class="photo-example reveal">
       <div class="photo-side">
         <div class="photo-mock mock-jewelry-before">
           <span class="photo-badge badge-before" data-en="Before" data-lt="Prieš">Before</span>
-          <div class="mock-icon">💎</div>
+          <img src="before.png" alt="Before" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="this.style.display='none'">
+          <div class="mock-icon" id="before-placeholder">📦</div>
           <span class="mock-env-label" data-en="Raw product photo" data-lt="Pradinė produkto nuotrauka">Raw product photo</span>
         </div>
         <div class="photo-info">
-          <strong data-en="Plain white background" data-lt="Paprastas baltas fonas">Plain white background</strong>
-          <span data-en="Just the piece — no context, no emotion" data-lt="Tik papuošalas — jokio konteksto ar emocijų">Just the piece — no context, no emotion</span>
+          <strong data-en="Your product as-is" data-lt="Jūsų produktas toks, koks yra">Your product as-is</strong>
+          <span data-en="Plain background, no styling" data-lt="Paprastas fonas, jokio stilizavimo">Plain background, no styling</span>
         </div>
       </div>
       <div class="photo-divider">
@@ -947,75 +948,14 @@ body.lang-switching [data-lt] {
       <div class="photo-side">
         <div class="photo-mock mock-jewelry-after">
           <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
-          <div class="mock-icon" style="filter: drop-shadow(0 0 28px rgba(167,139,250,0.65));">💎</div>
+          <img src="after.png" alt="After" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="this.style.display='none'">
+          <div class="mock-icon" id="after-placeholder" style="filter: drop-shadow(0 0 28px rgba(167,139,250,0.65));">✨</div>
           <div class="mock-overlay"></div>
-          <span class="mock-env-label" data-en="AI model · luxury editorial" data-lt="AI modelis · prabangus editorialas">AI model · luxury editorial</span>
+          <span class="mock-env-label" data-en="AI-generated environment" data-lt="AI sugeneruota aplinka">AI-generated environment</span>
         </div>
         <div class="photo-info">
-          <strong data-en="Jewelry worn by an AI-generated model" data-lt="Papuošalas ant AI sugeneruoto modelio">Jewelry worn by an AI-generated model</strong>
-          <span data-en="Elegant lighting, luxury backdrop — looks like a high-end campaign" data-lt="Elegantiška šviesa, prabangus fonas — atrodo kaip aukštos klasės kampanija">Elegant lighting, luxury backdrop — looks like a high-end campaign</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Example 2: Food / Bakery -->
-    <div class="photo-example reveal reveal-delay-1">
-      <div class="photo-side">
-        <div class="photo-mock mock-food-before">
-          <span class="photo-badge badge-before" data-en="Before" data-lt="Prieš">Before</span>
-          <div class="mock-icon">🎂</div>
-          <span class="mock-env-label" data-en="Raw product photo" data-lt="Pradinė produkto nuotrauka">Raw product photo</span>
-        </div>
-        <div class="photo-info">
-          <strong data-en="Phone photo on a kitchen counter" data-lt="Telefono nuotrauka ant virtuvės stalo">Phone photo on a kitchen counter</strong>
-          <span data-en="Flat lighting, no mood, no styling" data-lt="Plokščia šviesa, jokios nuotaikos, jokio stilizavimo">Flat lighting, no mood, no styling</span>
-        </div>
-      </div>
-      <div class="photo-divider">
-        <span class="photo-divider-text" data-en="AI" data-lt="AI">AI</span>
-        <span class="photo-divider-arrow">→</span>
-      </div>
-      <div class="photo-side">
-        <div class="photo-mock mock-food-after">
-          <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
-          <div class="mock-icon" style="filter: drop-shadow(0 0 24px rgba(255,150,60,0.55));">🎂</div>
-          <div class="mock-overlay"></div>
-          <span class="mock-env-label" data-en="Styled café · warm mood lighting" data-lt="Stilizuota kavinė · šilta nuotaikos šviesa">Styled café · warm mood lighting</span>
-        </div>
-        <div class="photo-info">
-          <strong data-en="Pastry placed in a styled café setting" data-lt="Konditerijos gaminys stilizuotoje kavinės aplinkoje">Pastry placed in a styled café setting</strong>
-          <span data-en="Warm tones, professional food photography feel — without hiring a photographer" data-lt="Šilti tonai, profesionalios maisto fotografijos jausmas — be fotografo samdymo">Warm tones, professional food photography feel — without hiring a photographer</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Example 3: Clothing / Apparel -->
-    <div class="photo-example reveal reveal-delay-2">
-      <div class="photo-side">
-        <div class="photo-mock mock-clothing-before">
-          <span class="photo-badge badge-before" data-en="Before" data-lt="Prieš">Before</span>
-          <div class="mock-icon">👕</div>
-          <span class="mock-env-label" data-en="Raw product photo" data-lt="Pradinė produkto nuotrauka">Raw product photo</span>
-        </div>
-        <div class="photo-info">
-          <strong data-en="Flat lay on the floor" data-lt="Plokščias išdėstymas ant grindų">Flat lay on the floor</strong>
-          <span data-en="No model, no context, nothing to connect with" data-lt="Jokio modelio, konteksto ar ryšio su pirkėju">No model, no context, nothing to connect with</span>
-        </div>
-      </div>
-      <div class="photo-divider">
-        <span class="photo-divider-text" data-en="AI" data-lt="AI">AI</span>
-        <span class="photo-divider-arrow">→</span>
-      </div>
-      <div class="photo-side">
-        <div class="photo-mock mock-clothing-after">
-          <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
-          <div class="mock-icon" style="filter: drop-shadow(0 0 22px rgba(80,160,255,0.45));">👕</div>
-          <div class="mock-overlay"></div>
-          <span class="mock-env-label" data-en="AI model · urban outdoor setting" data-lt="AI modelis · miesto lauko aplinka">AI model · urban outdoor setting</span>
-        </div>
-        <div class="photo-info">
-          <strong data-en="Clothing on an AI model in a city environment" data-lt="Drabužis ant AI modelio miesto aplinkoje">Clothing on an AI model in a city environment</strong>
-          <span data-en="Natural daylight, lifestyle feel — the kind of photo that actually sells" data-lt="Natūrali dienos šviesa, gyvenimo būdo jausmas — tokia nuotrauka, kuri iš tikrųjų parduoda">Natural daylight, lifestyle feel — the kind of photo that actually sells</span>
+          <strong data-en="Placed into a professional setting" data-lt="Patalpinta į profesionalią aplinką">Placed into a professional setting</strong>
+          <span data-en="Any backdrop, any model, any mood — without a photo shoot" data-lt="Bet koks fonas, modelis ar nuotaika — be fotosesijos">Any backdrop, any model, any mood — without a photo shoot</span>
         </div>
       </div>
     </div>
