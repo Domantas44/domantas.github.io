@@ -4,12 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Domantas Media — AI Product Commercials</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
 <style>
-/* ===== RESET & BASE ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -21,7 +18,8 @@
   --muted:   rgba(240,238,233,0.45);
   --accent:  #7B5CF0;
   --accent2: #A78BFA;
-  --glow:    rgba(123,92,240,0.25);
+  --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 html { scroll-behavior: smooth; }
@@ -35,115 +33,179 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--black); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+/* ===== CURSOR GLOW ===== */
+.cursor-glow {
+  position: fixed;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(123,92,240,0.08) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: left 0.6s var(--ease-fluid), top 0.6s var(--ease-fluid);
+  z-index: 0;
+}
 
 /* ===== NAV ===== */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 22px 6%;
-  transition: background 0.4s, backdrop-filter 0.4s, border-bottom 0.4s;
+  padding: 20px 6%;
+  transition: background 0.5s var(--ease-fluid),
+              backdrop-filter 0.5s,
+              padding 0.4s var(--ease-fluid),
+              border-bottom 0.5s;
 }
 nav.scrolled {
-  background: rgba(8,8,8,0.85);
-  backdrop-filter: blur(18px);
+  background: rgba(8,8,8,0.88);
+  backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
+  padding: 14px 6%;
 }
 .nav-logo {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700; font-size: 1.15rem;
   letter-spacing: -0.01em;
-  color: var(--white);
-  text-decoration: none;
+  color: var(--white); text-decoration: none;
+  transition: opacity 0.2s;
 }
+.nav-logo:hover { opacity: 0.8; }
 .nav-logo span { color: var(--accent2); }
-.nav-links { display: flex; gap: 36px; list-style: none; }
-.nav-links a {
-  font-size: 0.88rem; font-weight: 500;
+
+.nav-center {
+  display: flex; gap: 32px; list-style: none;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.nav-center a {
+  font-size: 0.85rem; font-weight: 500;
   color: var(--muted); text-decoration: none;
-  letter-spacing: 0.03em; text-transform: uppercase;
-  transition: color 0.2s;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  position: relative; padding-bottom: 2px;
+  transition: color 0.25s var(--ease-fluid);
 }
-.nav-links a:hover { color: var(--white); }
-.nav-cta {
-  padding: 10px 22px;
+.nav-center a::after {
+  content: '';
+  position: absolute; bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent2);
+  transition: width 0.3s var(--ease-fluid);
+}
+.nav-center a:hover { color: var(--white); }
+.nav-center a:hover::after { width: 100%; }
+
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+/* Language toggle */
+.lang-toggle {
+  display: flex; align-items: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 3px;
+  gap: 2px;
+}
+.lang-btn {
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 100px;
+  border: none; cursor: pointer;
+  background: transparent; color: var(--muted);
+  transition: background 0.25s var(--ease-fluid),
+              color 0.25s var(--ease-fluid),
+              transform 0.2s var(--ease-spring);
+  font-family: 'Inter', sans-serif;
+}
+.lang-btn.active {
   background: var(--accent);
-  color: var(--white) !important;
-  border-radius: 8px;
-  font-weight: 600 !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-  transition: background 0.2s, transform 0.15s !important;
+  color: var(--white);
+  transform: scale(1.05);
 }
-.nav-cta:hover { background: var(--accent2) !important; transform: translateY(-1px); }
+.lang-btn:hover:not(.active) { color: var(--white); }
+
+.nav-cta {
+  padding: 9px 20px;
+  background: var(--accent);
+  color: var(--white);
+  border-radius: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.2s var(--ease-spring), box-shadow 0.25s;
+}
+.nav-cta:hover {
+  background: var(--accent2);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(123,92,240,0.4);
+}
 
 /* ===== HERO ===== */
 #hero {
-  position: relative;
-  min-height: 100vh;
+  position: relative; min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
   text-align: center;
-  padding: 120px 6% 80px;
+  padding: 130px 6% 90px;
   overflow: hidden;
 }
 
-/* Animated gradient orbs */
 .orb {
   position: absolute; border-radius: 50%;
-  filter: blur(80px); opacity: 0.35;
-  animation: drift 12s ease-in-out infinite alternate;
+  filter: blur(90px); opacity: 0.3;
   pointer-events: none;
+  will-change: transform;
+  transition: transform 1.2s var(--ease-fluid);
 }
 .orb-1 {
-  width: 600px; height: 600px;
+  width: 650px; height: 650px;
   background: radial-gradient(circle, #7B5CF0, transparent 70%);
-  top: -150px; left: -100px;
-  animation-delay: 0s;
+  top: -180px; left: -120px;
 }
 .orb-2 {
-  width: 450px; height: 450px;
+  width: 480px; height: 480px;
   background: radial-gradient(circle, #a855f7, transparent 70%);
-  bottom: -100px; right: -80px;
-  animation-delay: -5s;
+  bottom: -120px; right: -100px;
 }
 .orb-3 {
-  width: 300px; height: 300px;
+  width: 320px; height: 320px;
   background: radial-gradient(circle, #6366f1, transparent 70%);
-  top: 40%; left: 50%;
+  top: 45%; left: 50%;
   transform: translate(-50%, -50%);
-  animation-delay: -8s;
-  opacity: 0.15;
+  opacity: 0.12;
 }
 
-@keyframes drift {
-  0%   { transform: translate(0,0) scale(1); }
-  100% { transform: translate(40px, 30px) scale(1.08); }
+/* Grid overlay */
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(123,92,240,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,92,240,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+  pointer-events: none;
 }
 
-/* Film strip ticker */
 .filmstrip {
   position: absolute; bottom: 0; left: 0; right: 0;
-  height: 40px; overflow: hidden;
+  height: 38px; overflow: hidden;
   display: flex; align-items: center;
   border-top: 1px solid var(--border);
 }
 .filmstrip-track {
-  display: flex; gap: 0; white-space: nowrap;
-  animation: ticker 18s linear infinite;
+  display: flex; white-space: nowrap;
+  animation: ticker 22s linear infinite;
 }
 .filmstrip-track span {
-  font-size: 0.7rem; font-weight: 500;
-  color: rgba(167,139,250,0.5);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 0 28px;
+  font-size: 0.68rem; font-weight: 500;
+  color: rgba(167,139,250,0.45);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0 30px;
 }
 .filmstrip-track span::before {
-  content: '◆';
-  margin-right: 28px;
-  color: rgba(123,92,240,0.4);
+  content: '◆'; margin-right: 30px;
+  color: rgba(123,92,240,0.35);
 }
 @keyframes ticker {
   0%   { transform: translateX(0); }
@@ -154,132 +216,142 @@ nav.scrolled {
 
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
-  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
+  font-size: 0.73rem; font-weight: 500; letter-spacing: 0.13em;
   text-transform: uppercase; color: var(--accent2);
-  border: 1px solid rgba(167,139,250,0.3);
-  background: rgba(123,92,240,0.08);
-  padding: 7px 16px; border-radius: 100px;
-  margin-bottom: 32px;
+  border: 1px solid rgba(167,139,250,0.28);
+  background: rgba(123,92,240,0.07);
+  padding: 7px 18px; border-radius: 100px;
+  margin-bottom: 34px;
+  backdrop-filter: blur(8px);
 }
 .hero-eyebrow::before {
   content: '';
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--accent2);
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulse-dot 2.5s ease-in-out infinite;
 }
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.7); }
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(167,139,250,0.4); }
+  50%       { opacity: 0.5; transform: scale(0.75); box-shadow: 0 0 0 4px rgba(167,139,250,0); }
 }
 
+/* Word-by-word stagger on h1 */
 h1 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2.8rem, 7vw, 5.5rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  margin-bottom: 24px;
+  font-size: clamp(2.8rem, 7vw, 5.6rem);
+  font-weight: 700; line-height: 1.05;
+  letter-spacing: -0.03em; margin-bottom: 26px;
 }
 h1 em {
   font-style: normal;
-  background: linear-gradient(135deg, #A78BFA 0%, #7B5CF0 50%, #6366f1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: linear-gradient(135deg, #C4B5FD 0%, #A78BFA 40%, #7B5CF0 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
+  display: inline-block;
+  animation: shimmer 4s ease-in-out infinite alternate;
+  background-size: 200% 200%;
+}
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
 .hero-sub {
-  font-size: 1.2rem; color: var(--muted);
-  max-width: 580px; margin: 0 auto 44px;
-  font-weight: 300;
+  font-size: 1.18rem; color: var(--muted);
+  max-width: 560px; margin: 0 auto 46px; font-weight: 300;
+  line-height: 1.75;
 }
 
 .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
 .btn-primary {
-  padding: 15px 32px;
-  background: var(--accent);
-  color: var(--white);
+  padding: 15px 34px;
+  background: var(--accent); color: var(--white);
   border-radius: 10px;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600; font-size: 0.95rem;
   text-decoration: none;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  box-shadow: 0 0 0 0 rgba(123,92,240,0);
+  transition: background 0.25s, transform 0.2s var(--ease-spring), box-shadow 0.25s;
+  position: relative; overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  opacity: 0; transition: opacity 0.25s;
 }
 .btn-primary:hover {
   background: var(--accent2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(123,92,240,0.35);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 36px rgba(123,92,240,0.42);
 }
+.btn-primary:hover::after { opacity: 1; }
 
 .btn-ghost {
-  padding: 15px 32px;
-  background: transparent;
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.18);
+  padding: 15px 34px;
+  background: transparent; color: var(--white);
+  border: 1px solid rgba(255,255,255,0.15);
   border-radius: 10px;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 500; font-size: 0.95rem;
   text-decoration: none;
-  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  transition: border-color 0.25s, background 0.25s, transform 0.2s var(--ease-spring);
+  backdrop-filter: blur(6px);
 }
 .btn-ghost:hover {
   border-color: rgba(167,139,250,0.5);
-  background: rgba(123,92,240,0.08);
-  transform: translateY(-2px);
+  background: rgba(123,92,240,0.09);
+  transform: translateY(-3px);
 }
 
 .hero-stats {
-  display: flex; gap: 48px; justify-content: center;
-  margin-top: 64px; flex-wrap: wrap;
+  display: flex; gap: 52px; justify-content: center;
+  margin-top: 68px; flex-wrap: wrap;
 }
 .stat-item { text-align: center; }
 .stat-num {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 2.2rem; font-weight: 700;
+  font-size: 2.3rem; font-weight: 700;
   letter-spacing: -0.03em; line-height: 1;
-  color: var(--white);
 }
 .stat-num span { color: var(--accent2); }
-.stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 6px; }
+.stat-label {
+  font-size: 0.78rem; color: var(--muted);
+  letter-spacing: 0.06em; margin-top: 7px;
+  text-transform: uppercase;
+}
 
 /* ===== SECTIONS ===== */
-section { padding: 100px 6%; }
+section { padding: 110px 6%; }
 
 .section-label {
-  font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.15em; text-transform: uppercase;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--accent2); margin-bottom: 14px;
 }
 .section-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
-  font-weight: 700; letter-spacing: -0.025em;
+  font-size: clamp(2rem, 4.5vw, 3.3rem);
+  font-weight: 700; letter-spacing: -0.026em;
   line-height: 1.1; margin-bottom: 18px;
 }
 .section-sub {
-  font-size: 1.05rem; color: var(--muted);
-  max-width: 520px; font-weight: 300;
+  font-size: 1.04rem; color: var(--muted);
+  max-width: 520px; font-weight: 300; line-height: 1.75;
 }
 
 /* ===== SERVICES ===== */
 #services { border-top: 1px solid var(--border); }
-
-.services-head { margin-bottom: 60px; }
-
+.services-head { margin-bottom: 64px; }
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2px;
 }
-
 .service-card {
-  background: var(--card);
-  padding: 40px 36px;
-  position: relative; overflow: hidden;
-  transition: background 0.3s;
-  cursor: default;
+  background: var(--card); padding: 44px 38px;
+  position: relative; overflow: hidden; cursor: default;
+  transition: background 0.4s var(--ease-fluid);
 }
 .service-card::before {
   content: '';
@@ -287,311 +359,268 @@ section { padding: 100px 6%; }
   width: 100%; height: 2px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.4s var(--ease-fluid);
 }
-.service-card:hover { background: #1c1c1c; }
+.service-card::after {
+  content: '';
+  position: absolute; bottom: 0; right: 0;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(123,92,240,0.08), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-fluid), transform 0.4s var(--ease-fluid);
+  transform: translate(40px, 40px);
+}
+.service-card:hover { background: #1d1d1d; }
 .service-card:hover::before { opacity: 1; }
+.service-card:hover::after { opacity: 1; transform: translate(0,0); }
 
 .service-icon {
-  font-size: 2rem; margin-bottom: 20px;
-  display: inline-block;
-  transition: transform 0.3s;
+  font-size: 2.1rem; margin-bottom: 22px; display: inline-block;
+  transition: transform 0.4s var(--ease-spring);
 }
-.service-card:hover .service-icon { transform: scale(1.15); }
-
+.service-card:hover .service-icon { transform: scale(1.2) rotate(-5deg); }
 .service-card h3 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.25rem; font-weight: 600;
-  margin-bottom: 10px; letter-spacing: -0.01em;
+  font-size: 1.22rem; font-weight: 600; margin-bottom: 10px;
 }
-.service-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
-
+.service-card p { font-size: 0.94rem; color: var(--muted); line-height: 1.72; }
 .service-tag {
-  display: inline-block; margin-top: 18px;
-  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+  display: inline-block; margin-top: 20px;
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--accent2);
 }
 
 /* ===== PORTFOLIO ===== */
 #portfolio { background: var(--surface); border-top: 1px solid var(--border); }
-
-.portfolio-head { margin-bottom: 60px; }
-
+.portfolio-head { margin-bottom: 64px; }
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 20px;
+  gap: 22px;
 }
-
 .video-card {
-  background: var(--card);
-  border-radius: 16px; overflow: hidden;
+  background: var(--card); border-radius: 18px; overflow: hidden;
   border: 1px solid var(--border);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.4s var(--ease-fluid), box-shadow 0.4s var(--ease-fluid), border-color 0.3s;
   position: relative;
 }
 .video-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(123,92,240,0.2);
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.65), 0 0 0 1px rgba(123,92,240,0.25);
+  border-color: rgba(123,92,240,0.18);
 }
-
 .video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  height: 0; overflow: hidden;
+  position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
 }
 .video-wrapper iframe {
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
-  border: none;
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
 }
-
-/* Placeholder state */
 .video-placeholder {
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
 }
-.video-placeholder .play-icon {
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  background: rgba(123,92,240,0.25);
+.play-icon {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: rgba(123,92,240,0.22);
   border: 2px solid rgba(123,92,240,0.4);
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  transition: transform 0.3s var(--ease-spring), background 0.3s;
+}
+.video-card:hover .play-icon {
+  transform: scale(1.15);
+  background: rgba(123,92,240,0.35);
 }
 .video-placeholder span {
-  font-size: 0.78rem; color: var(--muted);
-  letter-spacing: 0.08em; text-transform: uppercase;
+  font-size: 0.75rem; color: var(--muted);
+  letter-spacing: 0.1em; text-transform: uppercase;
 }
-
 .video-info { padding: 22px 24px 26px; }
 .video-info h3 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.1rem; font-weight: 600;
-  margin-bottom: 6px; letter-spacing: -0.01em;
+  font-size: 1.1rem; font-weight: 600; margin-bottom: 6px;
 }
-.video-info p { font-size: 0.88rem; color: var(--muted); }
+.video-info p { font-size: 0.87rem; color: var(--muted); }
 .video-badge {
   display: inline-block; margin-top: 12px;
   padding: 4px 12px; border-radius: 100px;
-  font-size: 0.7rem; font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  background: rgba(123,92,240,0.15);
-  color: var(--accent2);
-  border: 1px solid rgba(123,92,240,0.25);
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(123,92,240,0.12); color: var(--accent2);
+  border: 1px solid rgba(123,92,240,0.22);
 }
 
 /* ===== PROCESS ===== */
 #process { border-top: 1px solid var(--border); }
-.process-head { margin-bottom: 60px; }
-
+.process-head { margin-bottom: 64px; }
 .process-steps {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0;
-  position: relative;
+  gap: 0; position: relative;
 }
-
 .process-step {
-  padding: 40px 32px;
+  padding: 44px 34px;
   border-right: 1px solid var(--border);
   position: relative;
-  transition: background 0.3s;
+  transition: background 0.4s var(--ease-fluid);
+  overflow: hidden;
+}
+.process-step::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(123,92,240,0.05), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-fluid);
 }
 .process-step:last-child { border-right: none; }
-.process-step:hover { background: rgba(123,92,240,0.04); }
-
+.process-step:hover::after { opacity: 1; }
 .step-number {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 3.5rem; font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  background: linear-gradient(135deg, rgba(123,92,240,0.5), rgba(123,92,240,0.1));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 3.8rem; font-weight: 700;
+  letter-spacing: -0.04em; line-height: 1;
+  background: linear-gradient(135deg, rgba(123,92,240,0.55), rgba(123,92,240,0.1));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  transition: transform 0.4s var(--ease-spring);
 }
+.process-step:hover .step-number { transform: translateY(-4px); }
 .process-step h3 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.1rem; font-weight: 600;
-  margin-bottom: 10px;
+  font-size: 1.1rem; font-weight: 600; margin-bottom: 10px;
+  position: relative; z-index: 1;
 }
-.process-step p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+.process-step p { font-size: 0.9rem; color: var(--muted); line-height: 1.72; position: relative; z-index: 1; }
 
 /* ===== PRICING ===== */
 #pricing { background: var(--surface); border-top: 1px solid var(--border); }
-.pricing-head { margin-bottom: 60px; }
-
+.pricing-head { margin-bottom: 64px; }
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  max-width: 960px; margin: 0 auto;
+  gap: 22px; max-width: 980px; margin: 0 auto;
 }
-
 .price-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 40px 36px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 42px 38px;
   position: relative; overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  transition: transform 0.4s var(--ease-fluid), box-shadow 0.4s var(--ease-fluid), border-color 0.3s;
 }
 .price-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 50px rgba(0,0,0,0.5);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 55px rgba(0,0,0,0.55);
 }
 .price-card.featured {
-  border-color: rgba(123,92,240,0.5);
-  background: linear-gradient(160deg, #1d1830 0%, #161616 60%);
+  border-color: rgba(123,92,240,0.45);
+  background: linear-gradient(160deg, #1e1932 0%, #161616 65%);
 }
 .price-card.featured::before {
   content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px;
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
 }
 .price-card.featured:hover {
-  box-shadow: 0 16px 50px rgba(123,92,240,0.2);
+  box-shadow: 0 18px 55px rgba(123,92,240,0.22);
+  border-color: rgba(123,92,240,0.6);
 }
-
 .price-badge {
-  display: inline-block; margin-bottom: 20px;
-  padding: 4px 14px; border-radius: 100px;
-  font-size: 0.7rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  background: rgba(123,92,240,0.2);
-  color: var(--accent2);
-  border: 1px solid rgba(123,92,240,0.3);
+  display: inline-block; margin-bottom: 22px;
+  padding: 5px 14px; border-radius: 100px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  background: rgba(123,92,240,0.18); color: var(--accent2);
+  border: 1px solid rgba(123,92,240,0.28);
 }
-
 .price-card h3 {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.3rem; font-weight: 600; margin-bottom: 6px;
 }
-.price-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 28px; }
-
+.price-desc { font-size: 0.87rem; color: var(--muted); margin-bottom: 28px; }
 .price-amount {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 3.4rem; font-weight: 700;
-  letter-spacing: -0.04em; line-height: 1;
-  margin-bottom: 28px;
+  letter-spacing: -0.04em; line-height: 1; margin-bottom: 28px;
 }
 .price-amount sup { font-size: 1.5rem; vertical-align: top; margin-top: 8px; }
-.price-amount .price-note { font-size: 0.85rem; font-weight: 400; color: var(--muted); }
-
 .price-features { list-style: none; margin-bottom: 36px; }
 .price-features li {
   display: flex; align-items: flex-start; gap: 12px;
-  font-size: 0.92rem; color: var(--muted);
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
+  font-size: 0.91rem; color: var(--muted);
+  padding: 9px 0; border-bottom: 1px solid var(--border);
 }
 .price-features li:last-child { border-bottom: none; }
-.price-features li::before {
-  content: '✓';
-  color: var(--accent2); font-weight: 700; flex-shrink: 0;
-  margin-top: 1px;
-}
-
+.price-features li::before { content: '✓'; color: var(--accent2); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 .btn-price-cta {
-  display: block; width: 100%;
-  padding: 14px;
-  text-align: center;
-  border-radius: 10px;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600; font-size: 0.95rem;
-  text-decoration: none;
-  transition: all 0.2s;
-  border: 1px solid var(--border);
-  color: var(--white);
-  background: transparent;
+  display: block; width: 100%; padding: 14px; text-align: center;
+  border-radius: 10px; font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 0.94rem; text-decoration: none;
+  transition: all 0.25s var(--ease-fluid);
+  border: 1px solid var(--border); color: var(--white); background: transparent;
 }
 .btn-price-cta:hover {
-  border-color: rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.28); background: rgba(255,255,255,0.05);
+  transform: translateY(-1px);
 }
 .price-card.featured .btn-price-cta {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--accent); border-color: var(--accent);
 }
 .price-card.featured .btn-price-cta:hover {
-  background: var(--accent2);
-  border-color: var(--accent2);
-  box-shadow: 0 6px 24px rgba(123,92,240,0.4);
+  background: var(--accent2); border-color: var(--accent2);
+  box-shadow: 0 7px 26px rgba(123,92,240,0.42);
+  transform: translateY(-2px);
 }
 
 /* ===== CONTACT ===== */
 #contact { border-top: 1px solid var(--border); }
-
 .contact-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: start;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
 }
-@media(max-width: 700px) {
-  .contact-inner { grid-template-columns: 1fr; gap: 48px; }
-}
-
 .contact-info h2 {
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 700; letter-spacing: -0.025em;
   line-height: 1.1; margin-bottom: 18px;
 }
-.contact-info p { font-size: 1rem; color: var(--muted); margin-bottom: 36px; }
-
-.contact-methods { display: flex; flex-direction: column; gap: 16px; }
+.contact-info p { font-size: 1rem; color: var(--muted); margin-bottom: 36px; line-height: 1.75; }
+.contact-methods { display: flex; flex-direction: column; gap: 14px; }
 .contact-method {
   display: flex; align-items: center; gap: 16px;
   padding: 16px 20px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  text-decoration: none;
-  color: var(--white);
-  transition: border-color 0.2s, background 0.2s;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; text-decoration: none; color: var(--white);
+  transition: border-color 0.3s var(--ease-fluid),
+              background 0.3s var(--ease-fluid),
+              transform 0.3s var(--ease-spring);
 }
 .contact-method:hover {
-  border-color: rgba(123,92,240,0.4);
-  background: rgba(123,92,240,0.06);
+  border-color: rgba(123,92,240,0.4); background: rgba(123,92,240,0.06);
+  transform: translateX(5px);
 }
 .contact-method-icon {
-  width: 40px; height: 40px; border-radius: 8px;
+  width: 42px; height: 42px; border-radius: 9px;
   background: rgba(123,92,240,0.12);
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem; flex-shrink: 0;
+  font-size: 1.15rem; flex-shrink: 0;
+  transition: transform 0.3s var(--ease-spring);
 }
+.contact-method:hover .contact-method-icon { transform: scale(1.12); }
 .contact-method-text strong { display: block; font-weight: 600; font-size: 0.9rem; }
-.contact-method-text span { font-size: 0.83rem; color: var(--muted); }
-
+.contact-method-text span { font-size: 0.82rem; color: var(--muted); }
 .contact-form { display: flex; flex-direction: column; gap: 16px; }
-
 .form-group { display: flex; flex-direction: column; gap: 8px; }
 .form-group label {
-  font-size: 0.82rem; font-weight: 500;
-  letter-spacing: 0.04em; color: var(--muted);
-  text-transform: uppercase;
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em;
+  color: var(--muted); text-transform: uppercase;
 }
 .form-group input,
 .form-group textarea,
 .form-group select {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 13px 16px;
-  color: var(--white);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  -webkit-appearance: none;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 13px 16px;
+  color: var(--white); font-family: 'Inter', sans-serif;
+  font-size: 0.94rem; outline: none; -webkit-appearance: none;
+  transition: border-color 0.3s var(--ease-fluid), box-shadow 0.3s var(--ease-fluid);
 }
 .form-group input:focus,
 .form-group textarea:focus,
@@ -600,140 +629,160 @@ section { padding: 100px 6%; }
   box-shadow: 0 0 0 3px rgba(123,92,240,0.1);
 }
 .form-group textarea { resize: vertical; min-height: 120px; }
-.form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23A78BFA'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 18px; padding-right: 42px; }
+.form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23A78BFA'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; background-size: 18px; padding-right: 42px;
+}
 .form-group select option { background: var(--card); }
-
 .btn-submit {
-  padding: 15px;
-  background: var(--accent);
-  color: var(--white);
-  border: none;
-  border-radius: 10px;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600; font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  margin-top: 4px;
+  padding: 15px; background: var(--accent); color: var(--white);
+  border: none; border-radius: 10px;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem;
+  cursor: pointer; margin-top: 4px;
+  transition: background 0.25s, transform 0.2s var(--ease-spring), box-shadow 0.25s;
 }
 .btn-submit:hover {
   background: var(--accent2);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(123,92,240,0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(123,92,240,0.38);
 }
 
 /* ===== FOOTER ===== */
 footer {
-  padding: 40px 6%;
-  border-top: 1px solid var(--border);
+  padding: 40px 6%; border-top: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 16px;
 }
 .footer-logo {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700; font-size: 1rem;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem;
   color: var(--white); text-decoration: none;
 }
 .footer-logo span { color: var(--accent2); }
-footer p { font-size: 0.83rem; color: var(--muted); }
+footer p { font-size: 0.82rem; color: var(--muted); }
 .footer-links { display: flex; gap: 24px; }
 .footer-links a {
-  font-size: 0.83rem; color: var(--muted);
-  text-decoration: none; transition: color 0.2s;
+  font-size: 0.82rem; color: var(--muted); text-decoration: none;
+  transition: color 0.2s;
 }
 .footer-links a:hover { color: var(--white); }
 
-/* ===== REVEAL ANIMATIONS ===== */
+/* ===== REVEAL ===== */
 .reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1),
-              transform 0.65s cubic-bezier(0.16,1,0.3,1);
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.8s var(--ease-fluid), transform 0.8s var(--ease-fluid);
 }
 .reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.09s; }
+.reveal-delay-2 { transition-delay: 0.18s; }
+.reveal-delay-3 { transition-delay: 0.27s; }
+.reveal-delay-4 { transition-delay: 0.36s; }
 
-.reveal-delay-1 { transition-delay: 0.08s; }
-.reveal-delay-2 { transition-delay: 0.16s; }
-.reveal-delay-3 { transition-delay: 0.24s; }
-.reveal-delay-4 { transition-delay: 0.32s; }
+/* ===== LANGUAGE TRANSITION ===== */
+[data-en], [data-lt] { transition: opacity 0.25s, transform 0.25s var(--ease-fluid); }
+body.lang-switching [data-en],
+body.lang-switching [data-lt] {
+  opacity: 0; transform: translateY(6px);
+}
 
 /* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .nav-center { display: none; }
+  .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+}
 @media (max-width: 768px) {
-  .nav-links { display: none; }
-  .hero-stats { gap: 28px; }
+  .hero-stats { gap: 30px; }
   .process-steps { grid-template-columns: 1fr 1fr; }
   .process-step { border-right: none; border-bottom: 1px solid var(--border); }
   .process-step:last-child { border-bottom: none; }
   .filmstrip { display: none; }
   footer { flex-direction: column; text-align: center; }
+  .nav-cta { display: none; }
 }
-
 @media (max-width: 480px) {
   .process-steps { grid-template-columns: 1fr; }
-  section { padding: 70px 5%; }
+  section { padding: 72px 5%; }
+  h1 { letter-spacing: -0.02em; }
 }
-
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
 }
 </style>
 </head>
 <body>
 
+<div class="cursor-glow" id="cursorGlow"></div>
+
 <!-- ===== NAV ===== -->
 <nav id="main-nav">
   <a href="#hero" class="nav-logo">Domantas<span>.</span></a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
-    <li><a href="#process">Process</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+  <ul class="nav-center">
+    <li><a href="#services" data-en="Services" data-lt="Paslaugos">Services</a></li>
+    <li><a href="#portfolio" data-en="Portfolio" data-lt="Portfolio">Portfolio</a></li>
+    <li><a href="#process" data-en="Process" data-lt="Procesas">Process</a></li>
+    <li><a href="#pricing" data-en="Pricing" data-lt="Kainos">Pricing</a></li>
   </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btnLT" onclick="setLang('lt')">LT</button>
+    </div>
+    <a href="#contact" class="nav-cta" data-en="Get in touch" data-lt="Susisiekti">Get in touch</a>
+  </div>
 </nav>
 
 <!-- ===== HERO ===== -->
 <section id="hero">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
+  <div class="orb orb-1" id="orb1"></div>
+  <div class="orb orb-2" id="orb2"></div>
   <div class="orb orb-3"></div>
 
   <div class="hero-inner">
-    <div class="hero-eyebrow reveal">AI-Powered Video Production · Vilnius, Lithuania</div>
+    <div class="hero-eyebrow reveal" data-en="AI-Powered Video Production · Vilnius, Lithuania" data-lt="AI Vaizdo Gamyba · Vilnius, Lietuva">AI-Powered Video Production · Vilnius, Lithuania</div>
     <h1 class="reveal reveal-delay-1">
-      Commercials that<br><em>sell products.</em>
+      <span data-en="Commercials that" data-lt="Reklama, kuri">Commercials that</span><br>
+      <em data-en="sell products." data-lt="parduoda.">sell products.</em>
     </h1>
-    <p class="hero-sub reveal reveal-delay-2">
+    <p class="hero-sub reveal reveal-delay-2" data-en="Premium AI-generated advertising videos for e-commerce brands, product launches, and social media campaigns. Fast. Cinematic. Effective." data-lt="Aukščiausios kokybės AI sukurti reklaminiai vaizdo įrašai el. prekybos prekėms, produktų pristatymams ir socialinės medijos kampanijoms. Greita. Kinematografiška. Efektyvu.">
       Premium AI-generated advertising videos for e-commerce brands, product launches, and social media campaigns. Fast. Cinematic. Effective.
     </p>
     <div class="hero-btns reveal reveal-delay-3">
-      <a href="#portfolio" class="btn-primary">View work ↓</a>
-      <a href="#contact" class="btn-ghost">Start a project</a>
+      <a href="#portfolio" class="btn-primary" data-en="View work ↓" data-lt="Peržiūrėti darbus ↓">View work ↓</a>
+      <a href="#contact" class="btn-ghost" data-en="Start a project" data-lt="Pradėti projektą">Start a project</a>
     </div>
     <div class="hero-stats reveal reveal-delay-4">
       <div class="stat-item">
         <div class="stat-num">48<span>h</span></div>
-        <div class="stat-label">Avg. turnaround</div>
+        <div class="stat-label" data-en="Avg. turnaround" data-lt="Vid. laikas">Avg. turnaround</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">4K</div>
-        <div class="stat-label">Output quality</div>
+        <div class="stat-label" data-en="Output quality" data-lt="Vaizdo kokybė">Output quality</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">€75</div>
-        <div class="stat-label">Starting from</div>
+        <div class="stat-label" data-en="Starting from" data-lt="Nuo">Starting from</div>
       </div>
     </div>
   </div>
 
   <div class="filmstrip">
-    <div class="filmstrip-track">
-      <span>Instagram Reels</span><span>TikTok Ads</span><span>Product Showcases</span>
-      <span>E-Commerce Brands</span><span>Social Media</span><span>YouTube Pre-Roll</span>
-      <span>Luxury Branding</span><span>Product Launches</span>
-      <!-- duplicate for seamless loop -->
-      <span>Instagram Reels</span><span>TikTok Ads</span><span>Product Showcases</span>
-      <span>E-Commerce Brands</span><span>Social Media</span><span>YouTube Pre-Roll</span>
-      <span>Luxury Branding</span><span>Product Launches</span>
+    <div class="filmstrip-track" id="filmstripTrack">
+      <span data-en="Instagram Reels" data-lt="Instagram Reels">Instagram Reels</span>
+      <span data-en="TikTok Ads" data-lt="TikTok Reklama">TikTok Ads</span>
+      <span data-en="Product Showcases" data-lt="Produkto Pristatymai">Product Showcases</span>
+      <span data-en="E-Commerce Brands" data-lt="El. Prekyba">E-Commerce Brands</span>
+      <span data-en="Social Media" data-lt="Socialinė Media">Social Media</span>
+      <span data-en="YouTube Pre-Roll" data-lt="YouTube Reklama">YouTube Pre-Roll</span>
+      <span data-en="Luxury Branding" data-lt="Prabangus Brendingas">Luxury Branding</span>
+      <span data-en="Product Launches" data-lt="Produkto Paleidimas">Product Launches</span>
+      <span data-en="Instagram Reels" data-lt="Instagram Reels">Instagram Reels</span>
+      <span data-en="TikTok Ads" data-lt="TikTok Reklama">TikTok Ads</span>
+      <span data-en="Product Showcases" data-lt="Produkto Pristatymai">Product Showcases</span>
+      <span data-en="E-Commerce Brands" data-lt="El. Prekyba">E-Commerce Brands</span>
+      <span data-en="Social Media" data-lt="Socialinė Media">Social Media</span>
+      <span data-en="YouTube Pre-Roll" data-lt="YouTube Reklama">YouTube Pre-Roll</span>
+      <span data-en="Luxury Branding" data-lt="Prabangus Brendingas">Luxury Branding</span>
+      <span data-en="Product Launches" data-lt="Produkto Paleidimas">Product Launches</span>
     </div>
   </div>
 </section>
@@ -741,34 +790,34 @@ footer p { font-size: 0.83rem; color: var(--muted); }
 <!-- ===== SERVICES ===== -->
 <section id="services">
   <div class="services-head">
-    <div class="section-label reveal">What I do</div>
-    <h2 class="section-title reveal reveal-delay-1">Video that converts</h2>
-    <p class="section-sub reveal reveal-delay-2">Every format, every platform — crafted to stop the scroll and drive sales.</p>
+    <div class="section-label reveal" data-en="What I do" data-lt="Ką darau">What I do</div>
+    <h2 class="section-title reveal reveal-delay-1" data-en="Video that converts" data-lt="Vaizdo įrašai, kurie parduoda">Video that converts</h2>
+    <p class="section-sub reveal reveal-delay-2" data-en="Every format, every platform — crafted to stop the scroll and drive sales." data-lt="Kiekvienas formatas, kiekviena platforma — sukurta sustabdyti slinkimą ir skatinti pardavimus.">Every format, every platform — crafted to stop the scroll and drive sales.</p>
   </div>
   <div class="services-grid">
     <div class="service-card reveal">
       <div class="service-icon">🎬</div>
-      <h3>Product Commercials</h3>
-      <p>Cinematic showcases that make your product irresistible. Perfect for landing pages, paid ads, and brand campaigns.</p>
-      <span class="service-tag">High-end · 15–60s</span>
+      <h3 data-en="Product Commercials" data-lt="Produkto Reklamos">Product Commercials</h3>
+      <p data-en="Cinematic showcases that make your product irresistible. Perfect for landing pages, paid ads, and brand campaigns." data-lt="Kinematografiški pristatymai, dėl kurių jūsų produktas tampa neatsispiriamas. Puikiai tinka nukreipimo puslapiams, mokamoms reklamoms ir prekės ženklo kampanijoms.">Cinematic showcases that make your product irresistible. Perfect for landing pages, paid ads, and brand campaigns.</p>
+      <span class="service-tag" data-en="High-end · 15–60s" data-lt="Aukšta kokybė · 15–60s">High-end · 15–60s</span>
     </div>
     <div class="service-card reveal reveal-delay-1">
       <div class="service-icon">📱</div>
-      <h3>Instagram Reels</h3>
-      <p>Vertical-format short videos optimized for engagement and reach. Designed for the algorithm and the audience.</p>
-      <span class="service-tag">Social · 15–30s</span>
+      <h3 data-en="Instagram Reels" data-lt="Instagram Reels">Instagram Reels</h3>
+      <p data-en="Vertical-format short videos optimized for engagement and reach. Designed for the algorithm and the audience." data-lt="Vertikalaus formato trumpi vaizdo įrašai, optimizuoti įsitraukimui ir pasiekiamumui. Sukurti algoritmui ir auditorijai.">Vertical-format short videos optimized for engagement and reach. Designed for the algorithm and the audience.</p>
+      <span class="service-tag" data-en="Social · 15–30s" data-lt="Socialinė · 15–30s">Social · 15–30s</span>
     </div>
     <div class="service-card reveal reveal-delay-2">
       <div class="service-icon">⚡</div>
-      <h3>TikTok Ads</h3>
-      <p>Trend-aware, high-energy content that earns attention in the first two seconds. Built to go viral.</p>
-      <span class="service-tag">TikTok · 15–60s</span>
+      <h3 data-en="TikTok Ads" data-lt="TikTok Reklamos">TikTok Ads</h3>
+      <p data-en="Trend-aware, high-energy content that earns attention in the first two seconds. Built to go viral." data-lt="Tendencijomis pagrįstas, energingas turinys, kuris atkreipia dėmesį per pirmąsias dvi sekundes. Sukurtas tapti virusiniu.">Trend-aware, high-energy content that earns attention in the first two seconds. Built to go viral.</p>
+      <span class="service-tag" data-en="TikTok · 15–60s" data-lt="TikTok · 15–60s">TikTok · 15–60s</span>
     </div>
     <div class="service-card reveal reveal-delay-3">
       <div class="service-icon">🛍️</div>
-      <h3>E-Commerce Packs</h3>
-      <p>Multi-format bundles for Shopify and WooCommerce stores — hero video, reels, and stories in one order.</p>
-      <span class="service-tag">Bundle · Multi-format</span>
+      <h3 data-en="E-Commerce Packs" data-lt="El. Prekybos Paketai">E-Commerce Packs</h3>
+      <p data-en="Multi-format bundles for Shopify and WooCommerce stores — hero video, reels, and stories in one order." data-lt="Kelių formatų paketai Shopify ir WooCommerce parduotuvėms — pagrindinis vaizdo įrašas, reels ir stories viename užsakyme.">Multi-format bundles for Shopify and WooCommerce stores — hero video, reels, and stories in one order.</p>
+      <span class="service-tag" data-en="Bundle · Multi-format" data-lt="Paketas · Kelių formatų">Bundle · Multi-format</span>
     </div>
   </div>
 </section>
@@ -776,60 +825,54 @@ footer p { font-size: 0.83rem; color: var(--muted); }
 <!-- ===== PORTFOLIO ===== -->
 <section id="portfolio">
   <div class="portfolio-head">
-    <div class="section-label reveal">Portfolio</div>
-    <h2 class="section-title reveal reveal-delay-1">Recent work</h2>
-    <p class="section-sub reveal reveal-delay-2">Real AI-generated commercials — replace these with your Higgsfield videos.</p>
+    <div class="section-label reveal" data-en="Portfolio" data-lt="Portfolio">Portfolio</div>
+    <h2 class="section-title reveal reveal-delay-1" data-en="Recent work" data-lt="Naujausi darbai">Recent work</h2>
+    <p class="section-sub reveal reveal-delay-2" data-en="Real AI-generated commercials — replace these with your Higgsfield videos." data-lt="Realios AI sukurtos reklamos — pakeiskite jas savo Higgsfield vaizdo įrašais.">Real AI-generated commercials — replace these with your Higgsfield videos.</p>
   </div>
   <div class="portfolio-grid">
     <div class="video-card reveal">
       <div class="video-wrapper">
-        <!-- ============================================================
-             VIDEO 1 — when you have a real video:
-             1. Upload to YouTube as Unlisted
-             2. Copy the video ID from the URL (the part after ?v=)
-             3. Delete the <div class="video-placeholder">...</div> block below
-             4. Uncomment the <iframe> line and paste your video ID
-             ============================================================ -->
+        <!-- VIDEO 1: delete the placeholder div below and uncomment the iframe with your YouTube video ID -->
         <div class="video-placeholder">
           <div class="play-icon">▶</div>
-          <span>Your video here</span>
+          <span data-en="Your video here" data-lt="Jūsų vaizdo įrašas čia">Your video here</span>
         </div>
         <!-- <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HERE" allowfullscreen></iframe> -->
       </div>
       <div class="video-info">
-        <h3>Luxury Jewelry Commercial</h3>
-        <p>Premium brand showcase · Instagram & web</p>
-        <span class="video-badge">Product Showcase</span>
+        <h3 data-en="Luxury Jewelry Commercial" data-lt="Prabangių Papuošalų Reklama">Luxury Jewelry Commercial</h3>
+        <p data-en="Premium brand showcase · Instagram & web" data-lt="Aukščiausios klasės prekės pristatymas · Instagram ir internetas">Premium brand showcase · Instagram & web</p>
+        <span class="video-badge" data-en="Product Showcase" data-lt="Produkto Pristatymas">Product Showcase</span>
       </div>
     </div>
     <div class="video-card reveal reveal-delay-1">
       <div class="video-wrapper">
-        <!-- VIDEO 2 — same steps as Video 1 above -->
+        <!-- VIDEO 2 -->
         <div class="video-placeholder">
           <div class="play-icon">▶</div>
-          <span>Your video here</span>
+          <span data-en="Your video here" data-lt="Jūsų vaizdo įrašas čia">Your video here</span>
         </div>
         <!-- <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HERE" allowfullscreen></iframe> -->
       </div>
       <div class="video-info">
-        <h3>Skincare Brand Reel</h3>
-        <p>30-second Instagram ad · 3.2× ROAS</p>
-        <span class="video-badge">Instagram Reel</span>
+        <h3 data-en="Skincare Brand Reel" data-lt="Odos Priežiūros Reel">Skincare Brand Reel</h3>
+        <p data-en="30-second Instagram ad · 3.2× ROAS" data-lt="30 sekundžių Instagram reklama · 3.2× ROAS">30-second Instagram ad · 3.2× ROAS</p>
+        <span class="video-badge" data-en="Instagram Reel" data-lt="Instagram Reel">Instagram Reel</span>
       </div>
     </div>
     <div class="video-card reveal reveal-delay-2">
       <div class="video-wrapper">
-        <!-- VIDEO 3 — same steps as Video 1 above -->
+        <!-- VIDEO 3 -->
         <div class="video-placeholder">
           <div class="play-icon">▶</div>
-          <span>Your video here</span>
+          <span data-en="Your video here" data-lt="Jūsų vaizdo įrašas čia">Your video here</span>
         </div>
         <!-- <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HERE" allowfullscreen></iframe> -->
       </div>
       <div class="video-info">
-        <h3>Watch Product Launch</h3>
-        <p>Cinematic 45-second commercial</p>
-        <span class="video-badge">TikTok + YouTube</span>
+        <h3 data-en="Watch Product Launch" data-lt="Laikrodžio Pristatymas">Watch Product Launch</h3>
+        <p data-en="Cinematic 45-second commercial" data-lt="Kinematografiškas 45 sekundžių reklaminis klipas">Cinematic 45-second commercial</p>
+        <span class="video-badge" data-en="TikTok + YouTube" data-lt="TikTok + YouTube">TikTok + YouTube</span>
       </div>
     </div>
   </div>
@@ -838,30 +881,30 @@ footer p { font-size: 0.83rem; color: var(--muted); }
 <!-- ===== PROCESS ===== -->
 <section id="process">
   <div class="process-head">
-    <div class="section-label reveal">How it works</div>
-    <h2 class="section-title reveal reveal-delay-1">From brief to final video</h2>
-    <p class="section-sub reveal reveal-delay-2">Simple. Fast. No back-and-forth that wastes your time.</p>
+    <div class="section-label reveal" data-en="How it works" data-lt="Kaip tai veikia">How it works</div>
+    <h2 class="section-title reveal reveal-delay-1" data-en="From brief to final video" data-lt="Nuo užduoties iki galutinio vaizdo">From brief to final video</h2>
+    <p class="section-sub reveal reveal-delay-2" data-en="Simple. Fast. No back-and-forth that wastes your time." data-lt="Paprasta. Greita. Jokio nereikalingo bendravimo, kuris gaišina jūsų laiką.">Simple. Fast. No back-and-forth that wastes your time.</p>
   </div>
   <div class="process-steps">
     <div class="process-step reveal">
       <div class="step-number">01</div>
-      <h3>Share your brief</h3>
-      <p>Tell me about your product, brand style, and where the video will run. A quick email is enough to get started.</p>
+      <h3 data-en="Share your brief" data-lt="Pasidalinkite užduotimi">Share your brief</h3>
+      <p data-en="Tell me about your product, brand style, and where the video will run. A quick email is enough to get started." data-lt="Papasakokite apie savo produktą, prekės ženklo stilių ir kur bus rodomas vaizdo įrašas. Pakaks trumpo el. laiško.">Tell me about your product, brand style, and where the video will run. A quick email is enough to get started.</p>
     </div>
     <div class="process-step reveal reveal-delay-1">
       <div class="step-number">02</div>
-      <h3>I produce the video</h3>
-      <p>Using AI tools and cinematic techniques, I create a draft within 48 hours. No stock footage, fully custom.</p>
+      <h3 data-en="I produce the video" data-lt="Kuriu vaizdo įrašą">I produce the video</h3>
+      <p data-en="Using AI tools and cinematic techniques, I create a draft within 48 hours. No stock footage, fully custom." data-lt="Naudodamas AI įrankius ir kinematografines technikas, per 48 valandas sukuriu juodraštį. Jokių standartinių kadrų, viskas individualiai.">Using AI tools and cinematic techniques, I create a draft within 48 hours. No stock footage, fully custom.</p>
     </div>
     <div class="process-step reveal reveal-delay-2">
       <div class="step-number">03</div>
-      <h3>Review & refine</h3>
-      <p>One round of revisions included. You give feedback, I polish. Most clients approve within 24 hours.</p>
+      <h3 data-en="Review & refine" data-lt="Peržiūra ir tobulinimas">Review & refine</h3>
+      <p data-en="One round of revisions included. You give feedback, I polish. Most clients approve within 24 hours." data-lt="Įskaičiuotas vienas taisymų raundas. Jūs pateikiate atsiliepimus, aš tobulinu. Dauguma klientų patvirtina per 24 valandas.">One round of revisions included. You give feedback, I polish. Most clients approve within 24 hours.</p>
     </div>
     <div class="process-step reveal reveal-delay-3">
       <div class="step-number">04</div>
-      <h3>Receive your files</h3>
-      <p>Final delivery in all formats you need — 9:16 for Reels, 1:1 for feeds, 16:9 for YouTube. Ready to upload.</p>
+      <h3 data-en="Receive your files" data-lt="Gaunate failus">Receive your files</h3>
+      <p data-en="Final delivery in all formats you need — 9:16 for Reels, 1:1 for feeds, 16:9 for YouTube. Ready to upload." data-lt="Galutinis pristatymas visais jums reikalingais formatais — 9:16 Reels, 1:1 tiekimui, 16:9 YouTube. Paruošta įkėlimui.">Final delivery in all formats you need — 9:16 for Reels, 1:1 for feeds, 16:9 for YouTube. Ready to upload.</p>
     </div>
   </div>
 </section>
@@ -869,57 +912,53 @@ footer p { font-size: 0.83rem; color: var(--muted); }
 <!-- ===== PRICING ===== -->
 <section id="pricing">
   <div class="pricing-head" style="text-align:center;">
-    <div class="section-label reveal" style="text-align:center;">Pricing</div>
-    <h2 class="section-title reveal reveal-delay-1" style="text-align:center;">Transparent. No surprises.</h2>
-    <p class="section-sub reveal reveal-delay-2" style="margin:0 auto; text-align:center;">Every package includes unlimited file formats and one revision round.</p>
+    <div class="section-label reveal" style="text-align:center;" data-en="Pricing" data-lt="Kainos">Pricing</div>
+    <h2 class="section-title reveal reveal-delay-1" style="text-align:center;" data-en="Transparent. No surprises." data-lt="Skaidru. Jokių netikėtumų.">Transparent. No surprises.</h2>
+    <p class="section-sub reveal reveal-delay-2" style="margin:0 auto;text-align:center;" data-en="Every package includes unlimited file formats and one revision round." data-lt="Kiekvienas paketas apima neribotus failų formatus ir vieną taisymų raundą.">Every package includes unlimited file formats and one revision round.</p>
   </div>
   <div class="pricing-grid">
-
     <div class="price-card reveal">
-      <div class="price-badge">Starter</div>
-      <h3>Single Ad</h3>
-      <p class="price-desc">One polished video, delivered fast.</p>
+      <div class="price-badge" data-en="Starter" data-lt="Pradinis">Starter</div>
+      <h3 data-en="Single Ad" data-lt="Viena Reklama">Single Ad</h3>
+      <p class="price-desc" data-en="One polished video, delivered fast." data-lt="Vienas išbaigtas vaizdo įrašas, pristatytas greitai.">One polished video, delivered fast.</p>
       <div class="price-amount"><sup>€</sup>75</div>
       <ul class="price-features">
-        <li>1 AI-generated commercial</li>
-        <li>Up to 30 seconds</li>
-        <li>1 revision round</li>
-        <li>All aspect ratios</li>
-        <li>48h turnaround</li>
+        <li data-en="1 AI-generated commercial" data-lt="1 AI sukurta reklama">1 AI-generated commercial</li>
+        <li data-en="Up to 30 seconds" data-lt="Iki 30 sekundžių">Up to 30 seconds</li>
+        <li data-en="1 revision round" data-lt="1 taisymų raundas">1 revision round</li>
+        <li data-en="All aspect ratios" data-lt="Visi formatai">All aspect ratios</li>
+        <li data-en="48h turnaround" data-lt="48h pristatymas">48h turnaround</li>
       </ul>
-      <a href="#contact" class="btn-price-cta">Get started</a>
+      <a href="#contact" class="btn-price-cta" data-en="Get started" data-lt="Pradėti">Get started</a>
     </div>
-
     <div class="price-card featured reveal reveal-delay-1">
-      <div class="price-badge">Most Popular</div>
-      <h3>Growth Pack</h3>
-      <p class="price-desc">Everything you need to test and scale.</p>
+      <div class="price-badge" data-en="Most Popular" data-lt="Populiariausias">Most Popular</div>
+      <h3 data-en="Growth Pack" data-lt="Augimo Paketas">Growth Pack</h3>
+      <p class="price-desc" data-en="Everything you need to test and scale." data-lt="Viskas, ko reikia testuoti ir augti.">Everything you need to test and scale.</p>
       <div class="price-amount"><sup>€</sup>300</div>
       <ul class="price-features">
-        <li>5 AI-generated videos</li>
-        <li>Mix of formats & lengths</li>
-        <li>2 revision rounds each</li>
-        <li>All aspect ratios</li>
-        <li>Priority turnaround</li>
+        <li data-en="5 AI-generated videos" data-lt="5 AI sukurti vaizdo įrašai">5 AI-generated videos</li>
+        <li data-en="Mix of formats & lengths" data-lt="Įvairūs formatai ir trukmės">Mix of formats & lengths</li>
+        <li data-en="2 revision rounds each" data-lt="Po 2 taisymų raundus">2 revision rounds each</li>
+        <li data-en="All aspect ratios" data-lt="Visi formatai">All aspect ratios</li>
+        <li data-en="Priority turnaround" data-lt="Prioritetinis pristatymas">Priority turnaround</li>
       </ul>
-      <a href="#contact" class="btn-price-cta">Get started</a>
+      <a href="#contact" class="btn-price-cta" data-en="Get started" data-lt="Pradėti">Get started</a>
     </div>
-
     <div class="price-card reveal reveal-delay-2">
-      <div class="price-badge">Agency</div>
-      <h3>Monthly Retainer</h3>
-      <p class="price-desc">Ongoing content for growing brands.</p>
-      <div class="price-amount">Custom</div>
+      <div class="price-badge" data-en="Agency" data-lt="Agentūra">Agency</div>
+      <h3 data-en="Monthly Retainer" data-lt="Mėnesinis Abonementas">Monthly Retainer</h3>
+      <p class="price-desc" data-en="Ongoing content for growing brands." data-lt="Nuolatinis turinys augantiems prekės ženklams.">Ongoing content for growing brands.</p>
+      <div class="price-amount" data-en="Custom" data-lt="Individualus">Custom</div>
       <ul class="price-features">
-        <li>8–20 videos/month</li>
-        <li>Dedicated content calendar</li>
-        <li>Unlimited revisions</li>
-        <li>Strategy included</li>
-        <li>Same-day turnaround</li>
+        <li data-en="8–20 videos/month" data-lt="8–20 vaizdo įrašų/mėn.">8–20 videos/month</li>
+        <li data-en="Dedicated content calendar" data-lt="Turinio kalendorius">Dedicated content calendar</li>
+        <li data-en="Unlimited revisions" data-lt="Neriboti taisymai">Unlimited revisions</li>
+        <li data-en="Strategy included" data-lt="Strategija įskaičiuota">Strategy included</li>
+        <li data-en="Same-day turnaround" data-lt="Pristatymas tą pačią dieną">Same-day turnaround</li>
       </ul>
-      <a href="#contact" class="btn-price-cta">Let's talk</a>
+      <a href="#contact" class="btn-price-cta" data-en="Let's talk" data-lt="Pasikalbėkime">Let's talk</a>
     </div>
-
   </div>
 </section>
 
@@ -927,14 +966,14 @@ footer p { font-size: 0.83rem; color: var(--muted); }
 <section id="contact">
   <div class="contact-inner">
     <div class="contact-info reveal">
-      <div class="section-label">Contact</div>
-      <h2>Let's make your product impossible to ignore.</h2>
-      <p>Whether you have one product to launch or a full catalog to promote, reach out and I'll respond within a few hours.</p>
+      <div class="section-label" data-en="Contact" data-lt="Kontaktai">Contact</div>
+      <h2 data-en="Let's make your product impossible to ignore." data-lt="Padarykime jūsų produktą neįmanoma nepastebėti.">Let's make your product impossible to ignore.</h2>
+      <p data-en="Whether you have one product to launch or a full catalog to promote, reach out and I'll respond within a few hours." data-lt="Nesvarbu, ar turite vieną produktą, kurį reikia pristatyti, ar visą katalogą reklamuoti — susisiekite ir atsakysiu per kelias valandas.">Whether you have one product to launch or a full catalog to promote, reach out and I'll respond within a few hours.</p>
       <div class="contact-methods">
         <a href="mailto:your.email@gmail.com" class="contact-method">
           <div class="contact-method-icon">✉️</div>
           <div class="contact-method-text">
-            <strong>Email</strong>
+            <strong data-en="Email" data-lt="El. paštas">Email</strong>
             <span>your.email@gmail.com</span>
           </div>
         </a>
@@ -948,37 +987,36 @@ footer p { font-size: 0.83rem; color: var(--muted); }
         <div class="contact-method">
           <div class="contact-method-icon">📍</div>
           <div class="contact-method-text">
-            <strong>Location</strong>
-            <span>Vilnius, Lithuania · Remote worldwide</span>
+            <strong data-en="Location" data-lt="Vieta">Location</strong>
+            <span data-en="Vilnius, Lithuania · Remote worldwide" data-lt="Vilnius, Lietuva · Nuotoliniu būdu visame pasaulyje">Vilnius, Lithuania · Remote worldwide</span>
           </div>
         </div>
       </div>
     </div>
-
     <div class="contact-form reveal reveal-delay-1">
       <div class="form-group">
-        <label>Your name</label>
-        <input type="text" placeholder="e.g. Jonas Jonaitis">
+        <label data-en="Your name" data-lt="Jūsų vardas">Your name</label>
+        <input type="text" data-en-placeholder="e.g. Jonas Jonaitis" data-lt-placeholder="pvz. Jonas Jonaitis" placeholder="e.g. Jonas Jonaitis">
       </div>
       <div class="form-group">
-        <label>Email address</label>
+        <label data-en="Email address" data-lt="El. pašto adresas">Email address</label>
         <input type="email" placeholder="you@company.com">
       </div>
       <div class="form-group">
-        <label>Package interest</label>
-        <select>
-          <option value="" disabled selected>Select a package…</option>
-          <option>Starter — €75</option>
-          <option>Growth Pack — €300</option>
-          <option>Monthly Retainer</option>
-          <option>Not sure yet</option>
+        <label data-en="Package interest" data-lt="Domina paketas">Package interest</label>
+        <select id="packageSelect">
+          <option value="" disabled selected data-en="Select a package…" data-lt="Pasirinkite paketą…">Select a package…</option>
+          <option data-en="Starter — €75" data-lt="Pradinis — €75">Starter — €75</option>
+          <option data-en="Growth Pack — €300" data-lt="Augimo Paketas — €300">Growth Pack — €300</option>
+          <option data-en="Monthly Retainer" data-lt="Mėnesinis Abonementas">Monthly Retainer</option>
+          <option data-en="Not sure yet" data-lt="Dar nežinau">Not sure yet</option>
         </select>
       </div>
       <div class="form-group">
-        <label>Tell me about your product</label>
-        <textarea placeholder="What are you selling? Any brand style, colors, or references you like?"></textarea>
+        <label data-en="Tell me about your product" data-lt="Papasakokite apie savo produktą">Tell me about your product</label>
+        <textarea data-en-placeholder="What are you selling? Any brand style, colors, or references you like?" data-lt-placeholder="Ką parduodate? Koks jūsų prekės ženklo stilius, spalvos ar pavyzdžiai?" placeholder="What are you selling? Any brand style, colors, or references you like?"></textarea>
       </div>
-      <button class="btn-submit" onclick="handleSubmit(event)">Send message →</button>
+      <button class="btn-submit" onclick="handleSubmit(event)" data-en="Send message →" data-lt="Siųsti žinutę →">Send message →</button>
     </div>
   </div>
 </section>
@@ -986,40 +1024,83 @@ footer p { font-size: 0.83rem; color: var(--muted); }
 <!-- ===== FOOTER ===== -->
 <footer>
   <a href="#hero" class="footer-logo">Domantas<span>.</span></a>
-  <p>© 2026 Domantas Media · AI Product Commercials</p>
+  <p data-en="© 2026 Domantas Media · AI Product Commercials" data-lt="© 2026 Domantas Media · AI Produktų Reklamos">© 2026 Domantas Media · AI Product Commercials</p>
   <div class="footer-links">
-    <a href="#services">Services</a>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#contact">Contact</a>
+    <a href="#services" data-en="Services" data-lt="Paslaugos">Services</a>
+    <a href="#portfolio" data-en="Portfolio" data-lt="Portfolio">Portfolio</a>
+    <a href="#contact" data-en="Contact" data-lt="Kontaktai">Contact</a>
   </div>
 </footer>
 
-<!-- ===== SCRIPTS ===== -->
 <script>
-// Nav scroll effect
+/* ===== CURSOR GLOW ===== */
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top  = e.clientY + 'px';
+}, { passive: true });
+
+/* ===== NAV SCROLL ===== */
 const nav = document.getElementById('main-nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 
-// Reveal on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-    }
-  });
+/* ===== ORB PARALLAX ===== */
+const orb1 = document.getElementById('orb1');
+const orb2 = document.getElementById('orb2');
+document.addEventListener('mousemove', e => {
+  const x = (e.clientX / window.innerWidth  - 0.5) * 40;
+  const y = (e.clientY / window.innerHeight - 0.5) * 40;
+  orb1.style.transform = `translate(${x * 0.6}px, ${y * 0.6}px) scale(1)`;
+  orb2.style.transform = `translate(${-x * 0.4}px, ${-y * 0.4}px) scale(1)`;
+}, { passive: true });
+
+/* ===== REVEAL ON SCROLL ===== */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+setTimeout(() => {
+  document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
+}, 60);
 
-document.querySelectorAll('.reveal').forEach(el => {
-  observer.observe(el);
-});
+/* ===== LANGUAGE SWITCHER ===== */
+let currentLang = 'en';
 
-// Hero elements visible immediately
-document.querySelectorAll('#hero .reveal').forEach(el => {
-  setTimeout(() => el.classList.add('visible'), 80);
-});
+function setLang(lang) {
+  if (lang === currentLang) return;
+  currentLang = lang;
 
+  // Toggle button states
+  document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+  document.getElementById('btnLT').classList.toggle('active', lang === 'lt');
+
+  // Fade out
+  document.body.classList.add('lang-switching');
+
+  setTimeout(() => {
+    // Update all elements with data-en / data-lt
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.textContent = el.getAttribute('data-' + lang);
+    });
+
+    // Update placeholders
+    document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+      el.placeholder = el.getAttribute('data-' + lang + '-placeholder') || el.placeholder;
+    });
+
+    // Update select options
+    document.querySelectorAll('select option[data-en]').forEach(opt => {
+      opt.textContent = opt.getAttribute('data-' + lang);
+    });
+
+    // Fade back in
+    document.body.classList.remove('lang-switching');
+  }, 260);
+}
+
+/* ===== FORM SUBMIT ===== */
 async function handleSubmit(e) {
   e.preventDefault();
   const btn = e.target;
@@ -1031,7 +1112,7 @@ async function handleSubmit(e) {
     message: form.querySelector('textarea').value,
   };
 
-  btn.textContent = 'Sending…';
+  btn.textContent = currentLang === 'lt' ? 'Siunčiama…' : 'Sending…';
   btn.disabled = true;
 
   try {
@@ -1041,7 +1122,7 @@ async function handleSubmit(e) {
       body: JSON.stringify(data)
     });
     if (res.ok) {
-      btn.textContent = '✓ Message sent!';
+      btn.textContent = currentLang === 'lt' ? '✓ Žinutė išsiųsta!' : '✓ Message sent!';
       btn.style.background = '#22c55e';
       form.querySelector('input[type=text]').value = '';
       form.querySelector('input[type=email]').value = '';
@@ -1050,11 +1131,11 @@ async function handleSubmit(e) {
       throw new Error('failed');
     }
   } catch {
-    btn.textContent = 'Failed — email me directly';
+    btn.textContent = currentLang === 'lt' ? 'Klaida — rašykite el. paštu' : 'Failed — email me directly';
     btn.style.background = '#ef4444';
     btn.disabled = false;
     setTimeout(() => {
-      btn.textContent = 'Send message →';
+      btn.textContent = currentLang === 'lt' ? 'Siųsti žinutę →' : 'Send message →';
       btn.style.background = '';
     }, 4000);
   }
