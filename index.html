@@ -812,8 +812,8 @@ body.lang-switching [data-lt] {
   </ul>
   <div class="nav-right">
     <div class="lang-toggle">
-      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" id="btnLT" onclick="setLang('lt')">LT</button>
+      <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn active" id="btnLT" onclick="setLang('lt')">LT</button>
     </div>
     <a href="#contact" class="nav-cta" data-en="Get in touch" data-lt="Susisiekti">Get in touch</a>
   </div>
@@ -1147,6 +1147,9 @@ body.lang-switching [data-lt] {
 </footer>
 
 <script>
+/* ===== DEFAULT LANGUAGE ===== */
+setLang('lt');
+
 /* ===== CURSOR GLOW ===== */
 const glow = document.getElementById('cursorGlow');
 document.addEventListener('mousemove', e => {
