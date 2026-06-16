@@ -24,10 +24,10 @@
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: var(--black); }
 
 body {
-  background: var(--black);
+  background: transparent;
   color: var(--white);
   font-family: 'Inter', sans-serif;
   font-size: 16px;
@@ -247,9 +247,9 @@ nav.scrolled {
 /* Word-by-word stagger on h1 */
 h1 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2.8rem, 7vw, 5.6rem);
-  font-weight: 700; line-height: 1.05;
-  letter-spacing: -0.03em; margin-bottom: 26px;
+  font-size: clamp(3rem, 7.4vw, 6rem);
+  font-weight: 700; line-height: 1.04;
+  letter-spacing: -0.035em; margin-bottom: 26px;
 }
 h1 em {
   font-style: normal;
@@ -257,7 +257,9 @@ h1 em {
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
   display: inline-block;
-  animation: shimmer 4s ease-in-out infinite alternate;
+  opacity: 0;
+  animation: wordRise 0.9s var(--ease-fluid) 0.3s forwards,
+             shimmer 4s ease-in-out 1.2s infinite alternate;
   background-size: 200% 200%;
 }
 @keyframes shimmer {
@@ -871,6 +873,204 @@ body.lang-switching [data-lt] {
   .photo-divider-text { writing-mode: horizontal-tb; transform: none; }
   .photo-mock { height: 200px; }
 }
+
+/* ============================================================
+   ENHANCEMENT LAYER — liquid glass, depth, motion
+   ============================================================ */
+
+/* ---- Ambient animated mesh background ---- */
+body::before {
+  content: '';
+  position: fixed; inset: -20%;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 50% at 15% 20%, rgba(10,132,255,0.10), transparent 60%),
+    radial-gradient(35% 45% at 85% 15%, rgba(90,200,250,0.08), transparent 60%),
+    radial-gradient(45% 50% at 75% 85%, rgba(64,156,255,0.07), transparent 60%),
+    radial-gradient(40% 40% at 25% 90%, rgba(10,132,255,0.06), transparent 60%);
+  filter: blur(40px);
+  animation: meshDrift 28s ease-in-out infinite alternate;
+}
+@keyframes meshDrift {
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(2%, -2%) scale(1.06); }
+  100% { transform: translate(-2%, 2%) scale(1.03); }
+}
+
+/* ---- Fine film grain for premium texture ---- */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  z-index: 1; pointer-events: none; opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Scroll progress bar ---- */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+  z-index: 200; pointer-events: none;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  box-shadow: 0 0 12px rgba(10,132,255,0.7);
+  transition: width 0.1s linear;
+}
+
+/* ---- Smoother body scrollbar accent ---- */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--accent), var(--accent2));
+}
+
+/* ---- Floating drift on hero orbs (layered over JS parallax via filter-safe wrapper) ---- */
+@keyframes orbFloat1 {
+  0%,100% { translate: 0 0; }
+  50%     { translate: 30px -40px; }
+}
+@keyframes orbFloat2 {
+  0%,100% { translate: 0 0; }
+  50%     { translate: -36px 30px; }
+}
+.orb-1 { animation: orbFloat1 16s ease-in-out infinite; }
+.orb-2 { animation: orbFloat2 19s ease-in-out infinite; }
+
+/* ---- Refined liquid glass: specular top sheen + perspective container ---- */
+.services-grid, .portfolio-grid, .pricing-grid, .photo-examples {
+  perspective: 1400px;
+}
+
+.service-card, .video-card, .price-card, .photo-example, .contact-method {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Specular sheen — a soft light edge across the top of each glass panel */
+.video-card::after,
+.price-card::after,
+.photo-example::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 32%);
+  opacity: 0.7;
+  z-index: 2;
+}
+
+/* ---- Animated shine sweep across glass cards on hover ---- */
+.service-card, .video-card, .price-card {
+  position: relative;
+}
+.service-card > .shine,
+.video-card > .shine,
+.price-card > .shine {
+  content: '';
+  position: absolute; top: 0; left: -75%;
+  width: 50%; height: 100%;
+  z-index: 3; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.16), transparent);
+  transform: skewX(-18deg);
+  transition: left 0.85s var(--ease-fluid);
+}
+.service-card:hover > .shine,
+.video-card:hover > .shine,
+.price-card:hover > .shine { left: 130%; }
+
+/* ---- 3D tilt driven by JS custom props ---- */
+.tilt {
+  transition: transform 0.4s var(--ease-fluid), box-shadow 0.4s var(--ease-fluid), border-color 0.3s, background 0.4s var(--ease-fluid);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--ty, 0)) scale(var(--sc, 1));
+}
+
+/* ---- Hero h1: bigger presence + per-word rise ---- */
+h1 .word {
+  display: inline-block;
+  opacity: 0; transform: translateY(40px) rotateX(-40deg);
+  transform-origin: bottom;
+  animation: wordRise 0.9s var(--ease-fluid) forwards;
+}
+@keyframes wordRise {
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- Eyebrow: animated conic gradient ring ---- */
+.hero-eyebrow {
+  position: relative;
+}
+.hero-eyebrow::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(110deg, transparent 20%, rgba(90,200,250,0.75), rgba(10,132,255,0.6), transparent 80%);
+  background-size: 220% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: eyebrowSheen 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes eyebrowSheen {
+  0%,100% { background-position: 0% 0%; }
+  50%     { background-position: 100% 0%; }
+}
+
+/* ---- Featured price card: living gradient border ---- */
+.price-card.featured {
+  background-clip: padding-box;
+}
+.price-card.featured::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(10,132,255,0.8), rgba(90,200,250,0.2), rgba(10,132,255,0.6));
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: borderFlow 6s ease infinite;
+  opacity: 0.9; z-index: 4;
+}
+@keyframes borderFlow {
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
+}
+
+/* ---- Magnetic buttons ---- */
+.btn-primary, .btn-ghost, .nav-cta {
+  will-change: transform;
+}
+
+/* ---- Reveal: add a soft blur-in for extra fluidity ---- */
+.reveal, .reveal-left, .reveal-right, .reveal-scale {
+  filter: blur(8px);
+  transition: opacity 0.95s var(--ease-fluid),
+              transform 0.95s var(--ease-fluid),
+              filter 0.95s var(--ease-fluid);
+}
+.reveal.visible, .reveal-left.visible,
+.reveal-right.visible, .reveal-scale.visible {
+  filter: blur(0);
+}
+
+/* ---- Section headings: gradient sheen on titles ---- */
+.section-title {
+  background: linear-gradient(180deg, var(--white) 30%, rgba(240,238,233,0.7) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---- Stat numbers glow subtly ---- */
+.stat-num span { text-shadow: 0 0 24px rgba(90,200,250,0.45); }
+
+/* ---- Nav links: smooth scale on hover ---- */
+.nav-center a { transition: color 0.25s var(--ease-fluid), transform 0.25s var(--ease-spring); }
+.nav-center a:hover { transform: translateY(-1px); }
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, .orb-1, .orb-2, .hero-eyebrow::after,
+  .price-card.featured::after, h1 .word { animation: none !important; }
+  h1 .word { opacity: 1; transform: none; }
+  .reveal, .reveal-left, .reveal-right, .reveal-scale { filter: none; }
+}
 </style>
 </head>
 <body>
@@ -905,7 +1105,7 @@ body.lang-switching [data-lt] {
   <div class="hero-inner">
     <div class="hero-eyebrow reveal" data-en="AI-Powered Video Production" data-lt="AI Vaizdo Gamyba">AI-Powered Video Production</div>
     <h1 class="reveal reveal-delay-1">
-      <span data-en="Commercials that" data-lt="Reklama, kuri">Commercials that</span><br>
+      <span class="word" style="animation-delay:0.15s" data-en="Commercials that" data-lt="Reklama, kuri">Commercials that</span><br>
       <em data-en="sell products." data-lt="parduoda.">sell products.</em>
     </h1>
     <p class="hero-sub reveal reveal-delay-2" data-en="Premium AI-generated advertising videos for e-commerce brands, product launches, and social media campaigns. Fast. Cinematic. Effective." data-lt="AI sukurti reklaminiai vaizdo įrašai el. prekybos verslams, socialiniams tinklams ir produktų reklamai. Greitai. Kokybiškai. Efektyviai.">
@@ -917,11 +1117,11 @@ body.lang-switching [data-lt] {
     </div>
     <div class="hero-stats reveal reveal-delay-4">
       <div class="stat-item">
-        <div class="stat-num">48<span>h</span></div>
+        <div class="stat-num" data-target="48">48<span>h</span></div>
         <div class="stat-label" data-en="Avg. turnaround" data-lt="Vid. laikas">Avg. turnaround</div>
       </div>
 <div class="stat-item">
-        <div class="stat-num">€49</div>
+        <div class="stat-num" data-target="€49">€49</div>
         <div class="stat-label" data-en="Starting from" data-lt="Nuo">Starting from</div>
       </div>
     </div>
@@ -1259,11 +1459,86 @@ document.addEventListener('mousemove', e => {
   updateOrbs();
 }, { passive: true });
 
+/* ===== SCROLL PROGRESS BAR ===== */
+const progressBar = document.createElement('div');
+progressBar.className = 'scroll-progress';
+document.body.appendChild(progressBar);
+
 window.addEventListener('scroll', () => {
   scrollOffset = window.scrollY;
   nav.classList.toggle('scrolled', scrollOffset > 40);
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (docH > 0 ? (scrollOffset / docH) * 100 : 0) + '%';
   updateOrbs();
 }, { passive: true });
+
+/* ===== LIQUID GLASS: 3D TILT + SHINE SWEEP ===== */
+const tiltCards = document.querySelectorAll('.service-card, .video-card, .price-card');
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+tiltCards.forEach(card => {
+  // inject a shine element for the sweep
+  const shine = document.createElement('span');
+  shine.className = 'shine';
+  card.appendChild(shine);
+  card.classList.add('tilt');
+
+  if (prefersReduced) return;
+
+  let raf = null;
+  card.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width  - 0.5;
+    const py = (e.clientY - r.top)  / r.height - 0.5;
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      card.style.transform =
+        `perspective(900px) rotateX(${(-py * 9).toFixed(2)}deg) rotateY(${(px * 9).toFixed(2)}deg) translateY(-6px) scale(1.015)`;
+    });
+  }, { passive: true });
+
+  card.addEventListener('pointerleave', () => {
+    card.style.transform = '';
+  });
+});
+
+/* ===== MAGNETIC BUTTONS ===== */
+if (!prefersReduced) {
+  document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta, .btn-submit').forEach(btn => {
+    btn.addEventListener('pointermove', e => {
+      const r = btn.getBoundingClientRect();
+      const mx = e.clientX - r.left - r.width / 2;
+      const my = e.clientY - r.top - r.height / 2;
+      btn.style.transform = `translate(${mx * 0.18}px, ${my * 0.28}px)`;
+    });
+    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+  });
+}
+
+/* ===== STAT COUNT-UP ===== */
+const statObs = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const full = el.dataset.target;
+    const num = parseInt(full.replace(/\D/g, ''), 10);
+    const prefix = full.startsWith('€') ? '€' : '';
+    const suffix = el.dataset.suffix || '';
+    let start = null;
+    const dur = 1300;
+    function step(ts) {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.firstChild.textContent = prefix + Math.round(num * eased);
+      if (p < 1) requestAnimationFrame(step);
+      else el.firstChild.textContent = prefix + num;
+    }
+    requestAnimationFrame(step);
+    obs.unobserve(el);
+  });
+}, { threshold: 0.6 });
+document.querySelectorAll('.stat-num[data-target]').forEach(el => statObs.observe(el));
 
 /* ===== REVEAL ON SCROLL ===== */
 const revealObs = new IntersectionObserver((entries) => {
