@@ -1736,5 +1736,63 @@ async function handleSubmit(e) {
 /* ===== DEFAULT LANGUAGE ===== */
 setLang('lt');
 </script>
+
+<!-- ===== WHATSAPP BUTTON ===== -->
+<a href="https://wa.me/37062235758?text=Hi%2C%20I'm%20interested%20in%20a%20free%20video%20sample%20for%20my%20product."
+   class="wa-btn" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.493.652 4.833 1.792 6.858L2 30l7.338-1.768A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="white"/>
+    <path d="M22.003 19.274c-.306-.153-1.812-.894-2.093-.996-.28-.1-.485-.153-.688.154-.204.306-.79.996-.968 1.2-.178.204-.357.23-.663.077-.306-.154-1.291-.476-2.459-1.517-.909-.81-1.522-1.81-1.7-2.116-.178-.306-.019-.47.134-.623.137-.136.306-.357.459-.535.153-.179.204-.307.306-.511.102-.204.051-.383-.026-.536-.077-.153-.688-1.66-.943-2.272-.248-.598-.5-.517-.688-.527l-.586-.01c-.204 0-.535.077-.815.383-.28.307-1.07 1.045-1.07 2.55 0 1.506 1.096 2.96 1.249 3.164.153.204 2.156 3.292 5.225 4.619.73.315 1.3.503 1.744.644.733.233 1.4.2 1.927.121.588-.088 1.812-.74 2.068-1.455.255-.714.255-1.326.178-1.455-.076-.128-.28-.204-.586-.357z" fill="#25D366"/>
+  </svg>
+  <span class="wa-label" data-en="Chat on WhatsApp" data-lt="Rašyti WhatsApp">Chat on WhatsApp</span>
+</a>
+
+<style>
+.wa-btn {
+  position: fixed; bottom: 28px; right: 28px; z-index: 999;
+  display: flex; align-items: center; gap: 10px;
+  background: #25D366;
+  color: #fff;
+  padding: 13px 20px 13px 16px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 0.88rem;
+  box-shadow: 0 6px 28px rgba(37,211,102,0.38), 0 2px 8px rgba(0,0,0,0.25);
+  transition: transform 0.25s var(--ease-spring), box-shadow 0.25s, background 0.2s;
+  max-width: 220px;
+  overflow: hidden;
+}
+.wa-btn:hover {
+  background: #20c05c;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 36px rgba(37,211,102,0.5), 0 4px 12px rgba(0,0,0,0.2);
+}
+.wa-btn svg { flex-shrink: 0; }
+.wa-label { white-space: nowrap; }
+
+/* Pulse ring to draw the eye */
+.wa-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 rgba(37,211,102,0.55);
+  animation: waPulse 2.8s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes waPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(37,211,102,0.55); }
+  70%  { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+  100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+}
+
+@media (max-width: 480px) {
+  .wa-btn { padding: 14px; border-radius: 50%; }
+  .wa-label { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-btn::before { animation: none; }
+}
+</style>
 </body>
 </html>
