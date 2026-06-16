@@ -77,7 +77,8 @@ nav.scrolled {
   transition: opacity 0.2s;
 }
 .nav-logo:hover { opacity: 0.8; }
-.nav-logo span { color: var(--accent); }
+.nav-logo .logo-dot  { color: var(--accent); }
+.nav-logo .logo-media { color: var(--white); }
 
 .nav-center {
   display: flex; gap: 32px; list-style: none;
@@ -710,7 +711,8 @@ footer {
   font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem;
   color: var(--white); text-decoration: none;
 }
-.footer-logo span { color: var(--accent); }
+.footer-logo .logo-dot  { color: var(--accent); }
+.footer-logo .logo-media { color: var(--white); }
 footer p { font-size: 0.82rem; color: var(--muted); }
 .footer-links { display: flex; gap: 24px; }
 .footer-links a {
@@ -1081,51 +1083,33 @@ h1 .word {
   to { opacity: 1; transform: none; }
 }
 
-/* ".Media" accent span fades in after the chars */
-.nav-logo > span {
+/* Dot and Media spans fade in after the chars */
+.nav-logo .logo-dot,
+.nav-logo .logo-media {
   display: inline-block;
   opacity: 0;
-  animation: logoCharIn 0.55s var(--ease-fluid) 0.42s forwards;
+  animation: logoCharIn 0.55s var(--ease-fluid) forwards;
 }
+.nav-logo .logo-dot   { animation-delay: 0.38s; }
+.nav-logo .logo-media { animation-delay: 0.42s; }
 
-/* Periodic shimmer sweep across the whole logo */
-.nav-logo {
-  position: relative;
-  overflow: hidden;
-}
-.nav-logo::before {
-  content: '';
-  position: absolute; top: 0; left: -80%;
-  width: 55%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
-  pointer-events: none;
-  animation: logoSweep 7s ease-in-out 1.4s infinite;
-}
-@keyframes logoSweep {
-  0%    { left: -80%;  opacity: 0; }
-  4%    { opacity: 1; }
-  44%   { left: 140%;  opacity: 0.7; }
-  45%   { opacity: 0; }
-  100%  { left: -80%;  opacity: 0; }
-}
-
-/* Subtle colour-breathe on the accent part */
-.nav-logo > span {
-  animation: logoCharIn 0.55s var(--ease-fluid) 0.42s forwards,
-             accentBreathe 6s ease-in-out 2s infinite;
+/* Breathe only on the dot */
+.nav-logo .logo-dot {
+  animation: logoCharIn 0.55s var(--ease-fluid) 0.38s forwards,
+             accentBreathe 5s ease-in-out 1.8s infinite;
 }
 @keyframes accentBreathe {
   0%,100% { filter: brightness(1); }
-  50%     { filter: brightness(1.25); }
+  50%     { filter: brightness(1.5) drop-shadow(0 0 4px var(--accent)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   body::before, .orb-1, .orb-2, .hero-eyebrow::after,
   .price-card.featured::after, h1 .word,
-  .nav-logo::before, .logo-char, .nav-logo > span { animation: none !important; }
+  .logo-char, .nav-logo .logo-dot, .nav-logo .logo-media { animation: none !important; }
   h1 .word { opacity: 1; transform: none; }
   .logo-char { opacity: 1; transform: none; }
-  .nav-logo > span { opacity: 1; }
+  .nav-logo .logo-dot, .nav-logo .logo-media { opacity: 1; }
   .reveal, .reveal-left, .reveal-right, .reveal-scale { filter: none; }
 }
 </style>
@@ -1136,7 +1120,7 @@ h1 .word {
 
 <!-- ===== NAV ===== -->
 <nav id="main-nav">
-  <a href="#hero" class="nav-logo">Domantas<span>.Media</span></a>
+  <a href="#hero" class="nav-logo">Domantas<span class="logo-dot">.</span><span class="logo-media">Media</span></a>
   <ul class="nav-center">
     <li><a href="#services" data-en="Services" data-lt="Paslaugos">Services</a></li>
     <li><a href="#portfolio" data-en="Portfolio" data-lt="Darbai">Portfolio</a></li>
@@ -1480,7 +1464,7 @@ h1 .word {
 
 <!-- ===== FOOTER ===== -->
 <footer>
-  <a href="#hero" class="footer-logo">Domantas<span>.Media</span></a>
+  <a href="#hero" class="footer-logo">Domantas<span class="logo-dot">.</span><span class="logo-media">Media</span></a>
   <p data-en="© 2026 Domantas Media · AI Product Commercials" data-lt="© 2026 Domantas Media · AI produktų reklamos">© 2026 Domantas Media · AI Product Commercials</p>
   <div class="footer-links">
     <a href="#services" data-en="Services" data-lt="Paslaugos">Services</a>
