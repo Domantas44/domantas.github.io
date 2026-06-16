@@ -337,7 +337,7 @@ h1 em {
 }
 
 /* ===== SECTIONS ===== */
-section { padding: 110px 6%; }
+section { padding: 80px 6%; }
 
 .section-label {
   font-size: 0.7rem; font-weight: 600;
@@ -357,7 +357,7 @@ section { padding: 110px 6%; }
 
 /* ===== SERVICES ===== */
 #services { border-top: 1px solid var(--border); }
-.services-head { margin-bottom: 64px; }
+.services-head { margin-bottom: 48px; }
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -414,7 +414,7 @@ section { padding: 110px 6%; }
 
 /* ===== PORTFOLIO ===== */
 #portfolio { background: rgba(255,255,255,0.012); border-top: 1px solid var(--border); }
-.portfolio-head { margin-bottom: 64px; }
+.portfolio-head { margin-bottom: 48px; }
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -483,7 +483,7 @@ section { padding: 110px 6%; }
 
 /* ===== PROCESS ===== */
 #process { border-top: 1px solid var(--border); }
-.process-head { margin-bottom: 64px; }
+.process-head { margin-bottom: 48px; }
 .process-steps {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -525,7 +525,7 @@ section { padding: 110px 6%; }
 
 /* ===== PRICING ===== */
 #pricing { background: rgba(255,255,255,0.012); border-top: 1px solid var(--border); }
-.pricing-head { margin-bottom: 64px; }
+.pricing-head { margin-bottom: 48px; }
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -787,7 +787,7 @@ body.lang-switching [data-lt] {
 
 /* ===== AI PHOTOS ===== */
 #photos { border-top: 1px solid var(--border); }
-.photos-head { margin-bottom: 64px; }
+.photos-head { margin-bottom: 48px; }
 .photo-examples { display: flex; flex-direction: column; gap: 24px; max-width: 1100px; margin: 0 auto; }
 .photo-example {
   display: grid;
@@ -807,7 +807,7 @@ body.lang-switching [data-lt] {
 }
 .photo-side { display: flex; flex-direction: column; }
 .photo-mock {
-  position: relative; height: 420px;
+  position: relative; height: 300px;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
@@ -1114,6 +1114,69 @@ h1 .word {
   .nav-logo .logo-dot, .nav-logo .logo-media { opacity: 1; }
   .reveal, .reveal-left, .reveal-right, .reveal-scale { filter: none; }
 }
+
+/* ===== AI CAPABILITIES ===== */
+#capabilities { border-top: 1px solid var(--border); }
+.capabilities-head { margin-bottom: 48px; }
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.cap-card {
+  background: var(--glass);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 36px 32px;
+  position: relative; overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.28);
+  transition: transform 0.4s var(--ease-fluid), box-shadow 0.4s var(--ease-fluid), border-color 0.3s;
+}
+.cap-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0,88,208,0.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 20px 56px rgba(0,0,0,0.45);
+}
+.cap-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,88,208,0.5), rgba(61,143,212,0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-fluid);
+}
+.cap-card:hover::before { opacity: 1; }
+.cap-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 24px;
+}
+.cap-icon { font-size: 2rem; flex-shrink: 0; }
+.cap-tool-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em;
+}
+.cap-tool-by { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.cap-list { list-style: none; margin-bottom: 24px; }
+.cap-list li {
+  font-size: 0.88rem; color: var(--muted);
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex; align-items: flex-start; gap: 10px;
+  line-height: 1.5;
+}
+.cap-list li:last-child { border-bottom: none; }
+.cap-list li::before {
+  content: '→'; color: var(--accent2); font-size: 0.8rem;
+  flex-shrink: 0; margin-top: 1px;
+}
+.cap-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.cap-tag {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 4px 12px; border-radius: 100px;
+  background: rgba(0,88,208,0.09); color: var(--accent2);
+  border: 1px solid rgba(0,88,208,0.18);
+}
 </style>
 </head>
 <body>
@@ -1126,6 +1189,7 @@ h1 .word {
   <ul class="nav-center">
     <li><a href="#services" data-en="Services" data-lt="Paslaugos">Services</a></li>
     <li><a href="#portfolio" data-en="Portfolio" data-lt="Darbai">Portfolio</a></li>
+    <li><a href="#capabilities" data-en="AI Tools" data-lt="AI Įrankiai">AI Tools</a></li>
     <li><a href="#photos" data-en="Photos" data-lt="Nuotraukos">Photos</a></li>
     <li><a href="#process" data-en="Process" data-lt="Procesas">Process</a></li>
     <li><a href="#pricing" data-en="Pricing" data-lt="Kainos">Pricing</a></li>
@@ -1274,6 +1338,84 @@ h1 .word {
         <span class="video-badge" data-en="Instagram Reel" data-lt="Instagram Reel">Instagram Reel</span>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ===== AI CAPABILITIES ===== -->
+<section id="capabilities">
+  <div class="capabilities-head">
+    <div class="section-label reveal" data-en="AI Technology" data-lt="AI Technologijos">AI Technology</div>
+    <h2 class="section-title reveal reveal-delay-1" data-en="What AI can create" data-lt="Ką AI gali sukurti">What AI can create</h2>
+    <p class="section-sub reveal reveal-delay-2" data-en="Three cutting-edge tools, each with unique strengths — combined to make ads that look impossible." data-lt="Trys pažangiausi įrankiai, kiekvienas su savo stiprosiomis pusėmis — kartu jie kuria reklamas, kurios atrodo neįtikėtinai.">Three cutting-edge tools, each with unique strengths — combined to make ads that look impossible.</p>
+  </div>
+  <div class="capabilities-grid">
+
+    <div class="cap-card reveal">
+      <div class="cap-header">
+        <span class="cap-icon">🎞</span>
+        <div>
+          <div class="cap-tool-name">Kling 3.0</div>
+          <div class="cap-tool-by">by Kuaishou</div>
+        </div>
+      </div>
+      <ul class="cap-list">
+        <li data-en="Hyper-realistic product motion" data-lt="Hiper-realistinis produkto judėjimas">Hyper-realistic product motion</li>
+        <li data-en="Cinematic camera moves — pan, orbit, push-in" data-lt="Kinematografiniai kameros judesiai — panorama, orbita, priartinimas">Cinematic camera moves — pan, orbit, push-in</li>
+        <li data-en="Image-to-video with accurate physics" data-lt="Vaizdas į vaizdo įrašą su tikslia fizika">Image-to-video with accurate physics</li>
+        <li data-en="Liquid, fire, smoke &amp; cloth simulation" data-lt="Skysčių, ugnies, dūmų ir audinio simuliacija">Liquid, fire, smoke &amp; cloth simulation</li>
+        <li data-en="Up to 10-second cinematic clips" data-lt="Iki 10 sekundžių kinematografiniai klipai">Up to 10-second cinematic clips</li>
+      </ul>
+      <div class="cap-tags">
+        <span class="cap-tag" data-en="Product fly-throughs" data-lt="Produkto skrydžiai">Product fly-throughs</span>
+        <span class="cap-tag" data-en="Luxury visuals" data-lt="Prabangūs vaizdai">Luxury visuals</span>
+        <span class="cap-tag" data-en="Hero shots" data-lt="Pagrindiniai kadrai">Hero shots</span>
+      </div>
+    </div>
+
+    <div class="cap-card reveal reveal-delay-1">
+      <div class="cap-header">
+        <span class="cap-icon">✨</span>
+        <div>
+          <div class="cap-tool-name">Seedance 2.0</div>
+          <div class="cap-tool-by">by ByteDance</div>
+        </div>
+      </div>
+      <ul class="cap-list">
+        <li data-en="Consistent product appearance across every frame" data-lt="Nuoseklus produkto vaizdas visuose kadruose">Consistent product appearance across every frame</li>
+        <li data-en="Text-to-video and image-to-video generation" data-lt="Tekstas į vaizdo įrašą ir vaizdas į vaizdo įrašą">Text-to-video and image-to-video generation</li>
+        <li data-en="Realistic human motion and expressions" data-lt="Realistinis žmonių judėjimas ir emocijos">Realistic human motion and expressions</li>
+        <li data-en="High-fidelity detail preservation" data-lt="Aukštos kokybės detalių išsaugojimas">High-fidelity detail preservation</li>
+        <li data-en="Dynamic lighting across any environment" data-lt="Dinaminis apšvietimas bet kokioje aplinkoje">Dynamic lighting across any environment</li>
+      </ul>
+      <div class="cap-tags">
+        <span class="cap-tag" data-en="Lifestyle ads" data-lt="Gyvenimo būdo reklamos">Lifestyle ads</span>
+        <span class="cap-tag" data-en="People + products" data-lt="Žmonės + produktai">People + products</span>
+        <span class="cap-tag" data-en="Brand stories" data-lt="Prekės ženklo istorijos">Brand stories</span>
+      </div>
+    </div>
+
+    <div class="cap-card reveal reveal-delay-2">
+      <div class="cap-header">
+        <span class="cap-icon">📢</span>
+        <div>
+          <div class="cap-tool-name">Marketing Studio</div>
+          <div class="cap-tool-by">by Higgsfield</div>
+        </div>
+      </div>
+      <ul class="cap-list">
+        <li data-en="Hook-optimized ad structures that stop the scroll" data-lt="Reklamos struktūros, optimizuotos sulaikyti žiūrovą">Hook-optimized ad structures that stop the scroll</li>
+        <li data-en="Real people placed into branded scenes" data-lt="Tikri žmonės įterpti į firminiuose scenas">Real people placed into branded scenes</li>
+        <li data-en="Brand color &amp; style adaptation" data-lt="Prekės ženklo spalvų ir stiliaus pritaikymas">Brand color &amp; style adaptation</li>
+        <li data-en="Auto-format for Instagram, TikTok, YouTube" data-lt="Automatinis formatavimas Instagram, TikTok, YouTube">Auto-format for Instagram, TikTok, YouTube</li>
+        <li data-en="Multiple creative variations for A/B testing" data-lt="Kelios kūrybinės versijos A/B testavimui">Multiple creative variations for A/B testing</li>
+      </ul>
+      <div class="cap-tags">
+        <span class="cap-tag" data-en="Social ads" data-lt="Socialinės reklamos">Social ads</span>
+        <span class="cap-tag" data-en="Fast turnaround" data-lt="Greitas pristatymas">Fast turnaround</span>
+        <span class="cap-tag" data-en="Performance creatives" data-lt="Efektyvi reklama">Performance creatives</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
