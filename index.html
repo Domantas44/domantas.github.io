@@ -1068,10 +1068,64 @@ h1 .word {
 /* ---- Remove shine sweep from all cards ---- */
 .shine { display: none !important; }
 
+/* ===== LOGO ANIMATION ===== */
+
+/* Per-character load-in */
+.logo-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(7px);
+  animation: logoCharIn 0.55s var(--ease-fluid) forwards;
+}
+@keyframes logoCharIn {
+  to { opacity: 1; transform: none; }
+}
+
+/* ".Media" accent span fades in after the chars */
+.nav-logo > span {
+  display: inline-block;
+  opacity: 0;
+  animation: logoCharIn 0.55s var(--ease-fluid) 0.42s forwards;
+}
+
+/* Periodic shimmer sweep across the whole logo */
+.nav-logo {
+  position: relative;
+  overflow: hidden;
+}
+.nav-logo::before {
+  content: '';
+  position: absolute; top: 0; left: -80%;
+  width: 55%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+  pointer-events: none;
+  animation: logoSweep 7s ease-in-out 1.4s infinite;
+}
+@keyframes logoSweep {
+  0%    { left: -80%;  opacity: 0; }
+  4%    { opacity: 1; }
+  44%   { left: 140%;  opacity: 0.7; }
+  45%   { opacity: 0; }
+  100%  { left: -80%;  opacity: 0; }
+}
+
+/* Subtle colour-breathe on the accent part */
+.nav-logo > span {
+  animation: logoCharIn 0.55s var(--ease-fluid) 0.42s forwards,
+             accentBreathe 6s ease-in-out 2s infinite;
+}
+@keyframes accentBreathe {
+  0%,100% { filter: brightness(1); }
+  50%     { filter: brightness(1.25); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   body::before, .orb-1, .orb-2, .hero-eyebrow::after,
-  .price-card.featured::after, h1 .word { animation: none !important; }
+  .price-card.featured::after, h1 .word,
+  .nav-logo::before, .logo-char, .nav-logo > span { animation: none !important; }
   h1 .word { opacity: 1; transform: none; }
+  .logo-char { opacity: 1; transform: none; }
+  .nav-logo > span { opacity: 1; }
   .reveal, .reveal-left, .reveal-right, .reveal-scale { filter: none; }
 }
 </style>
@@ -1436,6 +1490,22 @@ h1 .word {
 </footer>
 
 <script>
+/* ===== LOGO CHAR SPLIT ===== */
+(function() {
+  const logo = document.querySelector('.nav-logo');
+  const textNode = logo.firstChild; // "Domantas" text
+  const letters = textNode.textContent;
+  const frag = document.createDocumentFragment();
+  letters.split('').forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.className = 'logo-char';
+    s.style.animationDelay = (0.04 + i * 0.038) + 's';
+    s.textContent = ch;
+    frag.appendChild(s);
+  });
+  logo.replaceChild(frag, textNode);
+})();
+
 /* ===== CURSOR GLOW ===== */
 const glow = document.getElementById('cursorGlow');
 document.addEventListener('mousemove', e => {
