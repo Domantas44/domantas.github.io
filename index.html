@@ -563,11 +563,10 @@ section { padding: 100px 6%; }
   position: relative; overflow: clip;
   display: flex; flex-direction: column;
   box-shadow: 0 8px 40px rgba(0,0,0,0.38);
-  transition: transform 0.45s var(--ease-fluid), box-shadow 0.45s var(--ease-fluid), border-color 0.3s;
+  transition: transform 0.35s var(--ease-fluid), border-color 0.3s;
 }
 .price-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  transform: scale(1.025);
 }
 .price-card.featured {
   border-color: rgba(59,130,246,0.28);
@@ -823,10 +822,7 @@ body.lang-switching [data-lt] {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
-  /* Completely prevent the featured card mask-composite layer from being
-     created — opacity:0 alone still allocates GPU memory */
-  .price-card.featured::after { content: none !important; }
-  /* Prevent -webkit-mask layer on ::before too */
+  /* Prevent gradient top-line on featured card on mobile */
   .price-card.featured::before { display: none; }
   /* Remove GPU compositing hints from all animated elements */
   .service-card, .video-card, .price-card,
@@ -1022,7 +1018,6 @@ body::after {
 
 /* ---- Glass specular sheen ---- */
 .video-card::after,
-.price-card::after,
 .photo-example::after {
   content: '';
   position: absolute; inset: 0;
@@ -1035,8 +1030,7 @@ body::after {
 
 /* ---- Shine sweep on hover ---- */
 .service-card > .shine,
-.video-card > .shine,
-.price-card > .shine {
+.video-card > .shine {
   position: absolute; top: 0; left: -75%;
   width: 50%; height: 100%;
   z-index: 3; pointer-events: none;
@@ -1045,8 +1039,7 @@ body::after {
   transition: left 0.9s var(--ease-fluid);
 }
 .service-card:hover > .shine,
-.video-card:hover > .shine,
-.price-card:hover > .shine { left: 130%; }
+.video-card:hover > .shine { left: 130%; }
 
 /* ---- 3D tilt JS-driven ---- */
 .tilt {
@@ -1066,25 +1059,6 @@ h1 .word {
 }
 
 /* ---- Featured price card: living border ---- */
-.price-card.featured {
-  background-clip: padding-box;
-}
-.price-card.featured::after {
-  content: '';
-  position: absolute; inset: 0;
-  border-radius: inherit;
-  padding: 1.5px;
-  background: linear-gradient(135deg, rgba(59,130,246,0.85), rgba(37,99,235,0.25), rgba(59,130,246,0.65));
-  background-size: 200% 200%;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  animation: borderFlow 6s ease infinite;
-  opacity: 0.9; z-index: 4;
-}
-@keyframes borderFlow {
-  0%,100% { background-position: 0% 50%; }
-  50%     { background-position: 100% 50%; }
-}
 
 /* ---- Magnetic buttons ---- */
 .btn-primary, .btn-ghost, .nav-cta { will-change: transform; }
@@ -1682,7 +1656,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 /* ===== 3D TILT + SHINE SWEEP ===== */
-const tiltCards = document.querySelectorAll('.service-card, .video-card, .price-card');
+const tiltCards = document.querySelectorAll('.service-card, .video-card');
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
