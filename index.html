@@ -814,19 +814,46 @@ body.lang-switching [data-lt] {
 @media (hover: none) {
   .price-card:hover, .video-card:hover { transform: none; }
 }
-/* Hard mobile breakpoint: kill GPU-heavy effects that crash mobile browsers.
-   Using max-width instead of (hover:none) because some Android browsers
-   mis-report hover capability. The featured card's mask-composite animation
-   is the primary crash trigger at scroll time. */
+/* Nuclear mobile optimization — iOS Safari crashes when too many GPU
+   compositing layers (backdrop-filter, blur, will-change) are active
+   simultaneously. Removing them all below 900px fixes this. */
 @media (max-width: 900px) {
-  .service-card, .video-card, .price-card, .photo-example, .contact-method {
+  /* Kill every backdrop-filter on the page */
+  *, *::before, *::after {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+  }
+  /* Completely prevent the featured card mask-composite layer from being
+     created — opacity:0 alone still allocates GPU memory */
+  .price-card.featured::after { content: none !important; }
+  /* Prevent -webkit-mask layer on ::before too */
+  .price-card.featured::before { display: none; }
+  /* Remove GPU compositing hints from all animated elements */
+  .service-card, .video-card, .price-card,
+  .photo-example, .contact-method,
+  .btn-primary, .btn-ghost, .nav-cta, .orb {
     will-change: auto;
     transform-style: flat;
   }
-  .price-card { background: rgba(255,255,255,0.05); }
-  .price-card.featured::after { animation: none !important; opacity: 0 !important; }
+  /* Replace blurred reveal animations with plain opacity fades */
+  .reveal, .reveal-left, .reveal-right, .reveal-scale {
+    filter: none !important;
+    will-change: opacity;
+    transition: opacity 0.7s var(--ease-fluid), transform 0.7s var(--ease-fluid) !important;
+  }
+  /* Remove perspective stacking contexts from grid containers */
+  .services-grid, .portfolio-grid, .pricing-grid, .photo-examples {
+    perspective: none;
+  }
+  /* Halve orb blur (blur(100px) on a 750px div is a huge GPU texture) */
+  .orb { filter: blur(48px) !important; opacity: 0.08; }
+  /* Cursor glow is useless on touch */
+  .cursor-glow { display: none; }
+  /* Solid backgrounds since glass effect is gone */
+  .price-card { background: rgba(23,26,33,0.97); }
+  .price-card.featured { background: linear-gradient(160deg, rgba(37,99,235,0.12) 0%, rgba(23,26,33,0.97) 65%); }
+  /* Disable hover transforms */
+  .price-card:hover, .video-card:hover, .service-card:hover { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
