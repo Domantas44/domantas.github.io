@@ -10,16 +10,17 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --black:        #070707;
-  --surface:      #0d0d0d;
-  --card:         #111111;
-  --border:       rgba(255,255,255,0.06);
-  --white:        #F6F3ED;
-  --muted:        rgba(246,243,237,0.40);
-  --accent:       #C9A96E;
-  --accent2:      #E2C07A;
+  --black:        #08121F;
+  --surface:      #0B1B30;
+  --card:         #0F2238;
+  --border:       rgba(231,240,250,0.07);
+  --white:        #E7F0FA;
+  --muted:        rgba(231,240,250,0.42);
+  --accent:       #2E5E99;
+  --accent2:      #7BA4D0;
+  --accent-hi:    #3E78BE;
   --glass:        rgba(255,255,255,0.025);
-  --glass-border: rgba(255,255,255,0.07);
+  --glass-border: rgba(255,255,255,0.08);
   --ease-fluid:  cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -37,14 +38,14 @@ body {
 
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--black); }
-::-webkit-scrollbar-thumb { background: linear-gradient(var(--accent), var(--accent2)); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--accent2), var(--accent)); border-radius: 2px; }
 
 /* ===== CURSOR GLOW ===== */
 .cursor-glow {
   position: fixed;
   width: 600px; height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(201,169,110,0.055) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(123,164,208,0.06) 0%, transparent 70%);
   pointer-events: none;
   transform: translate(-50%, -50%);
   transition: left 0.8s var(--ease-fluid), top 0.8s var(--ease-fluid);
@@ -55,6 +56,7 @@ body {
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
+  gap: 20px;
   padding: 24px 6%;
   transition: background 0.5s var(--ease-fluid),
               backdrop-filter 0.5s,
@@ -62,10 +64,10 @@ nav {
               border-bottom 0.5s;
 }
 nav.scrolled {
-  background: rgba(7,7,7,0.78);
+  background: rgba(8,18,31,0.80);
   backdrop-filter: blur(48px) saturate(160%) brightness(1.02);
   -webkit-backdrop-filter: blur(48px) saturate(160%) brightness(1.02);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(231,240,250,0.06);
   box-shadow: 0 12px 48px rgba(0,0,0,0.6);
   padding: 16px 6%;
 }
@@ -74,14 +76,15 @@ nav.scrolled {
   font-weight: 700; font-size: 1.12rem;
   letter-spacing: -0.01em;
   color: var(--white); text-decoration: none;
+  white-space: nowrap;
   transition: opacity 0.2s;
 }
 .nav-logo:hover { opacity: 0.75; }
-.nav-logo .logo-dot  { color: var(--accent); }
-.nav-logo .logo-media { color: var(--accent); }
+.nav-logo .logo-dot  { color: var(--accent2); }
+.nav-logo .logo-media { color: var(--accent2); }
 
 .nav-center {
-  display: flex; gap: 36px; list-style: none;
+  display: flex; gap: 32px; list-style: none;
   position: absolute; left: 50%; transform: translateX(-50%);
 }
 .nav-center a {
@@ -89,19 +92,20 @@ nav.scrolled {
   color: var(--muted); text-decoration: none;
   letter-spacing: 0.1em; text-transform: uppercase;
   position: relative; padding-bottom: 2px;
+  white-space: nowrap;
   transition: color 0.25s var(--ease-fluid);
 }
 .nav-center a::after {
   content: '';
   position: absolute; bottom: -2px; left: 0;
   width: 0; height: 1px;
-  background: var(--accent);
+  background: var(--accent2);
   transition: width 0.35s var(--ease-fluid);
 }
 .nav-center a:hover { color: var(--white); }
 .nav-center a:hover::after { width: 100%; }
 
-.nav-right { display: flex; align-items: center; gap: 14px; }
+.nav-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 
 /* Language toggle */
 .lang-toggle {
@@ -126,26 +130,27 @@ nav.scrolled {
 }
 .lang-btn.active {
   background: var(--accent);
-  color: #0a0a0a;
+  color: var(--white);
   transform: scale(1.05);
-  box-shadow: 0 2px 12px rgba(201,169,110,0.35);
+  box-shadow: 0 2px 12px rgba(46,94,153,0.45);
 }
 .lang-btn:hover:not(.active) { color: var(--white); }
 
 .nav-cta {
   padding: 9px 22px;
   background: var(--accent);
-  color: #0a0a0a;
-  border-radius: 5px;
+  color: var(--white);
+  border-radius: 100px;
   font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700; font-size: 0.82rem;
+  font-weight: 600; font-size: 0.82rem;
   text-decoration: none; letter-spacing: 0.02em;
+  white-space: nowrap;
   transition: background 0.25s, transform 0.2s var(--ease-spring), box-shadow 0.25s;
 }
 .nav-cta:hover {
-  background: var(--accent2);
+  background: var(--accent-hi);
   transform: translateY(-1px) scale(1.01);
-  box-shadow: 0 8px 24px rgba(201,169,110,0.4);
+  box-shadow: 0 8px 24px rgba(46,94,153,0.5);
 }
 
 /* ===== HERO ===== */
@@ -159,36 +164,36 @@ nav.scrolled {
 
 .orb {
   position: absolute; border-radius: 50%;
-  filter: blur(100px); opacity: 0.16;
+  filter: blur(100px); opacity: 0.18;
   pointer-events: none;
   will-change: transform;
   transition: transform 1.6s var(--ease-fluid);
 }
 .orb-1 {
   width: 750px; height: 750px;
-  background: radial-gradient(circle, #C9A96E, transparent 70%);
+  background: radial-gradient(circle, #2E5E99, transparent 70%);
   top: -220px; left: -150px;
 }
 .orb-2 {
   width: 560px; height: 560px;
-  background: radial-gradient(circle, #E2C07A, transparent 70%);
+  background: radial-gradient(circle, #7BA4D0, transparent 70%);
   bottom: -140px; right: -120px;
 }
 .orb-3 {
   width: 360px; height: 360px;
-  background: radial-gradient(circle, #B8905A, transparent 70%);
+  background: radial-gradient(circle, #1E4A82, transparent 70%);
   top: 45%; left: 50%;
   transform: translate(-50%, -50%);
-  opacity: 0.07;
+  opacity: 0.09;
 }
 
-/* Gold grid overlay */
+/* Grid overlay */
 #hero::before {
   content: '';
   position: absolute; inset: 0;
   background-image:
-    linear-gradient(rgba(201,169,110,0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,169,110,0.022) 1px, transparent 1px);
+    linear-gradient(rgba(123,164,208,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,164,208,0.025) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
   pointer-events: none;
@@ -206,13 +211,13 @@ nav.scrolled {
 }
 .filmstrip-track span {
   font-size: 0.64rem; font-weight: 500;
-  color: rgba(226,192,122,0.28);
+  color: rgba(123,164,208,0.30);
   letter-spacing: 0.2em; text-transform: uppercase;
   padding: 0 40px;
 }
 .filmstrip-track span::before {
   content: '◆'; margin-right: 40px;
-  color: rgba(201,169,110,0.2);
+  color: rgba(123,164,208,0.22);
   font-size: 0.48rem;
 }
 @keyframes ticker {
@@ -225,7 +230,7 @@ nav.scrolled {
 .hero-rule {
   display: block;
   width: 40px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent2), transparent);
   margin: 0 auto 26px;
   opacity: 0;
   animation: ruleIn 0.9s var(--ease-fluid) 0.05s forwards;
@@ -235,19 +240,19 @@ nav.scrolled {
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
   font-size: 0.67rem; font-weight: 600; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--accent);
+  text-transform: uppercase; color: var(--accent2);
   margin-bottom: 40px;
 }
 .hero-eyebrow::before {
   content: '';
   width: 5px; height: 5px; border-radius: 50%;
-  background: var(--accent);
+  background: var(--accent2);
   flex-shrink: 0;
   animation: pulse-dot 2.5s ease-in-out infinite;
 }
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(201,169,110,0.5); }
-  50%       { opacity: 0.5; transform: scale(0.75); box-shadow: 0 0 0 6px rgba(201,169,110,0); }
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(123,164,208,0.5); }
+  50%       { opacity: 0.5; transform: scale(0.75); box-shadow: 0 0 0 6px rgba(123,164,208,0); }
 }
 
 h1 {
@@ -262,7 +267,7 @@ h1 em {
   font-family: 'Playfair Display', serif;
   font-style: italic;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--accent2) 0%, var(--accent) 50%, #B8905A 100%);
+  background: linear-gradient(135deg, #9CC2E6 0%, #5A93D0 50%, #2E5E99 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
   display: inline-block;
@@ -286,10 +291,10 @@ h1 em {
 
 .btn-primary {
   padding: 16px 36px;
-  background: var(--accent); color: #0a0a0a;
-  border-radius: 5px;
+  background: var(--accent); color: var(--white);
+  border-radius: 100px;
   font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em;
+  font-weight: 600; font-size: 0.9rem; letter-spacing: 0.02em;
   text-decoration: none;
   transition: background 0.25s, transform 0.2s var(--ease-spring), box-shadow 0.25s;
   position: relative; overflow: hidden;
@@ -297,31 +302,31 @@ h1 em {
 .btn-primary::after {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.14), transparent);
+  background: linear-gradient(135deg, rgba(255,255,255,0.16), transparent);
   opacity: 0; transition: opacity 0.25s;
 }
 .btn-primary:hover {
-  background: var(--accent2);
+  background: var(--accent-hi);
   transform: translateY(-2px) scale(1.01);
-  box-shadow: 0 14px 44px rgba(201,169,110,0.4);
+  box-shadow: 0 14px 44px rgba(46,94,153,0.5);
 }
 .btn-primary:hover::after { opacity: 1; }
 
 .btn-ghost {
   padding: 16px 36px;
   background: transparent; color: var(--white);
-  border: 1px solid rgba(255,255,255,0.16);
-  border-radius: 5px;
+  border: 1px solid rgba(231,240,250,0.18);
+  border-radius: 100px;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 500; font-size: 0.9rem; letter-spacing: 0.02em;
   text-decoration: none;
   transition: border-color 0.3s, background 0.3s, transform 0.2s var(--ease-spring), box-shadow 0.25s;
 }
 .btn-ghost:hover {
-  border-color: rgba(201,169,110,0.5);
-  background: rgba(201,169,110,0.06);
+  border-color: rgba(123,164,208,0.55);
+  background: rgba(46,94,153,0.12);
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(201,169,110,0.1);
+  box-shadow: 0 8px 28px rgba(46,94,153,0.18);
 }
 
 .hero-stats {
@@ -338,14 +343,14 @@ h1 em {
   position: absolute; right: 0; top: 50%;
   transform: translateY(-50%);
   height: 28px; width: 1px;
-  background: rgba(255,255,255,0.09);
+  background: rgba(231,240,250,0.1);
 }
 .stat-num {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 2.5rem; font-weight: 700;
   letter-spacing: -0.04em; line-height: 1;
 }
-.stat-num span { color: var(--accent); }
+.stat-num span { color: var(--accent2); }
 .stat-label {
   font-size: 0.7rem; color: var(--muted);
   letter-spacing: 0.1em; margin-top: 8px;
@@ -359,14 +364,14 @@ section { padding: 100px 6%; }
   display: inline-flex; align-items: center; gap: 14px;
   font-size: 0.64rem; font-weight: 600;
   letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 20px;
+  color: var(--accent2); margin-bottom: 20px;
 }
 .section-label::before {
   content: '';
   display: inline-block;
   width: 26px; height: 1px;
-  background: var(--accent);
-  opacity: 0.65;
+  background: var(--accent2);
+  opacity: 0.7;
   flex-shrink: 0;
 }
 
@@ -388,8 +393,8 @@ section { padding: 100px 6%; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1px;
-  background: rgba(201,169,110,0.07);
-  border: 1px solid rgba(201,169,110,0.07);
+  background: rgba(123,164,208,0.08);
+  border: 1px solid rgba(123,164,208,0.08);
 }
 .service-card {
   background: var(--black);
@@ -401,7 +406,7 @@ section { padding: 100px 6%; }
   content: '';
   position: absolute; top: 0; left: 0;
   width: 100%; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent2), transparent);
   opacity: 0;
   transition: opacity 0.4s var(--ease-fluid);
 }
@@ -409,7 +414,7 @@ section { padding: 100px 6%; }
   content: '';
   position: absolute; bottom: 0; right: 0;
   width: 220px; height: 220px;
-  background: radial-gradient(circle, rgba(201,169,110,0.055), transparent 70%);
+  background: radial-gradient(circle, rgba(46,94,153,0.10), transparent 70%);
   opacity: 0;
   transition: opacity 0.5s var(--ease-fluid), transform 0.5s var(--ease-fluid);
   transform: translate(70px, 70px);
@@ -432,11 +437,11 @@ section { padding: 100px 6%; }
 .service-tag {
   display: inline-block; margin-top: 24px;
   font-size: 0.62rem; font-weight: 600; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--accent);
+  text-transform: uppercase; color: var(--accent2);
 }
 
 /* ===== PORTFOLIO ===== */
-#portfolio { background: rgba(255,255,255,0.01); border-top: 1px solid var(--border); }
+#portfolio { background: rgba(255,255,255,0.012); border-top: 1px solid var(--border); }
 .portfolio-head { margin-bottom: 56px; }
 .portfolio-grid {
   display: grid;
@@ -453,8 +458,8 @@ section { padding: 100px 6%; }
 }
 .video-card:hover {
   transform: translateY(-10px) scale(1.008);
-  box-shadow: 0 36px 90px rgba(0,0,0,0.75), 0 0 0 1px rgba(201,169,110,0.14);
-  border-color: rgba(201,169,110,0.1);
+  box-shadow: 0 36px 90px rgba(0,0,0,0.75), 0 0 0 1px rgba(123,164,208,0.18);
+  border-color: rgba(123,164,208,0.14);
 }
 .video-wrapper {
   position: relative; padding-bottom: 72%; height: 0; overflow: hidden;
@@ -464,21 +469,21 @@ section { padding: 100px 6%; }
 }
 .video-placeholder {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(135deg, #0d0d0d 0%, #111 50%, #0a0a0a 100%);
+  background: linear-gradient(135deg, #0B1B30 0%, #0F2238 50%, #08121F 100%);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
 }
 .play-icon {
   width: 56px; height: 56px; border-radius: 50%;
-  background: rgba(201,169,110,0.1);
-  border: 1px solid rgba(201,169,110,0.28);
+  background: rgba(46,94,153,0.16);
+  border: 1px solid rgba(123,164,208,0.3);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.3rem;
   transition: transform 0.3s var(--ease-spring), background 0.3s, box-shadow 0.3s;
 }
 .video-card:hover .play-icon {
   transform: scale(1.15);
-  background: rgba(201,169,110,0.22);
-  box-shadow: 0 4px 20px rgba(201,169,110,0.25);
+  background: rgba(46,94,153,0.28);
+  box-shadow: 0 4px 20px rgba(46,94,153,0.3);
 }
 .video-placeholder span {
   font-size: 0.7rem; color: var(--muted);
@@ -495,8 +500,8 @@ section { padding: 100px 6%; }
   padding: 4px 11px; border-radius: 2px;
   font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: rgba(201,169,110,0.08); color: var(--accent);
-  border: 1px solid rgba(201,169,110,0.16);
+  background: rgba(46,94,153,0.12); color: var(--accent2);
+  border: 1px solid rgba(123,164,208,0.2);
 }
 
 /* ===== PROCESS ===== */
@@ -517,7 +522,7 @@ section { padding: 100px 6%; }
 .process-step::after {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(201,169,110,0.04), transparent 60%);
+  background: linear-gradient(135deg, rgba(46,94,153,0.06), transparent 60%);
   opacity: 0;
   transition: opacity 0.4s var(--ease-fluid);
 }
@@ -527,7 +532,7 @@ section { padding: 100px 6%; }
   font-family: 'Playfair Display', serif;
   font-size: 4.2rem; font-weight: 700;
   letter-spacing: -0.04em; line-height: 1;
-  background: linear-gradient(135deg, rgba(201,169,110,0.55), rgba(226,192,122,0.14));
+  background: linear-gradient(135deg, rgba(123,164,208,0.6), rgba(46,94,153,0.15));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 20px;
@@ -542,7 +547,7 @@ section { padding: 100px 6%; }
 .process-step p { font-size: 0.88rem; color: var(--muted); line-height: 1.8; position: relative; z-index: 1; }
 
 /* ===== PRICING ===== */
-#pricing { background: rgba(255,255,255,0.01); border-top: 1px solid var(--border); }
+#pricing { background: rgba(255,255,255,0.012); border-top: 1px solid var(--border); }
 .pricing-head { margin-bottom: 56px; }
 .pricing-grid {
   display: grid;
@@ -554,35 +559,35 @@ section { padding: 100px 6%; }
   backdrop-filter: blur(28px) saturate(160%);
   -webkit-backdrop-filter: blur(28px) saturate(160%);
   border: 1px solid var(--glass-border);
-  border-radius: 4px; padding: 46px 40px;
+  border-radius: 8px; padding: 46px 40px;
   position: relative; overflow: hidden;
   box-shadow: 0 8px 40px rgba(0,0,0,0.38);
   transition: transform 0.45s var(--ease-fluid), box-shadow 0.45s var(--ease-fluid), border-color 0.3s;
 }
 .price-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 30px 72px rgba(0,0,0,0.65);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
 }
 .price-card.featured {
-  border-color: rgba(201,169,110,0.22);
-  background: linear-gradient(160deg, rgba(201,169,110,0.055) 0%, rgba(255,255,255,0.015) 65%);
-  box-shadow: 0 12px 50px rgba(201,169,110,0.1);
+  border-color: rgba(123,164,208,0.28);
+  background: linear-gradient(160deg, rgba(46,94,153,0.10) 0%, rgba(255,255,255,0.015) 65%);
+  box-shadow: 0 12px 50px rgba(46,94,153,0.16);
 }
 .price-card.featured::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent2), var(--accent), transparent);
 }
 .price-card.featured:hover {
-  box-shadow: 0 30px 72px rgba(201,169,110,0.18);
-  border-color: rgba(201,169,110,0.38);
+  box-shadow: 0 24px 60px rgba(46,94,153,0.26);
+  border-color: rgba(123,164,208,0.45);
 }
 .price-badge {
   display: inline-block; margin-bottom: 24px;
-  padding: 4px 14px; border-radius: 2px;
+  padding: 4px 14px; border-radius: 100px;
   font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-  background: rgba(201,169,110,0.1); color: var(--accent);
-  border: 1px solid rgba(201,169,110,0.18);
+  background: rgba(46,94,153,0.14); color: var(--accent2);
+  border: 1px solid rgba(123,164,208,0.22);
 }
 .price-card h3 {
   font-family: 'Space Grotesk', sans-serif;
@@ -594,7 +599,7 @@ section { padding: 100px 6%; }
   font-size: 3.2rem; font-weight: 700;
   letter-spacing: -0.04em; line-height: 1; margin-bottom: 30px;
 }
-.price-amount sup { font-size: 1.4rem; vertical-align: top; margin-top: 10px; color: var(--accent); }
+.price-amount sup { font-size: 1.5rem; vertical-align: baseline; margin-left: 3px; color: var(--accent2); }
 .price-features { list-style: none; margin-bottom: 38px; }
 .price-features li {
   display: flex; align-items: flex-start; gap: 14px;
@@ -602,29 +607,29 @@ section { padding: 100px 6%; }
   padding: 10px 0; border-bottom: 1px solid var(--border);
 }
 .price-features li:last-child { border-bottom: none; }
-.price-features li::before { content: '—'; color: var(--accent); font-weight: 400; flex-shrink: 0; margin-top: 1px; }
+.price-features li::before { content: '—'; color: var(--accent2); font-weight: 400; flex-shrink: 0; margin-top: 1px; }
 .btn-price-cta {
   display: block; width: 100%; padding: 14px; text-align: center;
-  border-radius: 4px; font-family: 'Space Grotesk', sans-serif;
+  border-radius: 100px; font-family: 'Space Grotesk', sans-serif;
   font-weight: 600; font-size: 0.9rem; text-decoration: none;
   transition: all 0.28s var(--ease-fluid);
-  border: 1px solid rgba(255,255,255,0.1); color: var(--white);
+  border: 1px solid rgba(231,240,250,0.12); color: var(--white);
   background: rgba(255,255,255,0.04);
   letter-spacing: 0.03em;
 }
 .btn-price-cta:hover {
-  border-color: rgba(201,169,110,0.35); background: rgba(201,169,110,0.06);
-  transform: translateY(-1px); color: var(--accent);
+  border-color: rgba(123,164,208,0.4); background: rgba(46,94,153,0.12);
+  transform: translateY(-1px); color: var(--accent2);
 }
 .price-card.featured .btn-price-cta {
   background: var(--accent); border-color: transparent;
-  color: #0a0a0a;
-  box-shadow: 0 4px 20px rgba(201,169,110,0.3);
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(46,94,153,0.4);
 }
 .price-card.featured .btn-price-cta:hover {
-  background: var(--accent2); border-color: transparent;
-  color: #0a0a0a;
-  box-shadow: 0 8px 32px rgba(201,169,110,0.45);
+  background: var(--accent-hi); border-color: transparent;
+  color: var(--white);
+  box-shadow: 0 8px 32px rgba(46,94,153,0.55);
   transform: translateY(-1px);
 }
 
@@ -649,20 +654,20 @@ section { padding: 100px 6%; }
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
   border: 1px solid var(--glass-border);
-  border-radius: 4px; text-decoration: none; color: var(--white);
+  border-radius: 12px; text-decoration: none; color: var(--white);
   transition: border-color 0.3s var(--ease-fluid),
               background 0.3s var(--ease-fluid),
               transform 0.3s var(--ease-spring);
 }
 .contact-method:hover {
-  border-color: rgba(201,169,110,0.28);
-  background: rgba(201,169,110,0.04);
+  border-color: rgba(123,164,208,0.32);
+  background: rgba(46,94,153,0.08);
   transform: translateX(6px);
 }
 .contact-method-icon {
-  width: 40px; height: 40px; border-radius: 4px;
-  background: rgba(201,169,110,0.08);
-  border: 1px solid rgba(201,169,110,0.14);
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(46,94,153,0.12);
+  border: 1px solid rgba(123,164,208,0.18);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.1rem; flex-shrink: 0;
   transition: transform 0.3s var(--ease-spring);
@@ -683,7 +688,7 @@ section { padding: 100px 6%; }
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
-  border-radius: 4px; padding: 13px 16px;
+  border-radius: 12px; padding: 13px 16px;
   color: var(--white); font-family: 'Inter', sans-serif;
   font-size: 0.92rem; outline: none; -webkit-appearance: none;
   transition: border-color 0.3s var(--ease-fluid), box-shadow 0.3s var(--ease-fluid);
@@ -691,27 +696,27 @@ section { padding: 100px 6%; }
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
-  border-color: rgba(201,169,110,0.45);
-  box-shadow: 0 0 0 3px rgba(201,169,110,0.08);
+  border-color: rgba(123,164,208,0.5);
+  box-shadow: 0 0 0 3px rgba(46,94,153,0.14);
 }
 .form-group textarea { resize: vertical; min-height: 120px; }
 .form-group select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23C9A96E'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%237BA4D0'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 14px center; background-size: 18px; padding-right: 42px;
 }
 .form-group select option { background: var(--card); }
 .btn-submit {
-  padding: 15px; background: var(--accent); color: #0a0a0a;
-  border: none; border-radius: 4px;
-  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem;
+  padding: 15px; background: var(--accent); color: var(--white);
+  border: none; border-radius: 100px;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.95rem;
   cursor: pointer; margin-top: 4px; letter-spacing: 0.03em;
   transition: background 0.25s, transform 0.2s var(--ease-spring), box-shadow 0.25s;
-  box-shadow: 0 4px 20px rgba(201,169,110,0.28);
+  box-shadow: 0 4px 20px rgba(46,94,153,0.4);
 }
 .btn-submit:hover {
-  background: var(--accent2);
+  background: var(--accent-hi);
   transform: translateY(-1px);
-  box-shadow: 0 8px 32px rgba(201,169,110,0.42);
+  box-shadow: 0 8px 32px rgba(46,94,153,0.55);
 }
 
 /* ===== FOOTER ===== */
@@ -724,8 +729,8 @@ footer {
   font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem;
   color: var(--white); text-decoration: none;
 }
-.footer-logo .logo-dot  { color: var(--accent); }
-.footer-logo .logo-media { color: var(--accent); }
+.footer-logo .logo-dot  { color: var(--accent2); }
+.footer-logo .logo-media { color: var(--accent2); }
 footer p { font-size: 0.78rem; color: var(--muted); }
 .footer-links { display: flex; gap: 28px; }
 .footer-links a {
@@ -778,8 +783,10 @@ body.lang-switching [data-lt] {
 }
 
 /* ===== MOBILE ===== */
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
   .nav-center { display: none; }
+}
+@media (max-width: 900px) {
   .contact-inner { grid-template-columns: 1fr; gap: 48px; }
 }
 @media (max-width: 768px) {
@@ -790,13 +797,19 @@ body.lang-switching [data-lt] {
   .process-step:last-child { border-bottom: none; }
   .filmstrip { display: none; }
   footer { flex-direction: column; text-align: center; }
-  .nav-cta { display: none; }
 }
 @media (max-width: 480px) {
   .process-steps { grid-template-columns: 1fr; }
   section { padding: 80px 5%; }
   h1 { letter-spacing: -0.025em; }
   .stat-item { padding: 0 16px; }
+  nav { padding: 18px 5%; }
+  nav.scrolled { padding: 14px 5%; }
+  .nav-cta { padding: 8px 16px; font-size: 0.78rem; }
+}
+/* Disable card lift/tilt on touch devices */
+@media (hover: none) {
+  .price-card:hover, .video-card:hover { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
@@ -813,13 +826,13 @@ body.lang-switching [data-lt] {
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid var(--glass-border);
-  border-radius: 4px;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 8px 40px rgba(0,0,0,0.32);
   transition: border-color 0.3s var(--ease-fluid), box-shadow 0.3s var(--ease-fluid);
 }
 .photo-example:hover {
-  border-color: rgba(201,169,110,0.14);
+  border-color: rgba(123,164,208,0.18);
   box-shadow: 0 20px 60px rgba(0,0,0,0.55);
 }
 .photo-side { display: flex; flex-direction: column; }
@@ -830,7 +843,7 @@ body.lang-switching [data-lt] {
 }
 .photo-badge {
   position: absolute; top: 14px; left: 14px;
-  padding: 4px 12px; border-radius: 2px;
+  padding: 4px 12px; border-radius: 100px;
   font-size: 0.61rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
   backdrop-filter: blur(6px);
   z-index: 2;
@@ -840,8 +853,8 @@ body.lang-switching [data-lt] {
   border: 1px solid rgba(255,255,255,0.14);
 }
 .badge-after {
-  background: rgba(201,169,110,0.14); color: var(--accent);
-  border: 1px solid rgba(201,169,110,0.28);
+  background: rgba(46,94,153,0.18); color: var(--accent2);
+  border: 1px solid rgba(123,164,208,0.3);
 }
 .mock-icon {
   font-size: 5.5rem; position: relative; z-index: 1;
@@ -869,23 +882,23 @@ body.lang-switching [data-lt] {
 .photo-divider {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 12px;
-  background: rgba(201,169,110,0.025);
+  background: rgba(46,94,153,0.04);
   border-left: 1px solid var(--glass-border);
   border-right: 1px solid var(--glass-border);
 }
 .photo-divider-text {
   font-size: 0.53rem; font-weight: 700; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--accent);
+  text-transform: uppercase; color: var(--accent2);
   writing-mode: vertical-rl; transform: rotate(180deg);
 }
-.photo-divider-arrow { font-size: 1.3rem; color: var(--accent); line-height: 1; }
+.photo-divider-arrow { font-size: 1.3rem; color: var(--accent2); line-height: 1; }
 .mock-jewelry-before { background: linear-gradient(160deg, #080c10 0%, #0c1520 55%, #102030 100%); }
-.mock-jewelry-after  { background: linear-gradient(160deg, #0a0a0a 0%, #0f0f0f 55%, #111 100%); }
+.mock-jewelry-after  { background: linear-gradient(160deg, #08121F 0%, #0B1B30 55%, #0F2238 100%); }
 .photo-example--two-after { grid-template-columns: 1fr 60px 1fr 1fr; }
 .mock-food-before    { background: linear-gradient(160deg, #fdf9f0 0%, #f0e8d5 100%); }
-.mock-food-after     { background: linear-gradient(160deg, #0a0a0a 0%, #0f0f0f 55%, #111 100%); }
+.mock-food-after     { background: linear-gradient(160deg, #08121F 0%, #0B1B30 55%, #0F2238 100%); }
 .mock-clothing-before { background: linear-gradient(160deg, #f2f2f2 0%, #e2e2e2 100%); }
-.mock-clothing-after  { background: linear-gradient(160deg, #060606 0%, #0a0a0a 55%, #0d0d0d 100%); }
+.mock-clothing-after  { background: linear-gradient(160deg, #070F1A 0%, #0A1626 55%, #0D1E33 100%); }
 @media (max-width: 700px) {
   .photo-example { grid-template-columns: 1fr; }
   .photo-example--two-after { grid-template-columns: 1fr; }
@@ -899,20 +912,20 @@ body.lang-switching [data-lt] {
 }
 
 /* ============================================================
-   LUXURY ENHANCEMENT LAYER
+   ENHANCEMENT LAYER
    ============================================================ */
 
-/* ---- Warm ambient mesh ---- */
+/* ---- Ambient mesh ---- */
 body::before {
   content: '';
   position: fixed; inset: -20%;
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(40% 50% at 15% 20%, rgba(201,169,110,0.07), transparent 60%),
-    radial-gradient(35% 45% at 85% 15%, rgba(226,192,122,0.05), transparent 60%),
-    radial-gradient(45% 50% at 75% 85%, rgba(184,144,90,0.05), transparent 60%),
-    radial-gradient(40% 40% at 25% 90%, rgba(201,169,110,0.04), transparent 60%);
+    radial-gradient(40% 50% at 15% 20%, rgba(46,94,153,0.12), transparent 60%),
+    radial-gradient(35% 45% at 85% 15%, rgba(123,164,208,0.07), transparent 60%),
+    radial-gradient(45% 50% at 75% 85%, rgba(46,94,153,0.09), transparent 60%),
+    radial-gradient(40% 40% at 25% 90%, rgba(123,164,208,0.05), transparent 60%);
   filter: blur(40px);
   animation: meshDrift 32s ease-in-out infinite alternate;
 }
@@ -931,12 +944,12 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ---- Gold scroll progress bar ---- */
+/* ---- Scroll progress bar ---- */
 .scroll-progress {
   position: fixed; top: 0; left: 0; height: 1.5px; width: 0%;
   z-index: 200; pointer-events: none;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
-  box-shadow: 0 0 18px rgba(201,169,110,0.65);
+  box-shadow: 0 0 18px rgba(123,164,208,0.6);
   transition: width 0.1s linear;
 }
 
@@ -969,19 +982,19 @@ body::after {
   position: absolute; inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(160deg, rgba(255,255,255,0.065) 0%, rgba(255,255,255,0) 28%);
+  background: linear-gradient(160deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 28%);
   opacity: 0.6;
   z-index: 2;
 }
 
-/* ---- Gold shine sweep on hover ---- */
+/* ---- Shine sweep on hover ---- */
 .service-card > .shine,
 .video-card > .shine,
 .price-card > .shine {
   position: absolute; top: 0; left: -75%;
   width: 50%; height: 100%;
   z-index: 3; pointer-events: none;
-  background: linear-gradient(100deg, transparent, rgba(201,169,110,0.09), transparent);
+  background: linear-gradient(100deg, transparent, rgba(123,164,208,0.12), transparent);
   transform: skewX(-18deg);
   transition: left 0.9s var(--ease-fluid);
 }
@@ -1006,7 +1019,7 @@ h1 .word {
   to { opacity: 1; transform: none; }
 }
 
-/* ---- Featured price card: living gold border ---- */
+/* ---- Featured price card: living border ---- */
 .price-card.featured {
   background-clip: padding-box;
 }
@@ -1014,13 +1027,13 @@ h1 .word {
   content: '';
   position: absolute; inset: 0;
   border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(201,169,110,0.8), rgba(226,192,122,0.2), rgba(201,169,110,0.6));
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(123,164,208,0.85), rgba(46,94,153,0.25), rgba(123,164,208,0.65));
   background-size: 200% 200%;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   animation: borderFlow 6s ease infinite;
-  opacity: 0.85; z-index: 4;
+  opacity: 0.9; z-index: 4;
 }
 @keyframes borderFlow {
   0%,100% { background-position: 0% 50%; }
@@ -1032,13 +1045,13 @@ h1 .word {
 
 /* ---- Section title gradient ---- */
 .section-title {
-  background: linear-gradient(180deg, var(--white) 35%, rgba(246,243,237,0.7) 100%);
+  background: linear-gradient(180deg, var(--white) 35%, rgba(231,240,250,0.7) 100%);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* ---- Gold stat glow ---- */
-.stat-num span { text-shadow: 0 0 24px rgba(201,169,110,0.4); }
+/* ---- Stat glow ---- */
+.stat-num span { text-shadow: 0 0 24px rgba(123,164,208,0.45); }
 
 /* ---- Nav link hover ---- */
 .nav-center a { transition: color 0.25s var(--ease-fluid), transform 0.25s var(--ease-spring); }
@@ -1066,7 +1079,7 @@ h1 .word {
 }
 @keyframes accentBreathe {
   0%,100% { filter: brightness(1); }
-  50%     { filter: brightness(1.6) drop-shadow(0 0 5px var(--accent)); }
+  50%     { filter: brightness(1.6) drop-shadow(0 0 5px var(--accent2)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1093,7 +1106,7 @@ h1 .word {
     <li><a href="#photos" data-en="Photos" data-lt="Nuotraukos">Photos</a></li>
     <li><a href="#process" data-en="Process" data-lt="Procesas">Process</a></li>
     <li><a href="#pricing" data-en="Pricing" data-lt="Kainos">Pricing</a></li>
-    <li><a href="#free-sample" data-en="Free Video" data-lt="Nemokamas video" style="color:var(--accent);">Free Video</a></li>
+    <li><a href="#free-sample" data-en="Free Video" data-lt="Nemokamas video" style="color:var(--accent2);">Free Video</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-toggle">
@@ -1130,7 +1143,7 @@ h1 .word {
         <div class="stat-label" data-en="Avg. turnaround" data-lt="Vid. laikas">Avg. turnaround</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num" data-target="€49">€49</div>
+        <div class="stat-num" data-target="49" data-suffix="€">49€</div>
         <div class="stat-label" data-en="Starting from" data-lt="Nuo">Starting from</div>
       </div>
     </div>
@@ -1169,13 +1182,13 @@ h1 .word {
     <div class="service-card reveal">
       <div class="service-icon">🎬</div>
       <h3 data-en="Product Commercials" data-lt="Produkto Reklamos">Product Commercials</h3>
-      <p data-en="Cinematic showcases that make your product irresistible. Perfect for landing pages, paid ads, and brand campaigns." data-lt="Vaizdo įrašai, kurie geriausiai atskleidžia jūsų produktą. Tinka mokamoms reklamoms, svetainėms ir prekės ženklo kampanijoms.">Cinematic showcases that make your product irresistible. Perfect for landing pages, paid ads, and brand campaigns.</p>
+      <p data-en="Cinematic showcases that make your product irresistible. Perfect for landing pages, paid ads, and brand campaigns." data-lt="Vaizdo įrašai, kurie geriausiai atskleidžia Jūsų produktą. Tinka mokamoms reklamoms, svetainėms ir prekės ženklo kampanijoms.">Cinematic showcases that make your product irresistible. Perfect for landing pages, paid ads, and brand campaigns.</p>
       <span class="service-tag" data-en="High-end · 5–20s" data-lt="Aukšta kokybė · 5–20s">High-end · 5–20s</span>
     </div>
     <div class="service-card reveal reveal-delay-1">
       <div class="service-icon">📱</div>
       <h3 data-en="Instagram Reels" data-lt="Instagram Reels">Instagram Reels</h3>
-      <p data-en="Vertical-format short videos optimized for engagement and reach. Designed for the algorithm and the audience." data-lt="Trumpi vertikalūs vaizdo įrašai, pritaikyti algoritmams ir jūsų auditorijai. Didesnis pasiekiamumas socialiniuose tinkluose.">Vertical-format short videos optimized for engagement and reach. Designed for the algorithm and the audience.</p>
+      <p data-en="Vertical-format short videos optimized for engagement and reach. Designed for the algorithm and the audience." data-lt="Trumpi vertikalūs vaizdo įrašai, pritaikyti algoritmams ir Jūsų auditorijai. Didesnis pasiekiamumas socialiniuose tinkluose.">Vertical-format short videos optimized for engagement and reach. Designed for the algorithm and the audience.</p>
       <span class="service-tag" data-en="Social · 5–20s" data-lt="Socialinė · 5–20s">Social · 5–20s</span>
     </div>
     <div class="service-card reveal reveal-delay-2">
@@ -1188,7 +1201,7 @@ h1 .word {
       <div class="service-icon">📸</div>
       <h3 data-en="AI Product Photography" data-lt="AI produktų nuotraukos">AI Product Photography</h3>
       <p data-en="Send a photo of your product and we place it into any environment — on models, in styled locations, against professional backdrops. No photographer, no model, no studio needed." data-lt="Atsiųskite produkto nuotrauką, o mes ją įkelsime į bet kokią aplinką, ant modelio ar profesionalaus fono. Be fotografo, be studijos.">Send a photo of your product and we place it into any environment — on models, in styled locations, against professional backdrops. No photographer, no model, no studio needed.</p>
-      <span class="service-tag" data-en="From €4 per photo · Any setting" data-lt="Nuo €4 už nuotrauką · Bet kokia aplinka">From €4 per photo · Any setting</span>
+      <span class="service-tag" data-en="From 4€ per photo · Any setting" data-lt="Nuo 4€ už nuotrauką · Bet kokia aplinka">From 4€ per photo · Any setting</span>
     </div>
   </div>
 </section>
@@ -1199,7 +1212,7 @@ h1 .word {
     <div class="section-label reveal" data-en="Portfolio" data-lt="Darbai">Portfolio</div>
     <h2 class="section-title reveal reveal-delay-1" data-en="Recent work" data-lt="Naujausi darbai">Recent work</h2>
     <p class="section-sub reveal reveal-delay-2" data-en="A sample of AI-generated content across different product categories." data-lt="AI sukurtų reklamų pavyzdžiai įvairiems produktams.">A sample of AI-generated content across different product categories.</p>
-    <p class="reveal reveal-delay-3" style="margin-top:14px; font-size:0.78rem; color:rgba(246,243,237,0.3); max-width:560px;" data-en="⚠ Videos and images shown are for presentation purposes only and feature placeholder products. When you send your product photos, all AI-generated content will be created specifically for your brand." data-lt="⚠ Rodomi darbai skirti tik demonstracijai ir naudoja pavyzdinius produktus. Gavę jūsų produkto nuotraukas, sukursime AI turinį specialiai jūsų verslui.">⚠ Videos and images shown are for presentation purposes only and feature placeholder products. When you send your product photos, all AI-generated content will be created specifically for your brand.</p>
+    <p class="reveal reveal-delay-3" style="margin-top:14px; font-size:0.78rem; color:rgba(231,240,250,0.3); max-width:560px;" data-en="⚠ Videos and images shown are for presentation purposes only and feature placeholder products. When you send your product photos, all AI-generated content will be created specifically for your brand." data-lt="⚠ Rodomi darbai skirti tik demonstracijai ir naudoja pavyzdinius produktus. Gavę produkto nuotraukas, sukursime AI turinį specialiai Jūsų verslui.">⚠ Videos and images shown are for presentation purposes only and feature placeholder products. When you send your product photos, all AI-generated content will be created specifically for your brand.</p>
   </div>
   <div class="portfolio-grid">
     <div class="video-card reveal">
@@ -1208,7 +1221,6 @@ h1 .word {
       </div>
       <div class="video-info">
         <h3 data-en="Luxury Jewelry Commercial" data-lt="Prabangių Papuošalų Reklama">Luxury Jewelry Commercial</h3>
-        <p data-en="Premium brand showcase · Instagram & web" data-lt="Produkto reklama · Instagram ir internetas">Premium brand showcase · Instagram & web</p>
         <span class="video-badge" data-en="Product Showcase" data-lt="Produkto Pristatymas">Product Showcase</span>
       </div>
     </div>
@@ -1276,7 +1288,7 @@ h1 .word {
         </div>
         <div class="photo-info">
           <strong data-en="Placed into a professional setting" data-lt="Profesionaliai pateikta">Placed into a professional setting</strong>
-          <span data-en="Any backdrop, any model, any mood — without a photo shoot" data-lt="Bet koks fonas, modelis ar stilius – be fotosesijos.">Any backdrop, any model, any mood — without a photo shoot</span>
+          <span data-en="Any backdrop, any model, any mood — without a photo shoot" data-lt="Bet koks fonas, modelis ar stilius – be fotosesijos">Any backdrop, any model, any mood — without a photo shoot</span>
         </div>
       </div>
     </div>
@@ -1316,7 +1328,7 @@ h1 .word {
           <span class="mock-env-label" data-en="AI-generated environment" data-lt="AI sugeneruota aplinka">AI-generated environment</span>
         </div>
         <div class="photo-info">
-          <strong data-en="Lifestyle product layout" data-lt="Produktų išdėstymas pagal jūsų norus">Lifestyle product layout</strong>
+          <strong data-en="Lifestyle product layout" data-lt="Produktų išdėstymas pagal Jūsų norus">Lifestyle product layout</strong>
           <span data-en="Products styled on a premium surface — ready for ads" data-lt="Produktų išdėstymas pageidautinu atvaizdavimu">Products styled on a premium surface — ready for ads</span>
         </div>
       </div>
@@ -1358,7 +1370,7 @@ h1 .word {
         </div>
         <div class="photo-info">
           <strong data-en="Product on model" data-lt="Produktas ant modelio">Product on model</strong>
-          <span data-en="Placed on a real model in a branded scene — no photo shoot needed" data-lt="Pritaikyta realiam modeliui firminiame kadre — be fotosesijos">Placed on a real model in a branded scene — no photo shoot needed</span>
+          <span data-en="Placed on a real model in a branded scene, no photo shoot needed" data-lt="Pritaikyta realiam modeliui firminiame kadre be fotosesijos">Placed on a real model in a branded scene, no photo shoot needed</span>
         </div>
       </div>
     </div>
@@ -1366,22 +1378,22 @@ h1 .word {
   </div>
 
   <div class="photo-pricing-table reveal" style="max-width:1100px;margin:40px auto 0;">
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 28px;border-bottom:1px solid var(--border);background:rgba(201,169,110,0.04);">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:14px 28px;border-bottom:1px solid var(--border);background:rgba(46,94,153,0.06);">
         <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);" data-en="Quantity" data-lt="Kiekis">Quantity</span>
         <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-align:right;" data-en="Price per photo" data-lt="Kaina už nuotrauką">Price per photo</span>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;padding:18px 28px;border-bottom:1px solid var(--border);transition:background 0.2s;" onmouseover="this.style.background='rgba(201,169,110,0.04)'" onmouseout="this.style.background='transparent'">
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:18px 28px;border-bottom:1px solid var(--border);transition:background 0.2s;" onmouseover="this.style.background='rgba(46,94,153,0.06)'" onmouseout="this.style.background='transparent'">
         <span style="font-size:0.94rem;font-weight:500;" data-en="1–5 photos" data-lt="1–5 nuotraukų">1–5 photos</span>
-        <span style="font-size:0.94rem;font-weight:700;color:var(--accent);text-align:right;">€10</span>
+        <span style="font-size:0.94rem;font-weight:700;color:var(--accent2);text-align:right;">10€</span>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;padding:18px 28px;border-bottom:1px solid var(--border);transition:background 0.2s;" onmouseover="this.style.background='rgba(201,169,110,0.04)'" onmouseout="this.style.background='transparent'">
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:18px 28px;border-bottom:1px solid var(--border);transition:background 0.2s;" onmouseover="this.style.background='rgba(46,94,153,0.06)'" onmouseout="this.style.background='transparent'">
         <span style="font-size:0.94rem;font-weight:500;" data-en="6–20 photos" data-lt="6–20 nuotraukų">6–20 photos</span>
-        <span style="font-size:0.94rem;font-weight:700;color:var(--accent);text-align:right;">€7</span>
+        <span style="font-size:0.94rem;font-weight:700;color:var(--accent2);text-align:right;">7€</span>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;padding:18px 28px;transition:background 0.2s;" onmouseover="this.style.background='rgba(201,169,110,0.04)'" onmouseout="this.style.background='transparent'">
+      <div style="display:grid;grid-template-columns:1fr 1fr;padding:18px 28px;transition:background 0.2s;" onmouseover="this.style.background='rgba(46,94,153,0.06)'" onmouseout="this.style.background='transparent'">
         <span style="font-size:0.94rem;font-weight:500;" data-en="21+ photos" data-lt="21+ nuotraukų">21+ photos</span>
-        <span style="font-size:0.94rem;font-weight:700;color:var(--accent);text-align:right;">€4</span>
+        <span style="font-size:0.94rem;font-weight:700;color:var(--accent2);text-align:right;">5€</span>
       </div>
     </div>
     <p style="font-size:0.76rem;color:var(--muted);margin-top:12px;padding:0 4px;" data-en="All prices per final delivered photo. Bulk orders delivered within 48–72 hours." data-lt="Visos kainos už vieną galutinę nuotrauką. Didesni užsakymai pristatomi per 48–72 valandas.">All prices per final delivered photo. Bulk orders delivered within 48–72 hours.</p>
@@ -1427,15 +1439,15 @@ h1 .word {
     <p class="section-sub reveal reveal-delay-2" style="margin:0 auto 48px;" data-en="Send me your product photo and I'll produce a short AI commercial for you, completely free. No payment, no commitment — just see the quality for yourself before you decide." data-lt="Atsiųskite savo produkto nuotrauką ir aš sukursiu jums trumpą AI reklamą visiškai nemokamai. Jokio mokėjimo, jokių įsipareigojimų — tiesiog įsitikinkite kokybe patys.">Send me your product photo and I'll produce a short AI commercial for you, completely free. No payment, no commitment — just see the quality for yourself before you decide.</p>
 
     <div class="reveal reveal-delay-3" style="
-      background: linear-gradient(135deg, rgba(201,169,110,0.07) 0%, rgba(255,255,255,0.02) 100%);
+      background: linear-gradient(135deg, rgba(46,94,153,0.10) 0%, rgba(255,255,255,0.02) 100%);
       backdrop-filter: blur(28px) saturate(160%);
       -webkit-backdrop-filter: blur(28px) saturate(160%);
-      border: 1px solid rgba(201,169,110,0.2);
-      border-radius: 6px;
+      border: 1px solid rgba(123,164,208,0.22);
+      border-radius: 16px;
       padding: 52px 52px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 12px 50px rgba(201,169,110,0.08);
+      box-shadow: 0 12px 50px rgba(46,94,153,0.12);
     ">
       <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);"></div>
 
@@ -1444,27 +1456,27 @@ h1 .word {
           <span style="font-size:1.4rem; flex-shrink:0;">📸</span>
           <div>
             <strong style="display:block; font-family:'Space Grotesk',sans-serif; font-size:0.94rem; margin-bottom:5px;" data-en="Send your product photo" data-lt="Atsiųskite produkto nuotrauką">Send your product photo</strong>
-            <span style="font-size:0.82rem; color:var(--muted);" data-en="Any angle, any background — I'll handle the rest." data-lt="Bet koks kampas, bet koks fonas">Any angle, any background — I'll handle the rest.</span>
+            <span style="font-size:0.82rem; color:var(--muted);" data-en="Any angle or background." data-lt="Bet kokiu kampu ir fonu.">Any angle or background.</span>
           </div>
         </div>
         <div style="display:flex; align-items:flex-start; gap:14px; text-align:left; max-width:220px;">
           <span style="font-size:1.4rem; flex-shrink:0;">⚡</span>
           <div>
             <strong style="display:block; font-family:'Space Grotesk',sans-serif; font-size:0.94rem; margin-bottom:5px;" data-en="Receive your video in 48h" data-lt="Gaukite vaizdo įrašą per 48h">Receive your video in 48h</strong>
-            <span style="font-size:0.82rem; color:var(--muted);" data-en="A ready-to-post short-form commercial, made just for your product." data-lt="Paruošta publikuoti trumpa reklama, sukurta tik jūsų produktui.">A ready-to-post short-form commercial, made just for your product.</span>
+            <span style="font-size:0.82rem; color:var(--muted);" data-en="A ready-to-post short-form commercial." data-lt="Trumpa reklama bus paruošta publikuoti.">A ready-to-post short-form commercial.</span>
           </div>
         </div>
         <div style="display:flex; align-items:flex-start; gap:14px; text-align:left; max-width:220px;">
           <span style="font-size:1.4rem; flex-shrink:0;">🎯</span>
           <div>
             <strong style="display:block; font-family:'Space Grotesk',sans-serif; font-size:0.94rem; margin-bottom:5px;" data-en="Decide with zero risk" data-lt="Niekuo nerizikuojate">Decide with zero risk</strong>
-            <span style="font-size:0.82rem; color:var(--muted);" data-en="Love it? Let's work together. Don't? Keep the video anyway." data-lt="Patiko? Dirbkime kartu!">Love it? Let's work together. Don't? Keep the video anyway.</span>
+            <span style="font-size:0.82rem; color:var(--muted);" data-en="Love it? Let's work together!" data-lt="Patiko? Dirbkime kartu!">Love it? Let's work together!</span>
           </div>
         </div>
       </div>
 
       <a href="#contact" class="btn-primary" style="display:inline-block; font-size:0.95rem; padding:16px 44px;" data-en="Claim your free video →" data-lt="Gauti nemokamą vaizdo įrašą →">Claim your free video →</a>
-      <p style="margin-top:16px; font-size:0.76rem; color:var(--muted);" data-en="Limited to one free video per brand. No credit card required." data-lt="Ribojama iki vieno nemokamo vaizdo įrašo vienam prekės ženklui.">Limited to one free video per brand. No credit card required.</p>
+      <p style="margin-top:16px; font-size:0.76rem; color:var(--muted);" data-en="Limited to one free video per brand." data-lt="Ribojama iki vieno nemokamo vaizdo įrašo vienam prekės ženklui.">Limited to one free video per brand.</p>
     </div>
   </div>
 </section>
@@ -1480,42 +1492,39 @@ h1 .word {
     <div class="price-card reveal-scale">
       <div class="price-badge" data-en="Starter" data-lt="Pradinis">Starter</div>
       <h3 data-en="Single Ad" data-lt="Viena reklama">Single Ad</h3>
-      <p class="price-desc" data-en="One polished video, delivered fast." data-lt="Vienas išbaigtas vaizdo įrašas, pristatytas greitai.">One polished video, delivered fast.</p>
-      <div class="price-amount"><sup>€</sup>49</div>
+      <p class="price-desc" data-en="One polished video with a photo." data-lt="Vienas išbaigtas vaizdo įrašas su nuotrauka.">One polished video with a photo.</p>
+      <div class="price-amount">49<sup>€</sup></div>
       <ul class="price-features">
-        <li data-en="1 AI-generated commercial" data-lt="1 AI sukurta reklama">1 AI-generated commercial</li>
-
-        <li data-en="Up to 30 seconds" data-lt="Iki 30 sekundžių">Up to 30 seconds</li>
+        <li data-en="1 AI-generated video up to 20s + photo" data-lt="1 AI sukurtas vaizdo įrašas iki 20 sekundžių + nuotrauka">1 AI-generated video up to 20s + photo</li>
         <li data-en="1 revision round" data-lt="1 taisymų raundas">1 revision round</li>
         <li data-en="48h turnaround" data-lt="48h pristatymas">48h turnaround</li>
       </ul>
       <a href="#contact" class="btn-price-cta" data-en="Get started" data-lt="Pradėti">Get started</a>
     </div>
     <div class="price-card featured reveal-scale reveal-delay-1">
-      <div class="price-badge" data-en="Most Popular" data-lt="Populiariausias">Most Popular</div>
+      <div class="price-badge" data-en="Best Value" data-lt="Geriausia vertė">Best Value</div>
+      <h3 data-en="Monthly Plan" data-lt="Mėnesinis planas">Monthly Plan</h3>
+      <p class="price-desc" data-en="Steady content all month long." data-lt="Pastovus reklaminis turinys visą mėnesį.">Steady content all month long.</p>
+      <div class="price-amount">299<sup>€</sup><span style="font-size:1rem;font-weight:400;color:var(--muted)" data-en="/mo" data-lt="/mėn">/mo</span></div>
+      <ul class="price-features">
+        <li data-en="8 AI-generated videos/month" data-lt="8 AI vaizdo įrašai per mėnesį">8 AI-generated videos/month</li>
+        <li data-en="10 AI product photo generations" data-lt="10 AI sugeneruotų produktų nuotraukų">10 AI product photo generations</li>
+        <li data-en="Revisions by agreement" data-lt="Taisymai pagal susitarimą">Revisions by agreement</li>
+        <li data-en="Priority same-day turnaround" data-lt="Prioritetinis pristatymas tą pačią dieną">Priority same-day turnaround</li>
+      </ul>
+      <a href="#contact" class="btn-price-cta" data-en="Get started" data-lt="Pradėti">Get started</a>
+    </div>
+    <div class="price-card reveal-scale reveal-delay-2">
+      <div class="price-badge" data-en="Standard" data-lt="Standartinis">Standard</div>
       <h3 data-en="Growth Pack" data-lt="Augimo paketas">Growth Pack</h3>
-      <p class="price-desc" data-en="Everything you need to test and scale." data-lt="Viskas, ko reikia reklamos testavimui ir augimui.">Everything you need to test and scale.</p>
-      <div class="price-amount"><sup>€</sup>199</div>
+      <p class="price-desc" data-en="Everything you need to start advertising and grow." data-lt="Viskas, ko reikia norintiems reklamuotis ir augti.">Everything you need to start advertising and grow.</p>
+      <div class="price-amount">199<sup>€</sup></div>
       <ul class="price-features">
         <li data-en="5 AI-generated videos" data-lt="5 AI sukurti vaizdo įrašai">5 AI-generated videos</li>
         <li data-en="5 AI product photos" data-lt="5 AI produktų nuotraukos">5 AI product photos</li>
         <li data-en="Mix of formats & lengths" data-lt="Įvairūs formatai ir trukmės">Mix of formats & lengths</li>
         <li data-en="2 revision rounds each" data-lt="Po 2 taisymų raundus">2 revision rounds each</li>
         <li data-en="Priority turnaround" data-lt="Prioritetinis pristatymas">Priority turnaround</li>
-      </ul>
-      <a href="#contact" class="btn-price-cta" data-en="Get started" data-lt="Pradėti">Get started</a>
-    </div>
-    <div class="price-card reveal-scale reveal-delay-2">
-      <div class="price-badge" data-en="Best Value" data-lt="Geriausia vertė">Best Value</div>
-      <h3 data-en="Monthly Plan" data-lt="Mėnesinis planas">Monthly Plan</h3>
-      <p class="price-desc" data-en="Consistent content every month, always fresh." data-lt="Naujas reklaminis turinys kiekvieną mėnesį.">Consistent content every month, always fresh.</p>
-      <div class="price-amount"><sup>€</sup>299<span style="font-size:1rem;font-weight:400;color:var(--muted)" data-en="/mo" data-lt="/mėn">/mo</span></div>
-      <ul class="price-features">
-        <li data-en="8 AI-generated videos/month" data-lt="8 AI vaizdo įrašai per mėnesį">8 AI-generated videos/month</li>
-        <li data-en="10 AI product photo generations" data-lt="10 AI sugeneruotų produktų nuotraukų">10 AI product photo generations</li>
-        <li data-en="Unlimited revisions" data-lt="Neriboti taisymai">Unlimited revisions</li>
-        <li data-en="Dedicated content calendar" data-lt="Turinio kalendorius">Dedicated content calendar</li>
-        <li data-en="Priority same-day turnaround" data-lt="Prioritetinis pristatymas tą pačią dieną">Priority same-day turnaround</li>
       </ul>
       <a href="#contact" class="btn-price-cta" data-en="Get started" data-lt="Pradėti">Get started</a>
     </div>
@@ -1528,7 +1537,7 @@ h1 .word {
     <div class="contact-info reveal-left">
       <div class="section-label" data-en="Contact" data-lt="Kontaktai">Contact</div>
       <h2 data-en="Let's make your product impossible to ignore." data-lt="Sukurkime reklamą, kurios neįmanoma nepastebėti.">Let's make your product impossible to ignore.</h2>
-      <p data-en="Whether you have one product to launch or a full catalog to promote, reach out and I'll respond within a few hours." data-lt="Nesvarbu, ar norite reklamuoti vieną produktą, ar visą produktų katalogą — susisiekite ir atsakysiu per kelias valandas.">Whether you have one product to launch or a full catalog to promote, reach out and I'll respond within a few hours.</p>
+      <p data-en="Whether you have one product to launch or a full catalog to promote, reach out and I'll respond within a few hours. No sign-ups, no fuss — everything straight to the point." data-lt="Nesvarbu, ar norite reklamuoti vieną produktą, ar visą produktų katalogą — susisiekite ir atsakysiu per kelias valandas. Jokios registracijos — viskas tiesiai į reikalą.">Whether you have one product to launch or a full catalog to promote, reach out and I'll respond within a few hours. No sign-ups, no fuss — everything straight to the point.</p>
     </div>
     <div class="contact-form reveal-right reveal-delay-1">
       <div class="form-group">
@@ -1543,10 +1552,10 @@ h1 .word {
         <label data-en="What are you interested in?" data-lt="Kokia paslauga domina?">What are you interested in?</label>
         <select id="packageSelect">
           <option value="" disabled selected data-en="Select a package…" data-lt="Pasirinkite paketą…">Select a package…</option>
-          <option data-en="Single Ad — €49" data-lt="Viena reklama — €49">Single Ad — €49</option>
-          <option data-en="AI Photo Generation — from €4/photo" data-lt="AI Nuotraukų Generavimas — nuo €4/nuotr.">AI Photo Generation — from €4/photo</option>
-          <option data-en="Growth Pack — €199" data-lt="Augimo paketas — €199">Growth Pack — €199</option>
-          <option data-en="Monthly Plan — €299/mo" data-lt="Mėnesinis planas — €299/mėn.">Monthly Plan — €299/mo</option>
+          <option data-en="Single Ad — 49€" data-lt="Viena reklama — 49€">Single Ad — 49€</option>
+          <option data-en="AI Photo Generation — from 4€/photo" data-lt="AI Nuotraukų Generavimas — nuo 4€/nuotr.">AI Photo Generation — from 4€/photo</option>
+          <option data-en="Growth Pack — 199€" data-lt="Augimo paketas — 199€">Growth Pack — 199€</option>
+          <option data-en="Monthly Plan — 299€/mo" data-lt="Mėnesinis planas — 299€/mėn.">Monthly Plan — 299€/mo</option>
           <option data-en="Not sure yet" data-lt="Dar nežinau">Not sure yet</option>
         </select>
       </div>
@@ -1626,9 +1635,10 @@ window.addEventListener('scroll', () => {
   updateOrbs();
 }, { passive: true });
 
-/* ===== 3D TILT + GOLD SHINE SWEEP ===== */
+/* ===== 3D TILT + SHINE SWEEP ===== */
 const tiltCards = document.querySelectorAll('.service-card, .video-card, .price-card');
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 tiltCards.forEach(card => {
   const shine = document.createElement('span');
@@ -1636,7 +1646,7 @@ tiltCards.forEach(card => {
   card.appendChild(shine);
   card.classList.add('tilt');
 
-  if (prefersReduced) return;
+  if (prefersReduced || !canHover) return;
 
   let raf = null;
   card.addEventListener('pointermove', e => {
@@ -1646,7 +1656,7 @@ tiltCards.forEach(card => {
     if (raf) cancelAnimationFrame(raf);
     raf = requestAnimationFrame(() => {
       card.style.transform =
-        `perspective(900px) rotateX(${(-py * 9).toFixed(2)}deg) rotateY(${(px * 9).toFixed(2)}deg) translateY(-6px) scale(1.015)`;
+        `perspective(900px) rotateX(${(-py * 5).toFixed(2)}deg) rotateY(${(px * 5).toFixed(2)}deg) translateY(-3px) scale(1.01)`;
     });
   }, { passive: true });
 
@@ -1656,7 +1666,7 @@ tiltCards.forEach(card => {
 });
 
 /* ===== MAGNETIC BUTTONS ===== */
-if (!prefersReduced) {
+if (!prefersReduced && canHover) {
   document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta, .btn-submit').forEach(btn => {
     btn.addEventListener('pointermove', e => {
       const r = btn.getBoundingClientRect();
@@ -1683,9 +1693,9 @@ const statObs = new IntersectionObserver((entries, obs) => {
       if (!start) start = ts;
       const p = Math.min((ts - start) / dur, 1);
       const eased = 1 - Math.pow(1 - p, 3);
-      el.firstChild.textContent = prefix + Math.round(num * eased);
+      el.firstChild.textContent = prefix + Math.round(num * eased) + suffix;
       if (p < 1) requestAnimationFrame(step);
-      else el.firstChild.textContent = prefix + num;
+      else el.firstChild.textContent = prefix + num + suffix;
     }
     requestAnimationFrame(step);
     obs.unobserve(el);
@@ -1777,59 +1787,5 @@ async function handleSubmit(e) {
 setLang('lt');
 </script>
 
-<!-- ===== WHATSAPP BUTTON ===== -->
-<a href="https://wa.me/37062235758"
-   class="wa-btn" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.493.652 4.833 1.792 6.858L2 30l7.338-1.768A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="white"/>
-    <path d="M22.003 19.274c-.306-.153-1.812-.894-2.093-.996-.28-.1-.485-.153-.688.154-.204.306-.79.996-.968 1.2-.178.204-.357.23-.663.077-.306-.154-1.291-.476-2.459-1.517-.909-.81-1.522-1.81-1.7-2.116-.178-.306-.019-.47.134-.623.137-.136.306-.357.459-.535.153-.179.204-.307.306-.511.102-.204.051-.383-.026-.536-.077-.153-.688-1.66-.943-2.272-.248-.598-.5-.517-.688-.527l-.586-.01c-.204 0-.535.077-.815.383-.28.307-1.07 1.045-1.07 2.55 0 1.506 1.096 2.96 1.249 3.164.153.204 2.156 3.292 5.225 4.619.73.315 1.3.503 1.744.644.733.233 1.4.2 1.927.121.588-.088 1.812-.74 2.068-1.455.255-.714.255-1.326.178-1.455-.076-.128-.28-.204-.586-.357z" fill="#25D366"/>
-  </svg>
-  <span class="wa-label" data-en="Chat on WhatsApp" data-lt="Rašyti WhatsApp">Chat on WhatsApp</span>
-</a>
-
-<style>
-.wa-btn {
-  position: fixed; bottom: 28px; right: 28px; z-index: 999;
-  display: flex; align-items: center; gap: 10px;
-  background: #25D366;
-  color: #fff;
-  padding: 13px 20px 13px 16px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600; font-size: 0.86rem;
-  box-shadow: 0 6px 28px rgba(37,211,102,0.36), 0 2px 8px rgba(0,0,0,0.3);
-  transition: transform 0.25s var(--ease-spring), box-shadow 0.25s, background 0.2s;
-  max-width: 220px;
-  overflow: hidden;
-}
-.wa-btn:hover {
-  background: #20c05c;
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 10px 36px rgba(37,211,102,0.5), 0 4px 12px rgba(0,0,0,0.2);
-}
-.wa-btn svg { flex-shrink: 0; }
-.wa-label { white-space: nowrap; }
-.wa-btn::before {
-  content: '';
-  position: absolute; inset: 0;
-  border-radius: inherit;
-  box-shadow: 0 0 0 0 rgba(37,211,102,0.55);
-  animation: waPulse 2.8s ease-out infinite;
-  pointer-events: none;
-}
-@keyframes waPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(37,211,102,0.55); }
-  70%  { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
-  100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
-}
-@media (max-width: 480px) {
-  .wa-btn { padding: 14px; border-radius: 50%; }
-  .wa-label { display: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .wa-btn::before { animation: none; }
-}
-</style>
 </body>
 </html>
