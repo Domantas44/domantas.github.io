@@ -259,7 +259,7 @@ h1 {
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(3.2rem, 7.8vw, 6.4rem);
   font-weight: 300;
-  line-height: 1.04;
+  line-height: 1.1;
   letter-spacing: -0.03em; margin-bottom: 30px;
   color: var(--white);
 }
@@ -271,6 +271,8 @@ h1 em {
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
   display: inline-block;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
   opacity: 0;
   animation: wordRise 0.9s var(--ease-fluid) 0.3s forwards,
              shimmer 5s ease-in-out 1.5s infinite alternate;
