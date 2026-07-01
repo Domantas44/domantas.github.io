@@ -34,6 +34,7 @@ body {
   font-size: 16px;
   line-height: 1.65;
   overflow-x: hidden;
+  overscroll-behavior-y: contain;
 }
 
 ::-webkit-scrollbar { width: 3px; }
@@ -43,12 +44,12 @@ body {
 /* ===== CURSOR GLOW ===== */
 .cursor-glow {
   position: fixed;
+  left: 0; top: 0;
   width: 600px; height: 600px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%);
   pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: left 0.8s var(--ease-fluid), top 0.8s var(--ease-fluid);
+  will-change: transform;
   z-index: 0;
 }
 
@@ -1625,29 +1626,39 @@ h1 .word {
 
 /* ===== CURSOR GLOW ===== */
 const glow = document.getElementById('cursorGlow');
-document.addEventListener('mousemove', e => {
-  glow.style.left = e.clientX + 'px';
-  glow.style.top  = e.clientY + 'px';
-}, { passive: true });
+let glowTX = window.innerWidth / 2, glowTY = window.innerHeight / 2;
+let glowX = glowTX, glowY = glowTY;
 
 /* ===== NAV SCROLL ===== */
 const nav = document.getElementById('main-nav');
-let mouseX = 0, mouseY = 0, scrollOffset = 0;
+let scrollOffset = 0;
 
 /* ===== ORB PARALLAX ===== */
 const orb1 = document.getElementById('orb1');
 const orb2 = document.getElementById('orb2');
+let orbTX = 0, orbTY = 0, orbX = 0, orbY = 0, orbScroll = 0;
 
-function updateOrbs() {
-  orb1.style.transform = `translate(${mouseX * 0.6}px, ${mouseY * 0.6 + scrollOffset * 0.07}px)`;
-  orb2.style.transform = `translate(${-mouseX * 0.4}px, ${-mouseY * 0.4 - scrollOffset * 0.05}px)`;
-}
+function lerp(a, b, t) { return a + (b - a) * t; }
 
 document.addEventListener('mousemove', e => {
-  mouseX = (e.clientX / window.innerWidth  - 0.5) * 40;
-  mouseY = (e.clientY / window.innerHeight - 0.5) * 40;
-  updateOrbs();
+  glowTX = e.clientX;
+  glowTY = e.clientY;
+  orbTX = (e.clientX / window.innerWidth  - 0.5) * 40;
+  orbTY = (e.clientY / window.innerHeight - 0.5) * 40;
 }, { passive: true });
+
+/* SMOOTH RAF LOOP — lerp every frame for silky motion */
+(function rafLoop() {
+  requestAnimationFrame(rafLoop);
+  glowX = lerp(glowX, glowTX, 0.10);
+  glowY = lerp(glowY, glowTY, 0.10);
+  glow.style.transform = `translate(${glowX}px, ${glowY}px) translate(-50%, -50%)`;
+  orbX = lerp(orbX, orbTX, 0.05);
+  orbY = lerp(orbY, orbTY, 0.05);
+  orbScroll = lerp(orbScroll, scrollOffset, 0.08);
+  orb1.style.transform = `translate(${orbX * 0.6}px, ${orbY * 0.6 + orbScroll * 0.07}px)`;
+  orb2.style.transform = `translate(${-orbX * 0.4}px, ${-orbY * 0.4 - orbScroll * 0.05}px)`;
+})();
 
 /* ===== SCROLL PROGRESS BAR ===== */
 const progressBar = document.createElement('div');
@@ -1659,7 +1670,6 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', scrollOffset > 40);
   const docH = document.documentElement.scrollHeight - window.innerHeight;
   progressBar.style.width = (docH > 0 ? (scrollOffset / docH) * 100 : 0) + '%';
-  updateOrbs();
 }, { passive: true });
 
 /* ===== 3D TILT + SHINE SWEEP ===== */
