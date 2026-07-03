@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Domantas Media — AI Product Commercials</title>
+<meta name="description" content="AI sukurti reklaminiai vaizdo įrašai ir produktų nuotraukos el. prekybos verslams. Atsiųskite produkto nuotrauką — gaukite kinematografinę reklamą per 48 valandas. Pirmas vaizdo įrašas nemokamai.">
+<link rel="canonical" href="https://domantasmedia.lt/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Domantas Media">
+<meta property="og:title" content="Domantas Media — AI Product Commercials">
+<meta property="og:description" content="AI sukurti reklaminiai vaizdo įrašai ir produktų nuotraukos el. prekybos verslams. Pirmas vaizdo įrašas nemokamai — per 48 valandas.">
+<meta property="og:url" content="https://domantasmedia.lt/">
+<meta property="og:image" content="https://domantasmedia.lt/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="lt_LT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Domantas Media — AI Product Commercials">
+<meta name="twitter:description" content="AI sukurti reklaminiai vaizdo įrašai ir produktų nuotraukos el. prekybos verslams. Pirmas vaizdo įrašas nemokamai — per 48 valandas.">
+<meta name="twitter:image" content="https://domantasmedia.lt/og-image.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230F1115'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='38' font-weight='700' fill='%233B82F6' text-anchor='middle'%3ED%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -152,6 +170,64 @@ nav.scrolled {
   background: var(--accent-hi);
   transform: translateY(-1px) scale(1.01);
   box-shadow: 0 8px 24px rgba(37,99,235,0.5);
+}
+
+/* Mobile hamburger */
+.nav-burger {
+  display: none;
+  width: 40px; height: 40px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  cursor: pointer; padding: 0;
+  flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  flex-shrink: 0;
+}
+.nav-burger span {
+  display: block; width: 16px; height: 1.5px;
+  background: var(--white); border-radius: 2px;
+  transition: transform 0.3s var(--ease-fluid), opacity 0.2s;
+}
+.nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-menu {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 99;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  padding: 96px 6% 28px;
+  display: none;
+  flex-direction: column; gap: 4px;
+  transform: translateY(-12px); opacity: 0;
+  transition: transform 0.35s var(--ease-fluid), opacity 0.3s;
+}
+.mobile-menu.open { transform: translateY(0); opacity: 1; }
+.mobile-menu a {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem; font-weight: 500;
+  color: var(--white); text-decoration: none;
+  padding: 13px 4px;
+  border-bottom: 1px solid var(--border);
+}
+.mobile-menu a:last-child { border-bottom: none; }
+@media (max-width: 1080px) {
+  .nav-burger { display: flex; }
+  .mobile-menu { display: flex; visibility: hidden; pointer-events: none; }
+  .mobile-menu.open { visibility: visible; pointer-events: auto; }
+}
+@media (max-width: 600px) {
+  nav .nav-cta { display: none; }
+}
+
+/* Keyboard focus */
+a:focus-visible, button:focus-visible, input:focus-visible,
+textarea:focus-visible, select:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* ===== HERO ===== */
@@ -642,6 +718,53 @@ section { padding: 100px 6%; }
   transform: translateY(-1px);
 }
 
+/* ===== FAQ ===== */
+#faq { border-top: 1px solid var(--border); }
+.faq-head { margin-bottom: 48px; }
+.faq-list { max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.faq-item {
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.3s var(--ease-fluid), background 0.3s var(--ease-fluid);
+}
+.faq-item[open] {
+  border-color: rgba(59,130,246,0.28);
+  background: rgba(37,99,235,0.05);
+}
+.faq-item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  padding: 20px 24px;
+  cursor: pointer; list-style: none;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.98rem; font-weight: 600;
+  color: var(--white);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-icon {
+  flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid rgba(59,130,246,0.3);
+  background: rgba(37,99,235,0.12);
+  color: var(--accent2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 400; line-height: 1;
+  transition: transform 0.3s var(--ease-fluid);
+}
+.faq-item[open] .faq-icon { transform: rotate(45deg); }
+.faq-answer {
+  padding: 0 24px 22px;
+  font-size: 0.9rem; color: var(--muted); line-height: 1.8;
+  max-width: 700px;
+}
+@media (max-width: 900px) {
+  .faq-item { background: rgba(23,26,33,0.97); }
+  .faq-item[open] { background: rgba(23,26,33,0.97); }
+}
+
 /* ===== CONTACT ===== */
 #contact { border-top: 1px solid var(--border); }
 .contact-inner {
@@ -1119,6 +1242,42 @@ h1 .word {
   .reveal, .reveal-left, .reveal-right, .reveal-scale { filter: none; }
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Domantas Media",
+  "description": "AI sukurti reklaminiai vaizdo įrašai ir produktų nuotraukos el. prekybos verslams.",
+  "url": "https://domantasmedia.lt/",
+  "areaServed": { "@type": "Country", "name": "Lithuania" },
+  "priceRange": "€€",
+  "makesOffer": [
+    { "@type": "Offer", "name": "Viena reklama", "price": "49", "priceCurrency": "EUR" },
+    { "@type": "Offer", "name": "Augimo paketas", "price": "199", "priceCurrency": "EUR" },
+    { "@type": "Offer", "name": "Mėnesinis planas", "price": "299", "priceCurrency": "EUR" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Ką turiu atsiųsti, kad pradėtume?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Užtenka vienos ar kelių produkto nuotraukų, darytų telefonu, ir trumpo aprašymo apie prekės ženklo stilių bei kur bus rodoma reklama. Jokios profesionalios fotosesijos nereikia." } },
+    { "@type": "Question", "name": "Kaip veikia nemokamas vaizdo įrašas?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Atsiųskite produkto nuotrauką per kontaktų formą ir per 48 valandas gausite trumpą AI reklamą visiškai nemokamai, be jokių įsipareigojimų. Vienas nemokamas vaizdo įrašas vienam prekės ženklui." } },
+    { "@type": "Question", "name": "Per kiek laiko gausiu užsakymą?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Standartinis pristatymas — 48 valandos nuo užduoties gavimo. Mėnesinio plano klientams taikomas prioritetinis pristatymas tą pačią dieną. Didesni nuotraukų užsakymai pristatomi per 48–72 valandas." } },
+    { "@type": "Question", "name": "Kas, jei rezultatas man nepatiks?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Kiekviename pakete numatyti taisymų raundai — pateikiate pastabas, o aš tobulinu, kol rezultatas atitiks Jūsų lūkesčius. Be to, visada galite pradėti nuo nemokamo vaizdo įrašo ir įvertinti kokybę niekuo nerizikuodami." } },
+    { "@type": "Question", "name": "Kaip vyksta apmokėjimas?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Susitarus dėl užduoties, atsiųsiu sąskaitą. Apmokėjimas bankiniu pavedimu — jokių išankstinių įsipareigojimų ar ilgalaikių sutarčių. Mėnesinis planas atnaujinamas kas mėnesį ir gali būti nutrauktas bet kada." } },
+    { "@type": "Question", "name": "Ar galėsiu naudoti turinį kur panorėjęs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Taip — visi galutiniai failai priklauso Jums. Gausite visus reikalingus formatus (9:16, 1:1, 16:9) ir galėsite naudoti juos reklamoje, socialiniuose tinkluose, el. parduotuvėje ar bet kur kitur be papildomų mokesčių." } }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -1134,15 +1293,30 @@ h1 .word {
     <li><a href="#process" data-en="Process" data-lt="Procesas">Process</a></li>
     <li><a href="#pricing" data-en="Pricing" data-lt="Kainos">Pricing</a></li>
     <li><a href="#free-sample" data-en="Free Video" data-lt="Nemokamas video" style="color:var(--accent2);">Free Video</a></li>
+    <li><a href="#faq" data-en="FAQ" data-lt="DUK">FAQ</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-toggle">
-      <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
-      <button class="lang-btn active" id="btnLT" onclick="setLang('lt')">LT</button>
+      <button class="lang-btn" id="btnEN" onclick="setLang('en')" aria-label="English">EN</button>
+      <button class="lang-btn active" id="btnLT" onclick="setLang('lt')" aria-label="Lietuvių">LT</button>
     </div>
     <a href="#contact" class="nav-cta" data-en="Get in touch" data-lt="Susisiekti">Get in touch</a>
+    <button class="nav-burger" id="navBurger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Meniu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" data-en="Services" data-lt="Paslaugos">Services</a>
+  <a href="#portfolio" data-en="Portfolio" data-lt="Darbai">Portfolio</a>
+  <a href="#photos" data-en="Photos" data-lt="Nuotraukos">Photos</a>
+  <a href="#process" data-en="Process" data-lt="Procesas">Process</a>
+  <a href="#pricing" data-en="Pricing" data-lt="Kainos">Pricing</a>
+  <a href="#free-sample" style="color:var(--accent2);" data-en="Free Video" data-lt="Nemokamas video">Free Video</a>
+  <a href="#faq" data-en="FAQ" data-lt="DUK">FAQ</a>
+  <a href="#contact" data-en="Get in touch" data-lt="Susisiekti">Get in touch</a>
+</div>
 
 <!-- ===== HERO ===== -->
 <section id="hero">
@@ -1161,8 +1335,8 @@ h1 .word {
       Premium AI-generated advertising videos for e-commerce brands, product launches, and social media campaigns. Fast. Cinematic. Effective.
     </p>
     <div class="hero-btns reveal reveal-delay-3">
-      <a href="#portfolio" class="btn-primary" data-en="View work ↓" data-lt="Peržiūrėti darbus ↓">View work ↓</a>
-      <a href="#contact" class="btn-ghost" data-en="Start a project" data-lt="Pradėti projektą">Start a project</a>
+      <a href="#free-sample" class="btn-primary" data-en="Claim your free video →" data-lt="Gauti nemokamą vaizdo įrašą →">Claim your free video →</a>
+      <a href="#portfolio" class="btn-ghost" data-en="View work ↓" data-lt="Peržiūrėti darbus ↓">View work ↓</a>
     </div>
     <div class="hero-stats reveal reveal-delay-4">
       <div class="stat-item">
@@ -1244,7 +1418,7 @@ h1 .word {
   <div class="portfolio-grid">
     <div class="video-card reveal">
       <div class="video-wrapper">
-        <video src="video1.mp4" autoplay muted loop playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></video>
+        <video src="video1.mp4" muted loop playsinline preload="none" poster="poster1.jpg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></video>
       </div>
       <div class="video-info">
         <h3 data-en="Luxury Jewelry Commercial" data-lt="Prabangių Papuošalų Reklama">Luxury Jewelry Commercial</h3>
@@ -1253,7 +1427,7 @@ h1 .word {
     </div>
     <div class="video-card reveal reveal-delay-1">
       <div class="video-wrapper">
-        <video src="video2.mp4" autoplay muted loop playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></video>
+        <video src="video2.mp4" muted loop playsinline preload="none" poster="poster2.jpg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></video>
       </div>
       <div class="video-info">
         <h3 data-en="Perfume Brand Reel" data-lt="Kvepalų Prekės Ženklo Reel">Perfume Brand Reel</h3>
@@ -1262,7 +1436,7 @@ h1 .word {
     </div>
     <div class="video-card reveal reveal-delay-2">
       <div class="video-wrapper">
-        <video src="video3.mp4" autoplay muted loop playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></video>
+        <video src="video3.mp4" muted loop playsinline preload="none" poster="poster3.jpg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></video>
       </div>
       <div class="video-info">
         <h3 data-en="Ergonomic Chair Commercial" data-lt="Ergonominės Kėdės Reklama">Ergonomic Chair Commercial</h3>
@@ -1271,7 +1445,7 @@ h1 .word {
     </div>
     <div class="video-card reveal reveal-delay-3">
       <div class="video-wrapper">
-        <video src="video4.mp4" autoplay muted loop playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></video>
+        <video src="video4.mp4" muted loop playsinline preload="none" poster="poster4.jpg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></video>
       </div>
       <div class="video-info">
         <h3 data-en="Watch Ad" data-lt="Laikrodžio Reklama">Watch Ad</h3>
@@ -1295,7 +1469,7 @@ h1 .word {
       <div class="photo-side">
         <div class="photo-mock mock-jewelry-before">
           <span class="photo-badge badge-before" data-en="Before" data-lt="Prieš">Before</span>
-          <img src="before.png" alt="Before" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
+          <img src="before.webp" alt="Before" width="768" height="1376" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
           <span class="mock-env-label" data-en="Raw product photo" data-lt="Pradinė produkto nuotrauka">Raw product photo</span>
         </div>
         <div class="photo-info">
@@ -1309,7 +1483,7 @@ h1 .word {
       <div class="photo-side">
         <div class="photo-mock mock-jewelry-after">
           <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
-          <img src="after.png" alt="After" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
+          <img src="after.webp" alt="After" width="768" height="1376" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
           <div class="mock-overlay"></div>
           <span class="mock-env-label" data-en="AI-generated environment" data-lt="AI sugeneruota aplinka">AI-generated environment</span>
         </div>
@@ -1324,7 +1498,7 @@ h1 .word {
       <div class="photo-side">
         <div class="photo-mock mock-jewelry-before">
           <span class="photo-badge badge-before" data-en="Before" data-lt="Prieš">Before</span>
-          <img src="orson-before.png" alt="Before" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
+          <img src="orson-before.webp" alt="Before" width="1200" height="1600" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
           <span class="mock-env-label" data-en="Raw product photo" data-lt="Pradinė produkto nuotrauka">Raw product photo</span>
         </div>
         <div class="photo-info">
@@ -1338,7 +1512,7 @@ h1 .word {
       <div class="photo-side">
         <div class="photo-mock mock-jewelry-after">
           <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
-          <img src="orson-after1.png" alt="After 1" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
+          <img src="orson-after1.webp" alt="After 1" width="1195" height="1600" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
           <div class="mock-overlay"></div>
           <span class="mock-env-label" data-en="AI-generated environment" data-lt="AI sugeneruota aplinka">AI-generated environment</span>
         </div>
@@ -1350,7 +1524,7 @@ h1 .word {
       <div class="photo-side">
         <div class="photo-mock mock-jewelry-after">
           <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
-          <img src="orson-after2.png" alt="After 2" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
+          <img src="orson-after2.webp" alt="After 2" width="1195" height="1600" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
           <div class="mock-overlay"></div>
           <span class="mock-env-label" data-en="AI-generated environment" data-lt="AI sugeneruota aplinka">AI-generated environment</span>
         </div>
@@ -1365,7 +1539,7 @@ h1 .word {
       <div class="photo-side">
         <div class="photo-mock mock-jewelry-before">
           <span class="photo-badge badge-before" data-en="Before" data-lt="Prieš">Before</span>
-          <img src="celestine-before.png" alt="Before" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
+          <img src="celestine-before.webp" alt="Before" width="893" height="1600" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
           <span class="mock-env-label" data-en="Raw product photo" data-lt="Pradinė produkto nuotrauka">Raw product photo</span>
         </div>
         <div class="photo-info">
@@ -1379,7 +1553,7 @@ h1 .word {
       <div class="photo-side">
         <div class="photo-mock mock-jewelry-after">
           <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
-          <img src="celestine-after.png" alt="After" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
+          <img src="celestine-after.webp" alt="After" width="893" height="1600" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
           <div class="mock-overlay"></div>
           <span class="mock-env-label" data-en="AI-generated environment" data-lt="AI sugeneruota aplinka">AI-generated environment</span>
         </div>
@@ -1391,7 +1565,7 @@ h1 .word {
       <div class="photo-side">
         <div class="photo-mock mock-jewelry-after">
           <span class="photo-badge badge-after" data-en="After" data-lt="Po">After</span>
-          <img src="celestine-after2.jpg" alt="After 2" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
+          <img src="celestine-after2.webp" alt="After 2" width="845" height="1600" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;">
           <div class="mock-overlay"></div>
           <span class="mock-env-label" data-en="AI-generated environment" data-lt="AI sugeneruota aplinka">AI-generated environment</span>
         </div>
@@ -1558,6 +1732,41 @@ h1 .word {
   </div>
 </section>
 
+<!-- ===== FAQ ===== -->
+<section id="faq">
+  <div class="faq-head" style="text-align:center;">
+    <div class="section-label reveal" style="display:inline-flex;" data-en="FAQ" data-lt="DUK">FAQ</div>
+    <h2 class="section-title reveal reveal-delay-1" data-en="Frequently asked questions" data-lt="Dažniausiai užduodami klausimai">Frequently asked questions</h2>
+    <p class="section-sub reveal reveal-delay-2" style="margin:0 auto;" data-en="Everything you need to know before we start." data-lt="Viskas, ką verta žinoti prieš pradedant.">Everything you need to know before we start.</p>
+  </div>
+  <div class="faq-list">
+    <details class="faq-item reveal">
+      <summary><span data-en="What do I need to send to get started?" data-lt="Ką turiu atsiųsti, kad pradėtume?">What do I need to send to get started?</span><span class="faq-icon">+</span></summary>
+      <p class="faq-answer" data-en="One or a few product photos taken with your phone and a short note about your brand style and where the ad will run. No professional photo shoot needed — I handle everything else." data-lt="Užtenka vienos ar kelių produkto nuotraukų, darytų telefonu, ir trumpo aprašymo apie prekės ženklo stilių bei kur bus rodoma reklama. Jokios profesionalios fotosesijos nereikia — visą likusį darbą atlieku aš.">One or a few product photos taken with your phone and a short note about your brand style and where the ad will run. No professional photo shoot needed — I handle everything else.</p>
+    </details>
+    <details class="faq-item reveal reveal-delay-1">
+      <summary><span data-en="How does the free video work?" data-lt="Kaip veikia nemokamas vaizdo įrašas?">How does the free video work?</span><span class="faq-icon">+</span></summary>
+      <p class="faq-answer" data-en="Send your product photo through the contact form and within 48 hours you'll receive a short AI commercial completely free, with no obligations. One free video per brand." data-lt="Atsiųskite produkto nuotrauką per kontaktų formą ir per 48 valandas gausite trumpą AI reklamą visiškai nemokamai, be jokių įsipareigojimų. Vienas nemokamas vaizdo įrašas vienam prekės ženklui.">Send your product photo through the contact form and within 48 hours you'll receive a short AI commercial completely free, with no obligations. One free video per brand.</p>
+    </details>
+    <details class="faq-item reveal reveal-delay-2">
+      <summary><span data-en="How fast will I receive my order?" data-lt="Per kiek laiko gausiu užsakymą?">How fast will I receive my order?</span><span class="faq-icon">+</span></summary>
+      <p class="faq-answer" data-en="Standard turnaround is 48 hours from receiving your brief. Monthly plan clients get priority same-day delivery. Larger photo orders are delivered within 48–72 hours." data-lt="Standartinis pristatymas — 48 valandos nuo užduoties gavimo. Mėnesinio plano klientams taikomas prioritetinis pristatymas tą pačią dieną. Didesni nuotraukų užsakymai pristatomi per 48–72 valandas.">Standard turnaround is 48 hours from receiving your brief. Monthly plan clients get priority same-day delivery. Larger photo orders are delivered within 48–72 hours.</p>
+    </details>
+    <details class="faq-item reveal reveal-delay-3">
+      <summary><span data-en="What if I don't like the result?" data-lt="Kas, jei rezultatas man nepatiks?">What if I don't like the result?</span><span class="faq-icon">+</span></summary>
+      <p class="faq-answer" data-en="Every package includes revision rounds — you share feedback and I refine until the result matches your expectations. And you can always start with the free video to judge the quality with zero risk." data-lt="Kiekviename pakete numatyti taisymų raundai — pateikiate pastabas, o aš tobulinu, kol rezultatas atitiks Jūsų lūkesčius. Be to, visada galite pradėti nuo nemokamo vaizdo įrašo ir įvertinti kokybę niekuo nerizikuodami.">Every package includes revision rounds — you share feedback and I refine until the result matches your expectations. And you can always start with the free video to judge the quality with zero risk.</p>
+    </details>
+    <details class="faq-item reveal reveal-delay-4">
+      <summary><span data-en="How does payment work?" data-lt="Kaip vyksta apmokėjimas?">How does payment work?</span><span class="faq-icon">+</span></summary>
+      <p class="faq-answer" data-en="Once we agree on the brief, I'll send an invoice. Payment by bank transfer — no upfront commitments or long-term contracts. The monthly plan renews monthly and can be cancelled anytime." data-lt="Susitarus dėl užduoties, atsiųsiu sąskaitą. Apmokėjimas bankiniu pavedimu — jokių išankstinių įsipareigojimų ar ilgalaikių sutarčių. Mėnesinis planas atnaujinamas kas mėnesį ir gali būti nutrauktas bet kada.">Once we agree on the brief, I'll send an invoice. Payment by bank transfer — no upfront commitments or long-term contracts. The monthly plan renews monthly and can be cancelled anytime.</p>
+    </details>
+    <details class="faq-item reveal reveal-delay-4">
+      <summary><span data-en="Can I use the content anywhere I want?" data-lt="Ar galėsiu naudoti turinį kur panorėjęs?">Can I use the content anywhere I want?</span><span class="faq-icon">+</span></summary>
+      <p class="faq-answer" data-en="Yes — all final files are yours. You receive every format you need (9:16, 1:1, 16:9) and can use them in ads, social media, your online store, or anywhere else with no extra fees." data-lt="Taip — visi galutiniai failai priklauso Jums. Gausite visus reikalingus formatus (9:16, 1:1, 16:9) ir galėsite naudoti juos reklamoje, socialiniuose tinkluose, el. parduotuvėje ar bet kur kitur be papildomų mokesčių.">Yes — all final files are yours. You receive every format you need (9:16, 1:1, 16:9) and can use them in ads, social media, your online store, or anywhere else with no extra fees.</p>
+    </details>
+  </div>
+</section>
+
 <!-- ===== CONTACT ===== -->
 <section id="contact">
   <div class="contact-inner">
@@ -1566,18 +1775,18 @@ h1 .word {
       <h2 data-en="Let's make your product impossible to ignore." data-lt="Sukurkime reklamą, kurios neįmanoma nepastebėti.">Let's make your product impossible to ignore.</h2>
       <p data-en="Whether you have one product to launch or a full catalog to promote, reach out and I'll respond within a few hours. No sign-ups, no fuss — everything straight to the point." data-lt="Nesvarbu, ar norite reklamuoti vieną produktą, ar visą katalogą — susisiekite, ir per kelias valandas atsakysiu be registracijos ar kitų nepatogumų.">Whether you have one product to launch or a full catalog to promote, reach out and I'll respond within a few hours. No sign-ups, no fuss — everything straight to the point.</p>
     </div>
-    <div class="contact-form reveal-right reveal-delay-1">
+    <form class="contact-form reveal-right reveal-delay-1" id="contactForm" novalidate>
       <div class="form-group">
-        <label data-en="Your name" data-lt="Jūsų vardas">Your name</label>
-        <input type="text" data-en-placeholder="e.g. John Smith" data-lt-placeholder="pvz. Vardenis Pavardenis" placeholder="e.g. John Smith">
+        <label for="contactName" data-en="Your name" data-lt="Jūsų vardas">Your name</label>
+        <input type="text" id="contactName" name="name" required data-en-placeholder="e.g. John Smith" data-lt-placeholder="pvz. Vardenis Pavardenis" placeholder="e.g. John Smith">
       </div>
       <div class="form-group">
-        <label data-en="Email address" data-lt="El. pašto adresas">Email address</label>
-        <input type="email" data-en-placeholder="you@company.com" data-lt-placeholder="jusu@imone.lt" placeholder="you@company.com">
+        <label for="contactEmail" data-en="Email address" data-lt="El. pašto adresas">Email address</label>
+        <input type="email" id="contactEmail" name="email" required data-en-placeholder="you@company.com" data-lt-placeholder="jusu@imone.lt" placeholder="you@company.com">
       </div>
       <div class="form-group">
-        <label data-en="What are you interested in?" data-lt="Kokia paslauga domina?">What are you interested in?</label>
-        <select id="packageSelect">
+        <label for="packageSelect" data-en="What are you interested in?" data-lt="Kokia paslauga domina?">What are you interested in?</label>
+        <select id="packageSelect" name="package">
           <option value="" disabled selected data-en="Select a package…" data-lt="Pasirinkite paketą…">Select a package…</option>
           <option data-en="Single Ad — 49€" data-lt="Viena reklama — 49€">Single Ad — 49€</option>
           <option data-en="AI Photo Generation — from 5€/photo" data-lt="AI Nuotraukų Generavimas — nuo 5€/nuotr.">AI Photo Generation — from 4€/photo</option>
@@ -1588,11 +1797,15 @@ h1 .word {
         </select>
       </div>
       <div class="form-group">
-        <label data-en="Your product & what you need" data-lt="Jūsų produktas ir pageidavimai">Your product & what you need</label>
-        <textarea data-en-placeholder="What are you selling, what style or vibe are you going for, and where will the content run?" data-lt-placeholder="Ką parduodate, koks norimas stilius ir kur bus rodoma reklama?" placeholder="What are you selling, what style or vibe are you going for, and where will the content run?"></textarea>
+        <label for="contactMessage" data-en="Your product & what you need" data-lt="Jūsų produktas ir pageidavimai">Your product & what you need</label>
+        <textarea id="contactMessage" name="message" required data-en-placeholder="What are you selling, what style or vibe are you going for, and where will the content run?" data-lt-placeholder="Ką parduodate, koks norimas stilius ir kur bus rodoma reklama?" placeholder="What are you selling, what style or vibe are you going for, and where will the content run?"></textarea>
       </div>
-      <button class="btn-submit" onclick="handleSubmit(event)" data-en="Send message →" data-lt="Siųsti žinutę →">Send message →</button>
-    </div>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true">
+      <button type="submit" class="btn-submit" data-en="Send message →" data-lt="Siųsti žinutę →">Send message →</button>
+      <p id="formFallback" style="display:none; font-size:0.8rem; color:var(--muted); text-align:center; margin-top:4px;">
+        <a href="mailto:domantasmedia@info.lt" style="color:var(--accent2);">domantasmedia@info.lt</a>
+      </p>
+    </form>
   </div>
 </section>
 
@@ -1752,11 +1965,14 @@ setTimeout(() => {
 }, 60);
 
 /* ===== LANGUAGE SWITCHER ===== */
-let currentLang = 'en';
+let currentLang = null;
 
 function setLang(lang) {
   if (lang === currentLang) return;
   currentLang = lang;
+
+  document.documentElement.lang = lang;
+  try { localStorage.setItem('lang', lang); } catch {}
 
   document.getElementById('btnEN').classList.toggle('active', lang === 'en');
   document.getElementById('btnLT').classList.toggle('active', lang === 'lt');
@@ -1781,13 +1997,21 @@ function setLang(lang) {
 }
 
 /* ===== FORM SUBMIT ===== */
+const contactForm = document.getElementById('contactForm');
+contactForm.addEventListener('submit', handleSubmit);
+
 async function handleSubmit(e) {
   e.preventDefault();
-  const btn = e.target;
-  const form = btn.closest('div.contact-form');
+  const form = contactForm;
+  const btn = form.querySelector('.btn-submit');
+  const fallback = document.getElementById('formFallback');
+
+  if (form.querySelector('input[name=_gotcha]').value) return; // spam bot
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+
   const data = {
-    name:    form.querySelector('input[type=text]').value,
-    email:   form.querySelector('input[type=email]').value,
+    name:    form.querySelector('input[name=name]').value,
+    email:   form.querySelector('input[name=email]').value,
     package: form.querySelector('select').value,
     message: form.querySelector('textarea').value,
   };
@@ -1804,9 +2028,11 @@ async function handleSubmit(e) {
     if (res.ok) {
       btn.textContent = currentLang === 'lt' ? '✓ Žinutė išsiųsta!' : '✓ Message sent!';
       btn.style.background = '#22c55e';
-      form.querySelector('input[type=text]').value = '';
-      form.querySelector('input[type=email]').value = '';
+      fallback.style.display = 'none';
+      form.querySelector('input[name=name]').value = '';
+      form.querySelector('input[name=email]').value = '';
       form.querySelector('textarea').value = '';
+      form.querySelector('select').selectedIndex = 0;
     } else {
       throw new Error('failed');
     }
@@ -1814,14 +2040,45 @@ async function handleSubmit(e) {
     btn.textContent = currentLang === 'lt' ? 'Klaida — rašykite el. paštu' : 'Failed — email me directly';
     btn.style.background = '#ef4444';
     btn.disabled = false;
+    fallback.style.display = 'block';
     setTimeout(() => {
       btn.textContent = currentLang === 'lt' ? 'Siųsti žinutę →' : 'Send message →';
       btn.style.background = '';
     }, 4000);
   }
 }
+
+/* ===== MOBILE MENU ===== */
+const burger = document.getElementById('navBurger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+function closeMobileMenu() {
+  burger.setAttribute('aria-expanded', 'false');
+  mobileMenu.classList.remove('open');
+}
+burger.addEventListener('click', () => {
+  const open = burger.getAttribute('aria-expanded') === 'true';
+  burger.setAttribute('aria-expanded', String(!open));
+  mobileMenu.classList.toggle('open', !open);
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileMenu(); });
+
+/* ===== LAZY VIDEO PLAYBACK ===== */
+/* preload="none" keeps videos from downloading until scrolled near;
+   play only while on screen so off-screen clips stop burning GPU/battery */
+const videoObs = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) en.target.play().catch(() => {});
+    else en.target.pause();
+  });
+}, { rootMargin: '200px 0px' });
+document.querySelectorAll('.video-card video').forEach(v => videoObs.observe(v));
+
 /* ===== DEFAULT LANGUAGE ===== */
-setLang('lt');
+let savedLang = 'lt';
+try { savedLang = localStorage.getItem('lang') === 'en' ? 'en' : 'lt'; } catch {}
+setLang(savedLang);
 </script>
 
 <!-- Cloudflare Web Analytics -->
